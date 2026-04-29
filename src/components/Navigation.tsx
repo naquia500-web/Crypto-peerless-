@@ -17,7 +17,7 @@ export function Navigation({ onOpenAIHouse, onOpenTradingCoach }: { onOpenAIHous
         <div className="flex flex-col flex-1">
           <span className="text-[10px] uppercase tracking-[0.4em] opacity-50 mb-1">Market Intelligence</span>
           <div className="flex items-center gap-4 flex-wrap">
-            <h1 className="text-2xl font-black italic tracking-tighter uppercase">Bitwise Navigator</h1>
+            <h1 className="text-2xl font-black italic tracking-tighter uppercase">bitwise-tech</h1>
             
             <div className="hidden sm:block">
               <ApiKeyManager />

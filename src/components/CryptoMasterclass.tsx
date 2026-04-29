@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BookOpen, Sparkles, ChevronRight, GraduationCap } from 'lucide-react';
 import Markdown from 'react-markdown';
+import OpenAI from 'openai';
 
 export function CryptoMasterclass() {
   const [topic, setTopic] = useState('Trading Basics');
@@ -20,22 +21,38 @@ export function CryptoMasterclass() {
     setLoading(true);
     setError(null);
     try {
-      const apiKey = localStorage.getItem('user_api_key') || '';
-      const response = await fetch('/api/masterclass', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey
-        },
-        body: JSON.stringify({ topic: selectedTopic }),
-      });
-      const data = await response.json();
+      const apiKey = localStorage.getItem('user_api_key') || typeof process !== 'undefined' && process.env.OPENROUTER_API_KEY || (typeof process !== 'undefined' && process.env.OPENAI_API_KEY) || import.meta.env.VITE_OPENAI_API_KEY;
+      const isOR = apiKey?.startsWith("sk-or-");
+      const isGemini = apiKey && !apiKey.startsWith("sk-");
       
-      if (!response.ok) {
-         throw new Error(data.error || 'Failed to generate content');
+      if (!apiKey) {
+         throw new Error("Missing API Key. Please provide it in the input box, or add it via Settings.");
       }
       
-      setContent(data.content);
+      const openai = new OpenAI({
+         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : isOR ? "https://openrouter.ai/api/v1" : undefined,
+         apiKey: apiKey,
+         dangerouslyAllowBrowser: true,
+         defaultHeaders: isOR ? {
+           "HTTP-Referer": window.location.origin,
+           "X-Title": "Crypto AI Tools"
+         } : undefined
+      });
+      
+      const response = await openai.chat.completions.create({
+        model: isGemini ? "gemini-2.5-flash" : isOR ? "openai/gpt-4o-mini" : "gpt-4o-mini", // Fallback to accessible model
+        messages: [
+          { role: "system", content: "You are an expert Crypto Masterclass AI. Provide comprehensive, accurate educational content about " + selectedTopic + "." },
+        ],
+        max_tokens: 2000
+      });
+      
+      const generatedContent = response.choices[0]?.message?.content;
+      if (!generatedContent) {
+         throw new Error("No content generated.");
+      }
+      
+      setContent(generatedContent);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'An error occurred.');

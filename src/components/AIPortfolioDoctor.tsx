@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Stethoscope, ShieldCheck, Activity, Link as LinkIcon, RefreshCw, AlertTriangle } from 'lucide-react';
 import Markdown from 'react-markdown';
+import OpenAI from 'openai';
 
 interface PortfolioData {
   asset: string;
@@ -32,22 +33,39 @@ export function AIPortfolioDoctor() {
     setIsAnalyzing(true);
     setError(null);
     try {
-      const apiKey = localStorage.getItem('user_api_key') || '';
-      const response = await fetch('/api/portfolio-doctor', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey
-        },
-        body: JSON.stringify({ portfolio }),
-      });
-      const data = await response.json();
+      const apiKey = localStorage.getItem('user_api_key') || typeof process !== 'undefined' && process.env.OPENROUTER_API_KEY || (typeof process !== 'undefined' && process.env.OPENAI_API_KEY) || import.meta.env.VITE_OPENAI_API_KEY;
+      const isOR = apiKey?.startsWith("sk-or-");
+      const isGemini = apiKey && !apiKey.startsWith("sk-");
       
-      if (!response.ok) {
-         throw new Error(data.error || 'Failed to analyze portfolio');
+      if (!apiKey) {
+         throw new Error("Missing API Key. Please provide it in the input box, or add it via Settings.");
       }
       
-      setAnalysis(data.content);
+      const openai = new OpenAI({
+         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : isOR ? "https://openrouter.ai/api/v1" : undefined,
+         apiKey: apiKey,
+         dangerouslyAllowBrowser: true,
+         defaultHeaders: isOR ? {
+           "HTTP-Referer": window.location.origin,
+           "X-Title": "Crypto AI Tools"
+         } : undefined
+      });
+      
+      const response = await openai.chat.completions.create({
+        model: isGemini ? "gemini-2.5-pro" : isOR ? "openai/gpt-4o" : "gpt-4o",
+        messages: [
+          { role: "system", content: "You are the AI Portfolio Doctor. Analyze the following crypto holdings, risk profile, and suggest diversification. Format clearly in Markdown." },
+          { role: "user", content: "Holdings: " + JSON.stringify(portfolio) }
+        ],
+        max_tokens: 2000
+      });
+      
+      const generatedContent = response.choices[0]?.message?.content;
+      if (!generatedContent) {
+         throw new Error("No content generated.");
+      }
+      
+      setAnalysis(generatedContent);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'An error occurred.');
