@@ -28,12 +28,39 @@ async function startServer() {
       });
       const { topic } = req.body;
       const response = await openai.chat.completions.create({
-        model: isGemini ? "gemini-2.5-flash" : isOR ? "openai/gpt-4o-mini" : "gpt-4o-mini", // Fallback to accessible model
-        messages: [
-          { role: "system", content: "You are an expert Crypto Masterclass AI. Provide comprehensive, accurate educational content about " + topic + "." },
-        ],
-        max_tokens: 2000
-      });
+  model: isGemini ? "google/gemini-2.5-flash" : isOR ? "openai/gpt-4o-mini" : "gpt-4o-mini",
+
+  // ✅ 🔥 ADDED THIS BLOCK (OpenRouter fallback config)
+  extra_body: isOR
+    ? {
+        route: "fallback",
+        models: [
+          "meta/llama-3.1-405b",
+          "openai/gpt-4o-mini",
+          "mistralai/mistral-large-latest",
+          "anthropic/claude-3-haiku",
+          "google/gemini-flash-1.5"
+        ]
+      }
+    : undefined,
+
+  messages: [
+    { role: "system", content: "You are an expert Crypto Market Analyst." },
+    { role: "user", content: topic }
+  ],
+
+  max_tokens: 2000
+});const response = await openai.chat.completions.create({
+  model: isGemini ? "gemini-2.5-flash" : isOR ? "openai/..." : ...extra_body: {
+  route: "fallback",
+  models: [...]
+}"gemini-2.5-flash""google/gemini-2.5-flash"models: [
+  "openai/gpt-4o-mini",
+  "anthropic/claude-3-haiku",
+  "google/gemini-flash-1.5",
+  "mistralai/mistral-large-latest",
+  "meta/llama-3.1-405b"
+]
       res.json({ content: response.choices[0].message.content });
     } catch (e: any) {
       console.error(e);
