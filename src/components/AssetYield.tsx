@@ -81,24 +81,24 @@ export function AssetYield() {
 
   return (
     <section className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-white/10">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#00FF88] animate-pulse"></div>
-          Bitcoin Yield <span className="text-[10px] text-white/50 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
+      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-800 flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+          Bitcoin Yield <span className="text-[10px] text-slate-500 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
         </h3>
         <div className="flex gap-2">
           {['CeFi', 'DeFi', 'All'].map((tab, idx) => (
-            <button key={tab} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${idx === 2 ? 'bg-white/10 text-white' : 'bg-white/5 text-white/50 hover:bg-white/20 hover:text-white'}`}>
+            <button key={tab} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${idx === 2 ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'}`}>
               {tab}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-[#0B0E11] shadow-lg border border-white/10 rounded-xl overflow-x-auto border border-white/5">
+      <div className="bg-white shadow-sm border border-slate-200 rounded-xl overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-[700px]">
           <thead>
-            <tr className="border-b border-white/10 text-[9px] uppercase tracking-widest opacity-50 bg-white/5">
+            <tr className="border-b border-slate-200 text-[9px] uppercase tracking-widest text-slate-500 bg-slate-50">
               <th className="px-4 py-3 font-bold w-12 text-center">#</th>
               <th className="px-4 py-3 font-bold">Service Provider</th>
               <th className="px-4 py-3 font-bold">Yield Type</th>
@@ -109,17 +109,17 @@ export function AssetYield() {
           <tbody>
             {INITIAL_YIELD.map((row) => {
               const current = liveApy[row.rank] || { apy: row.baseApy, status: 'neutral' };
-              const colorClass = current.status === 'up' ? 'text-[#00FF88] bg-[#00FF88]/10 border-[#00FF88]/30' : current.status === 'down' ? 'text-[#FF4D4D] bg-[#FF4D4D]/10 border-[#FF4D4D]/30' : 'text-[#00FF88] bg-[#00FF88]/10 border-transparent';
+              const colorClass = current.status === 'up' ? 'text-green-600 bg-green-50 border-green-200' : current.status === 'down' ? 'text-red-600 bg-red-50 border-red-200' : 'text-blue-600 bg-blue-50 border-transparent';
               
               return (
-                <tr key={row.rank} className="border-b border-white/5 hover:bg-white/10 transition-colors group">
+                <tr key={row.rank} className="border-b border-slate-100 hover:bg-slate-50 transition-colors group">
                   <td className="px-4 py-4 text-center">
-                    <span className="text-[10px] font-mono opacity-50">{row.rank}</span>
+                    <span className="text-[10px] font-mono text-slate-400">{row.rank}</span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-xs font-bold flex items-center gap-2">
+                    <span className="text-xs font-bold flex items-center gap-2 text-slate-700">
                       <img 
-                        src={LOGOS[row.provider] || `https://ui-avatars.com/api/?name=${row.provider.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} 
+                        src={LOGOS[row.provider] || `https://ui-avatars.com/api/?name=${row.provider.replace(/ /g, '+')}&background=f8fafc&color=333&rounded=true&font-size=0.4`} 
                         alt={row.provider}
                         className="w-5 h-5 rounded-full"
                       />
@@ -127,7 +127,7 @@ export function AssetYield() {
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-[11px] opacity-70 tracking-wide">{row.type}</span>
+                    <span className="text-[11px] text-slate-600 tracking-wide">{row.type}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
                     <AnimatePresence mode="popLayout">
@@ -142,7 +142,7 @@ export function AssetYield() {
                     </AnimatePresence>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 bg-white/5 border border-white/10 px-2 py-0.5 rounded-sm">{row.category}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-sm">{row.category}</span>
                   </td>
                 </tr>
               );

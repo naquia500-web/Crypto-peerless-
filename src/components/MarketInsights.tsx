@@ -131,10 +131,10 @@ export function MarketInsights() {
             <GraduationCap className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
               Market Insights
             </h2>
-            <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono">
+            <p className="text-[11px] text-slate-500 uppercase tracking-widest font-mono">
               Learn & Earn Knowledge
             </p>
           </div>
@@ -145,7 +145,7 @@ export function MarketInsights() {
               {isFetchingVideos ? 'AI Analyzing...' : 'AI Live Tracker'}
             </span>
             {!isFetchingVideos && (
-              <span className="text-[10px] text-white/40 font-mono ml-2">
+              <span className="text-[10px] text-slate-900/40 font-mono ml-2">
                 Last updated {lastUpdated.toLocaleTimeString()}
               </span>
             )}
@@ -166,31 +166,31 @@ export function MarketInsights() {
                 className="group relative flex flex-col gap-3 cursor-pointer"
                 onClick={() => setActiveVideo(video.id)}
               >
-                <div className="relative aspect-video rounded-xl overflow-hidden bg-white/5 border border-white/10 group-hover:border-blue-500/30 transition-colors">
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-50 border border-slate-200 group-hover:border-blue-500/30 transition-colors">
                   <img 
                     src={video.thumbnail} 
                     alt={video.title} 
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity transform group-hover:scale-105 duration-500 mix-blend-lighten"
                   />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-transparent transition-colors">
+                  <div className="absolute inset-0 bg-slate-50 flex items-center justify-center group-hover:bg-transparent transition-colors">
                      <div className="flex flex-col items-center justify-center gap-2">
                        <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center backdrop-blur-md group-hover:bg-blue-500 transition-colors">
-                         <BookOpen className="w-4 h-4 text-white" />
+                         <BookOpen className="w-4 h-4 text-slate-900" />
                        </div>
                      </div>
                   </div>
-                  <div className="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold text-white border border-white/10">
+                  <div className="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold text-slate-900 border border-slate-200">
                     Image Update
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white/90 group-hover:text-blue-400 transition-colors leading-tight line-clamp-2">
+                  <h4 className="text-sm font-bold text-slate-700 group-hover:text-blue-400 transition-colors leading-tight line-clamp-2">
                     {video.title}
                   </h4>
-                  <p className="text-[10px] text-white/50 mt-1 line-clamp-2 group-hover:text-white/70 transition-colors">
+                  <p className="text-[10px] text-slate-500 mt-1 line-clamp-2 group-hover:text-slate-500 transition-colors">
                     {video.description}
                   </p>
-                  <div className="text-[11px] text-white/40 mt-1 font-mono">
+                  <div className="text-[11px] text-slate-900/40 mt-1 font-mono">
                     {video.views} views
                   </div>
                 </div>
@@ -207,13 +207,13 @@ export function MarketInsights() {
             <h3 className="text-sm font-bold uppercase tracking-widest text-blue-400 flex items-center gap-2">
               <HelpCircle className="w-4 h-4" /> Crypto Quiz
             </h3>
-            <span className="text-[10px] font-mono opacity-50 border border-white/10 px-2 py-1 rounded-full">
+            <span className="text-[10px] font-mono opacity-50 border border-slate-200 px-2 py-1 rounded-full">
               Q{currentQuestion + 1} / {QUIZ_QUESTIONS.length}
             </span>
           </div>
 
           <div className="flex-1 flex flex-col relative z-10">
-            <h4 className="text-lg font-bold text-white mb-6 leading-snug">
+            <h4 className="text-lg font-bold text-slate-900 mb-6 leading-snug">
               {QUIZ_QUESTIONS[currentQuestion].question}
             </h4>
 
@@ -231,7 +231,7 @@ export function MarketInsights() {
                     const isSelected = selectedAnswer === index;
                     const isCorrect = index === QUIZ_QUESTIONS[currentQuestion].correctAnswer;
                     
-                    let bgClass = "bg-[#0B0E11] hover:bg-white/5 border-white/10";
+                    let bgClass = "bg-white hover:bg-slate-50 border-slate-200";
                     let icon = null;
 
                     if (showResult) {
@@ -242,7 +242,7 @@ export function MarketInsights() {
                         bgClass = "bg-red-500/10 border-red-500/50 text-red-400";
                         icon = <XCircle className="w-4 h-4 text-red-500" />;
                       } else {
-                        bgClass = "bg-[#0B0E11] border-white/5 opacity-50";
+                        bgClass = "bg-white border-slate-100 opacity-50";
                       }
                     } else if (isSelected) {
                        bgClass = "bg-blue-500/20 border-blue-500/50 text-blue-400";
@@ -303,26 +303,26 @@ export function MarketInsights() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#0B0E11] border border-white/10 rounded-2xl overflow-hidden w-full max-w-4xl shadow-2xl relative flex flex-col"
+              className="bg-white border border-slate-200 rounded-2xl overflow-hidden w-full max-w-4xl shadow-2xl relative flex flex-col"
               onClick={e => e.stopPropagation()}
             >
-              <div className="aspect-video bg-black flex items-center justify-center relative w-full border-b border-white/10">
+              <div className="aspect-video bg-black flex items-center justify-center relative w-full border-b border-slate-200">
                   <img src={videos.find(v => v.id === activeVideo)?.thumbnail} className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="p-6 flex justify-between items-start">
                 <div className="max-w-2xl">
                   <h3 className="text-2xl font-bold">{videos.find(v => v.id === activeVideo)?.title}</h3>
-                  <p className="text-sm text-white/50 mt-2 font-mono">Market Insight • Live</p>
-                  <p className="text-white/80 mt-4 leading-relaxed">
+                  <p className="text-sm text-slate-500 mt-2 font-mono">Market Insight • Live</p>
+                  <p className="text-slate-600 mt-4 leading-relaxed">
                     {videos.find(v => v.id === activeVideo)?.description}
                   </p>
-                  <div className="mt-6 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 text-white/70 text-sm">
+                  <div className="mt-6 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 text-slate-500 text-sm">
                     <strong>Note:</strong> This is a condensed, text-and-image based update designed for quick consumption. Continuous macro trends and institutional inflows suggest high velocity in price discovery phases over the coming 48 hours. Keep stop losses tight.
                   </div>
                 </div>
                 <button 
                   onClick={() => setActiveVideo(null)}
-                  className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-sm font-bold transition-colors shrink-0"
+                  className="px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-lg text-sm font-bold transition-colors shrink-0"
                 >
                   Close
                 </button>

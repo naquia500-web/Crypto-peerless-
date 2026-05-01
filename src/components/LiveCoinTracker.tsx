@@ -129,7 +129,7 @@ export function LiveCoinTracker() {
     return (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-pulse">
         {[...Array(8)].map((_, i) => (
-          <div key={i} className="h-24 bg-white/5 rounded-lg border border-white/5"></div>
+          <div key={i} className="h-24 bg-slate-50 rounded-lg border border-slate-100"></div>
         ))}
       </div>
     );
@@ -142,21 +142,21 @@ export function LiveCoinTracker() {
         if (!data) return null;
         
         const isUp = data.priceChangePercent >= 0;
-        const colorClass = isUp ? 'text-[#00FF88]' : 'text-[#FF4D4D]';
-        const bgClass = isUp ? 'bg-[#00FF88]/5 border-[#00FF88]/20' : 'bg-[#FF4D4D]/5 border-[#FF4D4D]/20';
+        const colorClass = isUp ? 'text-blue-600' : 'text-red-500';
+        const bgClass = isUp ? 'bg-blue-500/5 border-blue-500/20' : 'bg-red-500/5 border-red-500/20';
         const baseSymbol = coin.symbol.replace('USDT', '');
         
         return (
-          <div key={coin.symbol} className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-white/5`}>
+          <div key={coin.symbol} className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-slate-50`}>
             <div className="flex justify-between items-start mb-2 relative z-10">
               <div className="flex items-center gap-2">
                 <img src={getCryptoLogo(baseSymbol) || `https://ui-avatars.com/api/?name=${coin.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} alt={baseSymbol} className="w-5 h-5 object-contain" />
                 <div className="flex flex-col">
-                  <span className="text-white font-bold text-sm tracking-wide">{coin.name}</span>
-                  <span className="text-white/40 text-[10px] font-mono tracking-widest">{baseSymbol}</span>
+                  <span className="text-slate-900 font-bold text-sm tracking-wide">{coin.name}</span>
+                  <span className="text-slate-900/40 text-[10px] font-mono tracking-widest">{baseSymbol}</span>
                 </div>
               </div>
-              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/40 ${colorClass}`}>
+              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-50 ${colorClass}`}>
                 {isUp ? '+' : ''}{data.priceChangePercent.toFixed(2)}%
               </span>
             </div>
@@ -168,20 +168,20 @@ export function LiveCoinTracker() {
                     key={data.price}
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`font-mono text-lg font-black tracking-tight ${data.status === 'up' ? 'text-[#00FF88]' : data.status === 'down' ? 'text-[#FF4D4D]' : 'text-white'}`}
+                    className={`font-mono text-lg font-black tracking-tight ${data.status === 'up' ? 'text-blue-600' : data.status === 'down' ? 'text-red-500' : 'text-slate-900'}`}
                   >
                     ${data.price.toLocaleString(undefined, { minimumFractionDigits: data.price < 2 ? 4 : 2, maximumFractionDigits: data.price < 2 ? 4 : 2 })}
                   </motion.span>
                 </AnimatePresence>
               </div>
               <div className="flex flex-col items-end">
-                 <span className="text-[9px] text-white/30 uppercase tracking-widest font-mono">24h Vol</span>
-                 <span className="text-[10px] text-white/50 font-mono">${(data.volume / 1000000).toFixed(1)}M</span>
+                 <span className="text-[9px] text-slate-900/30 uppercase tracking-widest font-mono">24h Vol</span>
+                 <span className="text-[10px] text-slate-500 font-mono">${(data.volume / 1000000).toFixed(1)}M</span>
               </div>
             </div>
             
             {/* Background decorative elements */}
-            <div className={`absolute -right-4 -bottom-4 w-16 h-16 rounded-full blur-xl opacity-20 ${isUp ? 'bg-[#00FF88]' : 'bg-[#FF4D4D]'} group-hover:opacity-40 transition-opacity`}></div>
+            <div className={`absolute -right-4 -bottom-4 w-16 h-16 rounded-full blur-xl opacity-20 ${isUp ? 'bg-blue-500' : 'bg-red-500'} group-hover:opacity-40 transition-opacity`}></div>
           </div>
         );
       })}

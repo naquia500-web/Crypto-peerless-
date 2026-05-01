@@ -49,20 +49,20 @@ ${isLiveMode ? '\n\n**CRITICAL LIVE ALERT**: Unusual option volume detected. Bra
           initial={{ scale: 0.95, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
-          className="bg-[#0B0E11] border border-blue-500/20 rounded-2xl w-full max-w-3xl h-[85vh] flex flex-col shadow-2xl relative overflow-hidden"
+          className="bg-white border border-blue-500/20 rounded-2xl w-full max-w-3xl h-[85vh] flex flex-col shadow-2xl relative overflow-hidden"
         >
           {/* Header */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full pointer-events-none"></div>
           
-          <div className="flex items-center justify-between p-4 border-b border-white/5 relative z-10 bg-white/[0.02]">
+          <div className="flex items-center justify-between p-4 border-b border-slate-100 relative z-10 bg-slate-50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/50 flex items-center justify-center relative">
                 <Bot className="w-5 h-5 text-blue-400" />
                 <span className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-green-500 border-2 border-[#0B0E11]"></span>
               </div>
               <div>
-                <h3 className="font-bold text-white tracking-wide">Trading Coach AI</h3>
-                <p className="text-[10px] uppercase font-mono text-white/50 tracking-widest flex items-center gap-1">
+                <h3 className="font-bold text-slate-900 tracking-wide">Trading Coach AI</h3>
+                <p className="text-[10px] uppercase font-mono text-slate-500 tracking-widest flex items-center gap-1">
                   <Cpu className="w-3 h-3" /> Real-time Guidance Module
                 </p>
               </div>
@@ -71,7 +71,7 @@ ${isLiveMode ? '\n\n**CRITICAL LIVE ALERT**: Unusual option volume detected. Bra
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setIsLiveMode(!isLiveMode)}
-                className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full flex items-center gap-2 border transition-all ${isLiveMode ? 'bg-red-500/10 text-red-500 border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.2)]' : 'bg-white/5 text-white/50 border-white/10 hover:bg-white/10'}`}
+                className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full flex items-center gap-2 border transition-all ${isLiveMode ? 'bg-red-500/10 text-red-500 border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.2)]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}
               >
                 {isLiveMode && <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>}
                 Live Trading Coach {isLiveMode ? 'ON' : 'OFF'}
@@ -79,7 +79,7 @@ ${isLiveMode ? '\n\n**CRITICAL LIVE ALERT**: Unusual option volume detected. Bra
 
               <button 
                 onClick={onClose}
-                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -98,12 +98,12 @@ ${isLiveMode ? '\n\n**CRITICAL LIVE ALERT**: Unusual option volume detected. Bra
                 <span className="text-sm font-mono animate-pulse">Generating Coach Report...</span>
               </div>
             ) : analysis ? (
-              <div className="bg-white/5 border border-white/10 text-white/90 rounded-2xl p-6 markdown-body prose prose-invert max-w-none shadow-xl">
-                 <div className="flex items-center gap-4 mb-4 pb-4 border-b border-white/10">
+              <div className="bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl p-6 markdown-body prose prose-invert max-w-none shadow-xl">
+                 <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-200">
                    <Target className="w-5 h-5 text-green-400" />
                    <ShieldAlert className="w-5 h-5 text-orange-400" />
                    <LineChart className="w-5 h-5 text-purple-400" />
-                   <span className="ml-2 text-xs font-bold text-white/50 uppercase tracking-widest font-mono">Strategy Dashboard Generated</span>
+                   <span className="ml-2 text-xs font-bold text-slate-500 uppercase tracking-widest font-mono">Strategy Dashboard Generated</span>
                  </div>
                  <Markdown>{analysis}</Markdown>
               </div>
@@ -111,8 +111,8 @@ ${isLiveMode ? '\n\n**CRITICAL LIVE ALERT**: Unusual option volume detected. Bra
           </div>
 
           {/* Bottom Bar */}
-          <div className="p-4 border-t border-white/5 bg-white/[0.01] relative z-10 flex flex-col gap-3">
-            <div className="flex justify-between items-center px-2 text-[10px] font-mono text-white/40">
+          <div className="p-4 border-t border-slate-100 bg-slate-50 relative z-10 flex flex-col gap-3">
+            <div className="flex justify-between items-center px-2 text-[10px] font-mono text-slate-900/40">
               <span className="flex items-center gap-1.5"><ShieldAlert className="w-3 h-3 text-orange-400" /> Risk Warning: Trading involves significant risk.</span>
               <span className="flex items-center gap-1.5"><Bot className="w-3 h-3" /> AI analysis is educational, not financial advice.</span>
             </div>

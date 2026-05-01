@@ -84,13 +84,13 @@ export function GlobalPrices({ currentBtcPrice = 76683.50 }: GlobalPricesProps) 
       
       {/* Global Prices block */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white border-b border-white/10 pb-2 flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse"></div>
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 border-b border-slate-200 pb-2 flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
           Global Bitcoin Prices <span className="lowercase font-mono text-[8px] animate-pulse opacity-50">(live tracking)</span>
         </h3>
         <div className="flex flex-wrap gap-2">
           {pairs.map((pair: any) => (
-            <div key={pair.target} className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/20 border border-white/5 rounded transition-colors group cursor-pointer">
+            <div key={pair.target} className="flex items-center gap-2 px-3 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded transition-colors group cursor-pointer">
               <img 
                 src={`https://flagcdn.com/w20/${pair.target === 'EUR' ? 'eu' : pair.target === 'GBP' ? 'gb' : pair.target === 'CNY' ? 'cn' : pair.target === 'CAD' ? 'ca' : pair.target === 'AUD' ? 'au' : pair.target === 'JPY' ? 'jp' : pair.target === 'KRW' ? 'kr' : pair.target === 'INR' ? 'in' : pair.target === 'BRL' ? 'br' : 'za'}.png`} 
                 alt={`${pair.target} flag`}
@@ -103,7 +103,7 @@ export function GlobalPrices({ currentBtcPrice = 76683.50 }: GlobalPricesProps) 
                   key={pair.flashId || pair.target}
                   initial={{ opacity: 0.5, y: -2 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-[11px] font-mono font-bold text-[#00FF88] ml-1 bg-[#00FF88]/10 px-1 rounded"
+                  className="text-[11px] font-mono font-bold text-blue-600 ml-1 bg-blue-500/10 px-1 rounded"
                 >
                   {pair.symbol}{(currentBtcPrice * pair.currentRate).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </motion.span>
@@ -115,30 +115,30 @@ export function GlobalPrices({ currentBtcPrice = 76683.50 }: GlobalPricesProps) 
 
       {/* Trending Block */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white border-b border-white/10 pb-2 flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse"></div>
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 border-b border-slate-200 pb-2 flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
           Trending <span className="lowercase font-mono text-[8px] animate-pulse opacity-50">(live tracking)</span>
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {liveTrending.map((coin: any) => (
-            <div key={coin.name} className="flex flex-col gap-2 p-4 bg-[#0B0E11] shadow-lg border border-white/10 rounded-xl hover:-translate-y-1 transition-transform cursor-pointer">
+            <div key={coin.name} className="flex flex-col gap-2 p-4 bg-white shadow-lg border border-slate-200 rounded-xl hover:-translate-y-1 transition-transform cursor-pointer">
               <img 
                 src={getCryptoLogo(coin.symbol) || `https://ui-avatars.com/api/?name=${coin.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} 
                 alt={coin.name}
-                className="w-6 h-6 rounded-full mb-2 bg-white/10"
+                className="w-6 h-6 rounded-full mb-2 bg-slate-100"
               />
-              <span className="font-bold text-sm text-white">{coin.name}</span>
+              <span className="font-bold text-sm text-slate-900">{coin.name}</span>
               <AnimatePresence mode="popLayout">
                 <motion.span 
                   key={coin.flashId || coin.price}
                   initial={{ opacity: 0.5, y: -2 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`font-mono text-xs font-bold px-1 py-0.5 rounded w-fit ${coin.isUp ? 'text-[#00FF88] bg-[#00FF88]/10' : 'text-[#FF4D4D] bg-[#FF4D4D]/10'}`}
+                  className={`font-mono text-xs font-bold px-1 py-0.5 rounded w-fit ${coin.isUp ? 'text-blue-600 bg-blue-500/10' : 'text-red-500 bg-red-500/10'}`}
                 >
                   {coin.price}
                 </motion.span>
               </AnimatePresence>
-              <span className={`font-mono text-[11px] font-bold ${coin.isUp ? 'text-[#00FF88]' : 'text-[#FF4D4D]'}`}>
+              <span className={`font-mono text-[11px] font-bold ${coin.isUp ? 'text-blue-600' : 'text-red-500'}`}>
                 {coin.change}
               </span>
             </div>

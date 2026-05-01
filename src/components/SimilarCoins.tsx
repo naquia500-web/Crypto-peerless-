@@ -135,18 +135,18 @@ export function SimilarCoins() {
 
   return (
     <section className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-white/10">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#00FF88] animate-pulse"></div>
-          Similar Coins Pattern Match <span className="text-[10px] text-white/50 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
+      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+          Similar Coins Pattern Match <span className="text-[10px] text-slate-500 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
         </h3>
         <div className="flex gap-2">
           {['24h', '7d', '30d'].map(tf => (
-            <button key={tf} className="text-[9px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white/20 px-2 py-1 flex items-center justify-center rounded transition-colors text-white/50 hover:text-white">
+            <button key={tf} className="text-[9px] font-bold uppercase tracking-widest bg-slate-50 hover:bg-slate-100 px-2 py-1 flex items-center justify-center rounded transition-colors text-slate-500 hover:text-slate-900">
               {tf}
             </button>
           ))}
-          <button className="text-[9px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white/20 px-3 py-1 rounded transition-colors ml-2">See More</button>
+          <button className="text-[9px] font-bold uppercase tracking-widest bg-slate-50 hover:bg-slate-100 px-3 py-1 rounded transition-colors ml-2">See More</button>
         </div>
       </div>
 
@@ -154,14 +154,14 @@ export function SimilarCoins() {
         {coins.map((coin) => {
           const Icon = coin.icon;
           return (
-            <div key={coin.id} className="bg-[#0B0E11] shadow-lg border border-white/10 p-4 rounded-xl flex flex-col relative group hover:bg-white/10 transition-colors cursor-pointer">
+            <div key={coin.id} className="bg-white shadow-lg border border-slate-200 p-4 rounded-xl flex flex-col relative group hover:bg-slate-100 transition-colors cursor-pointer">
               
               <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white/50">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">
                    <Icon className="w-4 h-4" />
                   {coin.match}
                 </div>
-                <div className="text-[10px] font-mono opacity-50 bg-white/5 px-1.5 py-0.5 rounded border border-white/5">
+                <div className="text-[10px] font-mono opacity-50 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">
                   {coin.score}
                 </div>
               </div>
@@ -197,10 +197,10 @@ export function SimilarCoins() {
                   <img 
                     src={getCryptoLogo(coin.symbol) || `https://ui-avatars.com/api/?name=${coin.symbol.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} 
                     alt={coin.symbol}
-                    className="w-5 h-5 rounded-full bg-white/5"
+                    className="w-5 h-5 rounded-full bg-slate-50"
                   />
                   <span className="font-bold text-sm">{coin.name}</span>
-                  <span className="text-[10px] uppercase font-bold opacity-50 bg-white/5 px-1 rounded">{coin.symbol}</span>
+                  <span className="text-[10px] uppercase font-bold opacity-50 bg-slate-50 px-1 rounded">{coin.symbol}</span>
                 </div>
                 <div className="flex items-center gap-2 font-mono">
                   <span className="text-sm">{typeof coin.price === 'number' ? `$${coin.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}` : coin.price}</span>

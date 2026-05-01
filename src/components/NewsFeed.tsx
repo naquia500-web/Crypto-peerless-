@@ -108,14 +108,14 @@ export function NewsFeed() {
   const listArticles = news.slice(1);
 
   return (
-    <section className="flex flex-col h-full bg-[#0B0E11] rounded-xl p-4 shadow-[0_0_40px_rgba(45,212,191,0.03)] border border-teal-500/10">
+    <section className="flex flex-col h-full bg-white rounded-xl p-4 shadow-[0_0_40px_rgba(45,212,191,0.03)] border border-teal-500/10">
       {/* Banner / Header */}
       <div className="flex justify-between items-center border-b border-teal-500/20 pb-4 mb-6">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center border border-teal-500/40 shadow-[0_0_15px_rgba(45,212,191,0.3)]">
              <TrendingUp className="w-4 h-4 text-teal-400" />
           </div>
-          <h3 className="text-[16px] font-black uppercase tracking-[0.2em] text-white drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]">
+          <h3 className="text-[16px] font-black uppercase tracking-[0.2em] text-slate-900 drop-shadow-[0_0_10px_rgba(45,212,191,0.5)]">
             "NEXUS AI" LIVE MARKET INTEL
           </h3>
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 shadow-[0_0_10px_rgba(45,212,191,0.2)] ml-2">
@@ -146,12 +146,12 @@ export function NewsFeed() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 onClick={() => setSelectedArticle(featuredArticle)}
-                className="lg:col-span-7 group flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden hover:border-teal-500/30 hover:shadow-[0_0_30px_rgba(45,212,191,0.1)] transition-all duration-500 cursor-pointer"
+                className="lg:col-span-7 group flex flex-col bg-slate-50 border border-slate-100 rounded-2xl overflow-hidden hover:border-teal-500/30 hover:shadow-[0_0_30px_rgba(45,212,191,0.1)] transition-all duration-500 cursor-pointer"
               >
-                <div className="w-full aspect-video relative overflow-hidden bg-black/50">
+                <div className="w-full aspect-video relative overflow-hidden bg-white">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0E11] via-black/20 to-transparent z-10 hover:opacity-80 transition-opacity duration-500"></div>
                   {featuredArticle.symbol && getCryptoLogo(featuredArticle.symbol) && (
-                    <div className="absolute top-4 left-4 z-20 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center overflow-hidden">
+                    <div className="absolute top-4 left-4 z-20 w-8 h-8 rounded-full bg-white backdrop-blur-md border border-slate-200 flex items-center justify-center overflow-hidden">
                       <img src={getCryptoLogo(featuredArticle.symbol)!} alt={featuredArticle.symbol} className="w-5 h-5 object-contain" />
                     </div>
                   )}
@@ -161,7 +161,7 @@ export function NewsFeed() {
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md border border-teal-500/20 px-3 py-1.5 rounded-full">
+                  <div className="absolute top-4 right-4 z-20 flex items-center gap-2 bg-white backdrop-blur-md border border-teal-500/20 px-3 py-1.5 rounded-full">
                     <Sparkles className="w-3 h-3 text-teal-400" />
                     <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">
                       AI Featured Image
@@ -170,26 +170,26 @@ export function NewsFeed() {
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
-                  <h4 className="text-2xl md:text-3xl font-bold leading-tight mb-3 text-white group-hover:text-teal-300 transition-colors duration-300 tracking-tight">
+                  <h4 className="text-2xl md:text-3xl font-bold leading-tight mb-3 text-slate-900 group-hover:text-teal-300 transition-colors duration-300 tracking-tight">
                     {featuredArticle.title}
                   </h4>
                   
-                  <p className="text-[15px] md:text-[16px] text-white/70 leading-relaxed font-sans mb-4 flex-1">
+                  <p className="text-[15px] md:text-[16px] text-slate-500 leading-relaxed font-sans mb-4 flex-1">
                     {featuredArticle.description}
                   </p>
                   
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5 opacity-80">
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 opacity-80">
                     <div className="flex items-center gap-3">
                       <span className="text-[11px] font-black text-teal-500 uppercase tracking-widest bg-teal-500/10 px-2 py-1 rounded">
                         {featuredArticle.source}
                       </span>
-                      <div className="flex items-center gap-1 text-[11px] font-mono text-white/50 uppercase tracking-wider">
+                      <div className="flex items-center gap-1 text-[11px] font-mono text-slate-500 uppercase tracking-wider">
                         <Clock className="w-3 h-3" />
                         {formatTimeAgo(featuredArticle.published_on)}
                       </div>
                     </div>
                     {featuredArticle.changePercent !== undefined && (
-                       <div className={`flex items-center gap-1.5 text-[12px] font-bold ${featuredArticle.changePercent >= 0 ? 'text-[#00FF88]' : 'text-[#FF4D4D]'}`}>
+                       <div className={`flex items-center gap-1.5 text-[12px] font-bold ${featuredArticle.changePercent >= 0 ? 'text-blue-600' : 'text-red-500'}`}>
                          {featuredArticle.changePercent >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                          <span>{featuredArticle.changePercent >= 0 ? '+' : ''}{featuredArticle.changePercent}%</span>
                        </div>
@@ -207,19 +207,19 @@ export function NewsFeed() {
                     transition={{ delay: 0.1 + (index * 0.1), duration: 0.4, ease: "easeOut" }}
                     key={article.id}
                     onClick={() => setSelectedArticle(article)}
-                    className="group bg-white/[0.02] border border-white/5 rounded-xl p-4 hover:border-teal-500/30 hover:bg-teal-500/[0.02] transition-colors cursor-pointer flex gap-4 items-center"
+                    className="group bg-slate-50 border border-slate-100 rounded-xl p-4 hover:border-teal-500/30 hover:bg-teal-500/[0.02] transition-colors cursor-pointer flex gap-4 items-center"
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
                         {article.symbol && getCryptoLogo(article.symbol) && (
                           <img src={getCryptoLogo(article.symbol)!} alt={article.symbol} className="w-4 h-4 rounded-full object-contain" />
                         )}
-                        <h5 className="text-[15px] font-bold leading-snug text-white group-hover:text-teal-300 transition-colors line-clamp-2">
+                        <h5 className="text-[15px] font-bold leading-snug text-slate-900 group-hover:text-teal-300 transition-colors line-clamp-2">
                           {article.title}
                         </h5>
                       </div>
                       
-                      <p className="text-[13px] text-white/60 leading-relaxed line-clamp-2 mb-3">
+                      <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-2 mb-3">
                         {article.description}
                       </p>
                       
@@ -228,15 +228,15 @@ export function NewsFeed() {
                           <span className="text-[10px] font-bold text-teal-500 uppercase tracking-widest">
                             {article.source}
                           </span>
-                          <span className="w-1 h-1 rounded-full bg-white/20"></span>
-                          <div className="flex items-center gap-1 text-[10px] font-mono text-white/50">
+                          <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                          <div className="flex items-center gap-1 text-[10px] font-mono text-slate-500">
                             <Clock className="w-3 h-3" />
                             {formatTimeAgo(article.published_on)}
                           </div>
                         </div>
                         
                         {article.changePercent !== undefined && (
-                          <div className={`flex items-center gap-1 text-[10px] font-bold ${article.changePercent >= 0 ? 'text-[#00FF88]' : 'text-[#FF4D4D]'}`}>
+                          <div className={`flex items-center gap-1 text-[10px] font-bold ${article.changePercent >= 0 ? 'text-blue-600' : 'text-red-500'}`}>
                             {article.changePercent >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                             <span>{article.changePercent >= 0 ? '+' : ''}{article.changePercent}%</span>
                           </div>
@@ -245,7 +245,7 @@ export function NewsFeed() {
                     </div>
 
                     {/* Company Thumbnail Image */}
-                    <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden border border-white/10 relative bg-black/40 flex items-center justify-center p-2">
+                    <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden border border-slate-200 relative bg-slate-50 flex items-center justify-center p-2">
                       <div className="absolute inset-0 bg-teal-500/5 group-hover:bg-transparent transition-colors z-10"></div>
                       <img 
                         src={article.imageUrl || 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop'} 

@@ -10,20 +10,20 @@ export function TreasuryHoldings() {
 
   return (
     <section className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-white/10">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white">Bitcoin Treasury Holdings</h3>
+      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-800">Bitcoin Treasury Holdings</h3>
         <button 
           onClick={() => window.open('https://bitcointreasuries.net', '_blank')}
-          className="text-[9px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white/20 px-3 py-1 rounded transition-colors"
+          className="text-[9px] font-bold uppercase tracking-widest bg-slate-100 text-slate-500 hover:text-slate-700 hover:bg-slate-200 px-3 py-1 rounded transition-colors"
         >
           View Complete List
         </button>
       </div>
 
-      <div className="bg-[#0B0E11] shadow-lg border border-white/10 rounded-xl overflow-x-auto border border-white/5">
+      <div className="bg-white shadow-sm border border-slate-200 rounded-xl overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-[700px]">
           <thead>
-            <tr className="border-b border-white/10 text-[9px] uppercase tracking-widest opacity-50 bg-white/5">
+            <tr className="border-b border-slate-200 text-[9px] uppercase tracking-widest text-slate-500 bg-slate-50">
               <th className="px-4 py-3 font-bold w-12 text-center">#</th>
               <th className="px-4 py-3 font-bold">Company Name</th>
               <th className="px-4 py-3 font-bold">Ticker</th>
@@ -38,38 +38,38 @@ export function TreasuryHoldings() {
               <tr 
                 key={idx} 
                 onClick={() => window.open(`https://finance.yahoo.com/quote/${row.ticker}`, '_blank')}
-                className="border-b border-white/5 hover:bg-white/10 transition-colors group cursor-pointer"
+                className="border-b border-slate-100 hover:bg-slate-50 transition-colors group cursor-pointer"
               >
                 <td className="px-4 py-4 text-center">
-                  <span className="text-[10px] font-mono opacity-50">{row.rank}</span>
+                  <span className="text-[10px] font-mono text-slate-400">{row.rank}</span>
                 </td>
                 <td className="px-4 py-4">
-                  <div className="flex items-center gap-2 group-hover:text-blue-400 transition-colors">
+                  <div className="flex items-center gap-2 group-hover:text-blue-600 transition-colors text-slate-700">
                     <img 
                       src={row.logo} 
                       alt={row.name} 
-                      className="w-5 h-5 rounded-full bg-white/10"
+                      className="w-5 h-5 rounded-full bg-slate-100"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${row.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`;
+                        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${row.name.replace(/ /g, '+')}&background=f8fafc&color=333&rounded=true&font-size=0.4`;
                       }}
                     />
                     <span className="text-xs font-bold">{row.name}</span>
                   </div>
                 </td>
                 <td className="px-4 py-4">
-                  <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 bg-white/5 px-2 py-0.5 rounded">{row.ticker}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{row.ticker}</span>
                 </td>
                 <td className="px-4 py-4 text-center">
-                  <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">{row.country}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{row.country}</span>
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <span className="font-mono text-xs font-bold text-white">{row.holdings}</span>
+                  <span className="font-mono text-xs font-bold text-slate-800">{row.holdings}</span>
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <span className="font-mono text-xs opacity-80">{row.value}</span>
+                  <span className="font-mono text-xs text-slate-600">{row.value}</span>
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <span className="font-mono text-xs opacity-50">{row.cost}</span>
+                  <span className="font-mono text-xs text-slate-400">{row.cost}</span>
                 </td>
               </tr>
             ))}

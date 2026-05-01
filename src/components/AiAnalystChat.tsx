@@ -41,14 +41,14 @@ Institutional inflows into major ETFs are stabilizing the baseline. On-chain met
   }, [currentBtcPrice]);
 
   return (
-    <div id="ai-analyst" className="bg-[#0B0E11] shadow-[0_0_30px_rgba(45,212,191,0.05)] border border-teal-500/20 rounded-xl flex flex-col h-[600px] overflow-hidden relative">
+    <div id="ai-analyst" className="bg-white shadow-[0_0_30px_rgba(45,212,191,0.05)] border border-teal-500/20 rounded-xl flex flex-col h-[600px] overflow-hidden relative">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-teal-500/50 to-transparent"></div>
       <div className="flex items-center gap-3 p-4 border-b border-teal-500/10 bg-teal-500/5">
         <div className="w-8 h-8 rounded-full bg-teal-500/20 text-teal-400 border border-teal-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(45,212,191,0.3)]">
           <TrendingUp className="w-4 h-4" />
         </div>
         <div>
-          <h3 className="text-sm font-black uppercase tracking-widest text-white shadow-teal-500/50 drop-shadow-md">AI Analyst</h3>
+          <h3 className="text-sm font-black uppercase tracking-widest text-slate-900 shadow-teal-500/50 drop-shadow-md">AI Analyst</h3>
           <span className="text-[10px] text-teal-400 uppercase tracking-widest font-bold">Live Data Connected</span>
         </div>
       </div>
@@ -64,7 +64,7 @@ Institutional inflows into major ETFs are stabilizing the baseline. On-chain met
              <span className="text-sm font-mono animate-pulse">Running Deep Market Analysis...</span>
           </div>
         ) : (
-          <div className="prose prose-invert prose-sm max-w-none markdown-body text-white/90">
+          <div className="prose prose-invert prose-sm max-w-none markdown-body text-slate-700">
              <Markdown>{analysis}</Markdown>
           </div>
         )}

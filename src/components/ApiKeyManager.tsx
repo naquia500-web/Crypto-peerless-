@@ -26,23 +26,23 @@ export function ApiKeyManager() {
   };
 
   return (
-    <div className="flex items-center gap-2 bg-[#0B0E11] border border-[#00FF88]/30 shadow-[0_0_15px_rgba(0,255,136,0.1)] px-3 py-2 rounded-xl transition-all focus-within:border-[#00FF88]/60 focus-within:shadow-[0_0_20px_rgba(0,255,136,0.2)]">
-      <div className="flex items-center justify-center p-1.5 bg-[#00FF88]/10 rounded-lg">
-        <Key className="w-4 h-4 text-[#00FF88]" />
+    <div className="flex items-center gap-2 bg-white border border-blue-500/30 shadow-[0_0_15px_rgba(0,255,136,0.1)] px-3 py-2 rounded-xl transition-all focus-within:border-blue-500/60 focus-within:shadow-[0_0_20px_rgba(0,255,136,0.2)]">
+      <div className="flex items-center justify-center p-1.5 bg-blue-500/10 rounded-lg">
+        <Key className="w-4 h-4 text-blue-600" />
       </div>
       <input
         type="password"
         value={apiKey}
         onChange={(e) => setApiKey(e.target.value)}
         placeholder="Paste your API Key (Gemini/OpenRouter)..."
-        className="bg-transparent border-none outline-none text-xs text-white focus:ring-0 placeholder:text-white/30 w-56 sm:w-72 font-mono"
+        className="bg-transparent border-none outline-none text-xs text-slate-900 focus:ring-0 placeholder:text-slate-900/30 w-56 sm:w-72 font-mono"
       />
       <button
         onClick={handleSave}
-        className="p-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg text-white/70 hover:text-white transition-colors ml-1"
+        className="p-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-lg text-slate-500 hover:text-slate-900 transition-colors ml-1"
         title="Save Key"
       >
-        {isSaved ? <Check className="w-3.5 h-3.5 text-[#00FF88]" /> : <Save className="w-3.5 h-3.5" />}
+        {isSaved ? <Check className="w-3.5 h-3.5 text-blue-600" /> : <Save className="w-3.5 h-3.5" />}
       </button>
     </div>
   );

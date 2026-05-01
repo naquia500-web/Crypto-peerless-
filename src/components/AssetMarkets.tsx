@@ -22,7 +22,7 @@ export function AssetMarkets() {
   ];
 
   const [liveData, setLiveData] = useState<Record<number, { price: number, status: 'up' | 'down' | 'neutral' }>>({});
-  const [activeTab, setActiveTab] = useState('Spot');
+  const [activeTab, setActiveTab] = useState('Futures');
 
   useEffect(() => {
     // Populate initial data
@@ -75,24 +75,24 @@ export function AssetMarkets() {
 
   return (
     <section className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-white/10">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#00FF88] animate-pulse"></div>
-          Bitcoin Markets <span className="text-[10px] text-white/50 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
+      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-800 flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+          Bitcoin Markets <span className="text-[10px] text-slate-500 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
         </h3>
         <div className="flex gap-2">
           {['Spot', 'Perpetual', 'Futures'].map((tab) => (
-            <button key={tab} onClick={() => setActiveTab(tab)} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${activeTab === tab ? 'bg-white/10 text-white' : 'bg-white/5 text-white/50 hover:bg-white/20 hover:text-white'}`}>
+            <button key={tab} onClick={() => setActiveTab(tab)} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${activeTab === tab ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'}`}>
               {tab}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-[#0B0E11] shadow-lg border border-white/10 rounded-xl overflow-x-auto border border-white/5">
+      <div className="bg-white shadow-sm border border-slate-200 rounded-xl overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-[800px]">
           <thead>
-            <tr className="border-b border-white/10 text-[9px] uppercase tracking-widest opacity-50 bg-white/5">
+            <tr className="border-b border-slate-200 text-[9px] uppercase tracking-widest text-slate-500 bg-slate-50">
               <th className="px-4 py-3 font-bold w-12 text-center">#</th>
               <th className="px-4 py-3 font-bold">Exchange</th>
               <th className="px-4 py-3 font-bold">Pairs</th>
@@ -106,21 +106,21 @@ export function AssetMarkets() {
           <tbody>
             {INITIAL_MARKETS.map((row) => {
               const current = liveData[row.rank] || { price: row.defaultPrice, status: 'neutral' };
-              const colorClass = current.status === 'up' ? 'text-[#00FF88] bg-[#00FF88]/10' : current.status === 'down' ? 'text-[#FF4D4D] bg-[#FF4D4D]/10' : 'text-white bg-white/5';
+              const colorClass = current.status === 'up' ? 'text-green-600 bg-green-50' : current.status === 'down' ? 'text-red-600 bg-red-50' : 'text-slate-800 bg-slate-50';
               
               return (
                 <tr 
                   key={row.rank} 
                   onClick={() => window.open(row.url, '_blank')}
-                  className="border-b border-white/5 hover:bg-white/10 transition-colors group cursor-pointer"
+                  className="border-b border-slate-100 hover:bg-slate-50 transition-colors group cursor-pointer"
                 >
                   <td className="px-4 py-4 text-center">
-                    <span className="text-[10px] font-mono opacity-50">{row.rank}</span>
+                    <span className="text-[10px] font-mono text-slate-400">{row.rank}</span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-xs font-bold flex items-center gap-2 group-hover:text-[#00FF88] transition-colors">
+                    <span className="text-xs font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors text-slate-700">
                       <img 
-                        src={LOGOS[row.exchange] || `https://ui-avatars.com/api/?name=${row.exchange.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} 
+                        src={LOGOS[row.exchange] || `https://ui-avatars.com/api/?name=${row.exchange.replace(/ /g, '+')}&background=f8fafc&color=333&rounded=true&font-size=0.4`} 
                         alt={row.exchange}
                         className="w-5 h-5 rounded-full"
                       />
@@ -128,7 +128,7 @@ export function AssetMarkets() {
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-[11px] font-bold uppercase tracking-widest opacity-80">{row.pair}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{row.pair}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
                     <AnimatePresence mode="popLayout">
@@ -143,19 +143,19 @@ export function AssetMarkets() {
                     </AnimatePresence>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="font-mono text-xs opacity-70">{row.depth}</span>
+                    <span className="font-mono text-xs text-slate-500">{row.depth}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="font-mono text-xs opacity-90">{row.volume}</span>
+                    <span className="font-mono text-xs text-slate-700">{row.volume}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="font-mono text-xs opacity-70">{row.volPct}</span>
+                    <span className="font-mono text-xs text-slate-500">{row.volPct}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <span className="font-mono text-xs">{row.liquidity}</span>
-                      <div className="w-12 h-1.5 bg-white/10 rounded-full overflow-hidden flex">
-                        <div className="h-full bg-[#0B0E11]/60" style={{ width: `${row.liqPct}%` }}></div>
+                      <span className="font-mono text-xs text-slate-700">{row.liquidity}</span>
+                      <div className="w-12 h-1.5 bg-slate-200 rounded-full overflow-hidden flex">
+                        <div className="h-full bg-blue-500" style={{ width: `${row.liqPct}%` }}></div>
                       </div>
                     </div>
                   </td>

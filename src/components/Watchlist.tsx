@@ -20,9 +20,9 @@ export function Watchlist() {
       </div>
       <div className="flex flex-col gap-5">
         {MOVERS.map((asset, i) => (
-          <div key={asset.symbol} className="flex justify-between items-center border-b border-white/5 pb-3 cursor-pointer hover:bg-white/10 transition-colors px-2 -mx-2 rounded">
+          <div key={asset.symbol} className="flex justify-between items-center border-b border-slate-100 pb-3 cursor-pointer hover:bg-slate-100 transition-colors px-2 -mx-2 rounded">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-black/40 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+              <div className="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
                 <img 
                   src={`https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://${asset.url}&size=64`}
                   alt={asset.name}

@@ -95,9 +95,9 @@ export function MarketTracker() {
 
   return (
     <section className="flex flex-col gap-4">
-      <div className="flex justify-between items-end border-b border-white/10 pb-2">
+      <div className="flex justify-between items-end border-b border-slate-200 pb-2">
         <div className="flex items-center gap-3">
-          <h3 className="text-[11px] font-black uppercase tracking-widest text-white">Market Tracker (Live Crypto Market)</h3>
+          <h3 className="text-[11px] font-black uppercase tracking-widest text-slate-900">Bitcoin Whale Live Tracker</h3>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20">
             <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></div>
             <span className="text-[9px] font-bold text-orange-500 uppercase tracking-wider">Live</span>
@@ -105,7 +105,7 @@ export function MarketTracker() {
         </div>
       </div>
       
-      <div className="bg-[#0B0E11] shadow-lg border border-white/10 rounded-xl overflow-hidden relative min-h-[300px]">
+      <div className="bg-white shadow-lg border border-slate-200 rounded-xl overflow-hidden relative min-h-[300px]">
         {loading ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center opacity-50 z-10">
             <Activity className="w-8 h-8 animate-spin mb-4 text-orange-500" />
@@ -116,7 +116,7 @@ export function MarketTracker() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
-              <tr className="border-b border-white/10 text-[10px] uppercase tracking-widest opacity-50 bg-white/5">
+              <tr className="border-b border-slate-200 text-[10px] uppercase tracking-widest opacity-50 bg-slate-50">
                 <th className="px-4 py-3 font-bold">Symbol</th>
                 <th className="px-4 py-3 font-bold">Name</th>
                 <th className="px-4 py-3 font-bold text-right">Last Price</th>
@@ -136,7 +136,7 @@ export function MarketTracker() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: idx * 0.05 }}
                     key={coin.id} 
-                    className="border-b border-white/5 hover:bg-white/10 transition-colors group cursor-pointer"
+                    className="border-b border-slate-100 hover:bg-slate-100 transition-colors group cursor-pointer"
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
@@ -145,7 +145,7 @@ export function MarketTracker() {
                           alt={coin.symbol}
                           className="w-5 h-5 rounded-full object-contain"
                         />
-                        <span className="text-xs font-bold uppercase tracking-wide text-white">{coin.symbol}</span>
+                        <span className="text-xs font-bold uppercase tracking-wide text-slate-900">{coin.symbol}</span>
                       </div>
                     </td>
                     <td className="px-4 py-3">
@@ -153,11 +153,11 @@ export function MarketTracker() {
                     </td>
                     <td className="px-4 py-3 text-right">
                       {coinData ? (
-                        <span className="font-mono font-bold text-[13px] text-white tracking-tight">
+                        <span className="font-mono font-bold text-[13px] text-slate-900 tracking-tight">
                           ${formatCurrency(coinData.c)}
                         </span>
                       ) : (
-                        <span className="font-mono text-white/40 text-xs">...</span>
+                        <span className="font-mono text-slate-900/40 text-xs">...</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-right">
@@ -166,16 +166,16 @@ export function MarketTracker() {
                           {isPositive ? '+' : ''}{formatCurrency(coinData.p)}
                         </span>
                       ) : (
-                        <span className="font-mono text-white/40 text-xs">...</span>
+                        <span className="font-mono text-slate-900/40 text-xs">...</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-right">
                       {coinData ? (
-                        <span className={`font-mono font-bold text-[12px] tracking-tight px-1.5 py-0.5 rounded bg-white/5 ${isPositive ? 'accent-green' : 'accent-red'}`}>
+                        <span className={`font-mono font-bold text-[12px] tracking-tight px-1.5 py-0.5 rounded bg-slate-50 ${isPositive ? 'accent-green' : 'accent-red'}`}>
                           {isPositive ? '+' : ''}{parseFloat(coinData.P).toFixed(2)}%
                         </span>
                       ) : (
-                        <span className="font-mono text-white/40 text-xs">...</span>
+                        <span className="font-mono text-slate-900/40 text-xs">...</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-right">
@@ -184,7 +184,7 @@ export function MarketTracker() {
                           ${formatVolume(coinData.q)}
                         </span>
                       ) : (
-                        <span className="font-mono text-white/40 text-xs">...</span>
+                        <span className="font-mono text-slate-900/40 text-xs">...</span>
                       )}
                     </td>
                   </motion.tr>

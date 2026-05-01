@@ -54,8 +54,8 @@ export function UserReports() {
   };
 
   return (
-    <div className="bg-[#0B0E11] shadow-lg border border-white/10 p-6 rounded-xl flex flex-col h-full">
-      <div className="flex flex-col gap-1 mb-4 border-b border-white/10 pb-4">
+    <div className="bg-white shadow-lg border border-slate-200 p-6 rounded-xl flex flex-col h-full">
+      <div className="flex flex-col gap-1 mb-4 border-b border-slate-200 pb-4">
         <span className="text-[10px] font-bold opacity-40 uppercase tracking-widest">Quick Submit</span>
         <div className="flex justify-between items-center">
           <h4 className="text-sm font-bold uppercase">Field Report</h4>
@@ -81,7 +81,7 @@ export function UserReports() {
         {uploads.length === 0 ? (
           <div 
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-white/10 rounded-lg p-8 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white/10 transition-colors h-full"
+            className="border-2 border-dashed border-slate-200 rounded-lg p-8 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-100 transition-colors h-full"
           >
             <UploadCloud className="w-6 h-6 opacity-30" />
             <span className="text-[10px] opacity-40 uppercase font-bold text-center mt-2">Upload Intel<br/>(Image or Text)</span>
@@ -94,7 +94,7 @@ export function UserReports() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-white/5 border border-white/10 rounded-lg p-4 group relative"
+                className="bg-slate-50 border border-slate-200 rounded-lg p-4 group relative"
               >
                 <div className="flex items-start justify-between mb-2">
                   <span className="text-[10px] font-bold uppercase opacity-50 block truncate max-w-[70%]">User Report: {item.name}</span>
@@ -102,16 +102,16 @@ export function UserReports() {
                 </div>
                 <div className="mt-2">
                   {item.type === 'image' ? (
-                    <img src={item.content} alt={item.name} className="max-h-32 rounded border border-white/10 object-cover w-full" />
+                    <img src={item.content} alt={item.name} className="max-h-32 rounded border border-slate-200 object-cover w-full" />
                   ) : (
-                    <p className="text-xs leading-relaxed italic text-white/70">
+                    <p className="text-xs leading-relaxed italic text-slate-500">
                       "{item.content.substring(0, 150)}{item.content.length > 150 ? '...' : ''}"
                     </p>
                   )}
                 </div>
                 <button 
                   onClick={() => removeUpload(item.id)}
-                  className="absolute top-2 right-2 p-1.5 text-white/50 hover:text-red-400 rounded-md opacity-0 group-hover:opacity-100 transition-all"
+                  className="absolute top-2 right-2 p-1.5 text-slate-500 hover:text-red-400 rounded-md opacity-0 group-hover:opacity-100 transition-all"
                 >
                   <X className="w-3 h-3" />
                 </button>

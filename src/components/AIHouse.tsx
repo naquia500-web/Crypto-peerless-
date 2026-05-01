@@ -108,21 +108,21 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
   const activeModelData = AI_MODELS.find(m => m.id === activeModel) || AI_MODELS[0];
 
   return (
-    <div className="fixed inset-0 z-[100] flex bg-[#030406]/95 backdrop-blur-2xl">
-      <div className="flex-1 flex flex-col h-full w-full border-x border-white/5 bg-[#050709] shadow-2xl">
+    <div className="fixed inset-0 z-[100] flex bg-white/95 backdrop-blur-2xl">
+      <div className="flex-1 flex flex-col h-full w-full border-x border-slate-100 bg-slate-50 shadow-2xl">
         {/* Header */}
-        <header className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0B0E11]/80">
+        <header className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white/80">
           <div className="flex items-center gap-4">
             <h2 className="text-2xl font-black italic tracking-tighter uppercase text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]">AI HOUSE</h2>
-            <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
+            <div className="h-4 w-px bg-slate-300 hidden sm:block"></div>
             <div className="hidden sm:flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#00FF88] animate-pulse"></div>
-              <span className="text-[11px] uppercase tracking-widest font-mono text-white/70">Core Systems Online</span>
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+              <span className="text-[11px] uppercase tracking-widest font-mono text-slate-500">Core Systems Online</span>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/5 bg-white/5 hover:bg-white/10 hover:text-yellow-400 hover:border-yellow-400/50 transition-all"
+            className="w-10 h-10 rounded-lg flex items-center justify-center border border-slate-100 bg-slate-50 hover:bg-slate-100 hover:text-yellow-400 hover:border-yellow-400/50 transition-all"
           >
             <svg className="w-5 h-5 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
@@ -130,9 +130,9 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           {/* Models Sidebar */}
-          <div className="w-full lg:w-72 border-r border-white/10 flex flex-col overflow-y-auto bg-[#0A0D10]/50 backdrop-blur-sm z-10 custom-scrollbar">
-            <div className="p-4 border-b border-white/5">
-              <h3 className="text-[10px] uppercase tracking-widest font-bold text-white/50 mb-3">Neural Architectures</h3>
+          <div className="w-full lg:w-72 border-r border-slate-200 flex flex-col overflow-y-auto bg-slate-50/50 backdrop-blur-sm z-10 custom-scrollbar">
+            <div className="p-4 border-b border-slate-100">
+              <h3 className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-3">Neural Architectures</h3>
               <div className="space-y-2">
                 {AI_MODELS.map(model => {
                   const isActive = activeModel === model.id;
@@ -140,7 +140,7 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
                   <button
                     key={model.id}
                     onClick={() => setActiveModel(model.id)}
-                    className={`relative w-full text-left p-2.5 rounded-xl border transition-all duration-300 group ${isActive ? 'bg-black/80 overflow-hidden scale-[1.02]' : 'border-white/5 bg-white/[0.02] hover:bg-white/10'}`}
+                    className={`relative w-full text-left p-2.5 rounded-xl border transition-all duration-300 group ${isActive ? 'bg-black/80 overflow-hidden scale-[1.02]' : 'border-slate-100 bg-slate-50 hover:bg-slate-100'}`}
                     style={isActive ? { borderColor: model.colorHex, boxShadow: `0 0 30px ${model.colorHex}40, inset 0 0 20px ${model.colorHex}20` } : { borderLeftColor: model.colorHex, borderLeftWidth: '3px' }}
                   >
                     {isActive && (
@@ -154,10 +154,10 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
                       <span className={`text-[11px] font-black uppercase tracking-wider transition-all duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`} style={isActive ? { color: '#ffffff', textShadow: `0 0 10px ${model.colorHex}, 0 0 20px ${model.colorHex}, 0 0 30px ${model.colorHex}` } : { color: model.colorHex, textShadow: `0 0 8px ${model.colorHex}60` }}>{model.name}</span>
                       <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-black/80" style={isActive ? { color: '#fff', textShadow: `0 0 5px ${model.colorHex}`, border: `1px solid ${model.colorHex}50`, boxShadow: `0 0 10px ${model.colorHex}40` } : { color: 'rgba(255,255,255,0.6)' }}>{model.version}</span>
                     </div>
-                    <p className="relative text-[10px] text-white/70 leading-snug mb-2 line-clamp-1 z-10 font-medium" style={isActive ? { textShadow: `0 0 15px ${model.colorHex}80` } : {}}>{model.description}</p>
-                    <div className="relative flex justify-between items-end text-[9px] font-mono text-white/50 z-10">
+                    <p className="relative text-[10px] text-slate-500 leading-snug mb-2 line-clamp-1 z-10 font-medium" style={isActive ? { textShadow: `0 0 15px ${model.colorHex}80` } : {}}>{model.description}</p>
+                    <div className="relative flex justify-between items-end text-[9px] font-mono text-slate-500 z-10">
                       <span>[{model.parameters}]</span>
-                      <span className={`px-1 py-0.5 rounded backdrop-blur-sm ${model.status === 'Online' ? 'text-[#00FF88] bg-[#00FF88]/10' : 'text-yellow-500 bg-yellow-500/10'}`} style={isActive ? { boxShadow: `0 0 10px ${model.colorHex}30` } : {}}>{model.status}</span>
+                      <span className={`px-1 py-0.5 rounded backdrop-blur-sm ${model.status === 'Online' ? 'text-blue-600 bg-blue-500/10' : 'text-yellow-500 bg-yellow-500/10'}`} style={isActive ? { boxShadow: `0 0 10px ${model.colorHex}30` } : {}}>{model.status}</span>
                     </div>
                   </button>
                   );
@@ -167,34 +167,34 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
             
             {/* Live Data Feed inside Sidebar */}
             <div className="p-4 flex-1">
-              <h3 className="text-[10px] uppercase tracking-widest font-bold text-white/50 mb-3 flex items-center gap-2">
+              <h3 className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-3 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping"></div>
                 Live Telemetry
               </h3>
               <div className="grid grid-cols-2 gap-2">
                 {marketData.length > 0 ? marketData.map((data) => (
-                  <div key={data.symbol} className="flex flex-col p-2.5 rounded-lg border border-white/5 bg-[#12161A] font-mono shadow-sm">
-                    <span className="text-white/60 text-[9px] mb-1">{data.symbol.replace('USDT', '')}</span>
+                  <div key={data.symbol} className="flex flex-col p-2.5 rounded-lg border border-slate-100 bg-slate-50 font-mono shadow-sm">
+                    <span className="text-slate-500 text-[9px] mb-1">{data.symbol.replace('USDT', '')}</span>
                     <AnimatePresence mode="popLayout">
                       <motion.span 
                         key={`${data.price}`}
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`text-xs font-bold ${data.change === 'up' ? 'text-[#00FF88]' : 'text-[#FF4D4D]'}`}
+                        className={`text-xs font-bold ${data.change === 'up' ? 'text-blue-600' : 'text-red-500'}`}
                       >
                         ${data.price.toFixed(2)}
                       </motion.span>
                     </AnimatePresence>
                   </div>
                 )) : (
-                  <div className="col-span-2 text-xs text-white/30 font-mono text-center py-4 bg-white/5 rounded-lg border border-white/5">Initializing datastream...</div>
+                  <div className="col-span-2 text-xs text-slate-900/30 font-mono text-center py-4 bg-slate-50 rounded-lg border border-slate-100">Initializing datastream...</div>
                 )}
               </div>
             </div>
           </div>
 
           {/* Main Interface */}
-          <div className="flex-1 flex flex-col relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] bg-opacity-20 before:absolute before:inset-0 before:bg-[#050709]/95 z-0">
+          <div className="flex-1 flex flex-col relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] bg-opacity-20 before:absolute before:inset-0 before:bg-slate-50/95 z-0">
             {/* Analysis Area */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth z-10 w-full flex justify-center items-start custom-scrollbar">
               {isProcessing || marketData.length === 0 ? (
@@ -203,7 +203,7 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
                       className="w-12 h-12 border-4 rounded-full animate-spin mb-4"
                       style={{ borderRightColor: activeModelData.colorHex, borderTopColor: activeModelData.colorHex, borderBottomColor: `transparent`, borderLeftColor: `transparent` }}
                    ></div>
-                   <span className="text-sm font-mono font-bold text-white/70 uppercase tracking-widest animate-pulse">Running {activeModelData.name} Analysis...</span>
+                   <span className="text-sm font-mono font-bold text-slate-500 uppercase tracking-widest animate-pulse">Running {activeModelData.name} Analysis...</span>
                 </div>
               ) : analysis ? (
                 <motion.div 
@@ -212,10 +212,10 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
                   className="w-full max-w-4xl"
                 >
                   <div 
-                     className="rounded-2xl p-6 shadow-xl bg-[#1A1F26] text-white/90 shadow-black/80 w-full"
+                     className="rounded-2xl p-6 shadow-xl bg-white text-slate-700 shadow-black/80 w-full"
                      style={{ borderLeftColor: activeModelData.colorHex, borderLeftWidth: '4px', borderTopColor: 'rgba(255,255,255,0.05)', borderRightColor: 'rgba(255,255,255,0.05)', borderBottomColor: 'rgba(255,255,255,0.05)', borderStyle: 'solid' }}
                   >
-                    <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-3">
+                    <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
                       <span 
                          className="text-[12px] font-mono tracking-widest uppercase font-bold"
                          style={{ color: activeModelData.colorHex, textShadow: `0 0 5px ${activeModelData.colorHex}40` }}
@@ -235,8 +235,8 @@ The current order book depth implies a consolidation phase. Sellers are absorbin
             </div>
 
             {/* Bottom Status Bar */}
-            <div className="p-4 border-t border-white/10 bg-[#0B0E11]/90 backdrop-blur-md z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-              <div className="flex items-center justify-between text-[10px] font-mono text-white/40 px-2 uppercase tracking-wide">
+            <div className="p-4 border-t border-slate-200 bg-white/90 backdrop-blur-md z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center justify-between text-[10px] font-mono text-slate-900/40 px-2 uppercase tracking-wide">
                 <span>Telemetry frequency: 1000ms</span>
                 <span className="flex items-center gap-2">Active Node: <span className="text-yellow-400/80 font-bold">{activeModelData.name}</span></span>
               </div>
