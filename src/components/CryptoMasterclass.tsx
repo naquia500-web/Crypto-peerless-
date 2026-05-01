@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { BookOpen, Sparkles, ChevronRight, GraduationCap } from 'lucide-react';
 import Markdown from 'react-markdown';
-import OpenAI from 'openai';
 
 export function CryptoMasterclass() {
   const [topic, setTopic] = useState('Trading Basics');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const topics = [
     'Trading Basics',
@@ -19,43 +17,58 @@ export function CryptoMasterclass() {
 
   const generateContent = async (selectedTopic: string) => {
     setLoading(true);
-    setError(null);
     try {
-      const apiKey = localStorage.getItem('user_api_key') || typeof process !== 'undefined' && process.env.OPENROUTER_API_KEY || (typeof process !== 'undefined' && process.env.OPENAI_API_KEY) || import.meta.env.VITE_OPENAI_API_KEY;
-      const isOR = apiKey?.startsWith("sk-or-");
-      const isGemini = apiKey && !apiKey.startsWith("sk-");
+      await new Promise(r => setTimeout(r, 1200)); // Simulate generation
       
-      if (!apiKey) {
-         throw new Error("Missing API Key. Please provide it in the input box, or add it via Settings.");
-      }
-      
-      const openai = new OpenAI({
-         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : isOR ? "https://openrouter.ai/api/v1" : undefined,
-         apiKey: apiKey,
-         dangerouslyAllowBrowser: true,
-         defaultHeaders: isOR ? {
-           "HTTP-Referer": window.location.origin,
-           "X-Title": "Crypto AI Tools"
-         } : undefined
-      });
-      
-      const response = await openai.chat.completions.create({
-        model: isGemini ? "gemini-2.5-flash" : isOR ? "openai/gpt-4o-mini" : "gpt-4o-mini", // Fallback to accessible model
-        messages: [
-          { role: "system", content: "You are an expert Crypto Masterclass AI. Provide comprehensive, accurate educational content about " + selectedTopic + "." },
-        ],
-        max_tokens: 2000
-      });
-      
-      const generatedContent = response.choices[0]?.message?.content;
-      if (!generatedContent) {
-         throw new Error("No content generated.");
-      }
-      
-      setContent(generatedContent);
+      const simulatedData: Record<string, string> = {
+        'Trading Basics': `## Mastering Trading Basics
+
+Welcome to the foundation of crypto trading. Here we cover the absolute essentials you need before deploying capital.
+
+### 1. Market Orders vs Limit Orders
+- **Market Order:** Buy or sell immediately at the best available current price. Use this when speed is more important than the exact price.
+- **Limit Order:** Buy or sell at a specific price or better. Use this to control your entry and exit points precisely.
+
+### 2. Candlestick Anatomy
+Candle bodies show the open and close, while the wicks (shadows) show the high and low of that period. A green candle means the close was higher than the open.
+
+### 3. Support and Resistance
+- **Support:** A price level where a downtrend tends to pause due to a concentration of demand.
+- **Resistance:** A price level where an uptrend tends to pause due to a concentration of supply.`,
+        'Blockchain Technology': `## Understanding Blockchain Technology
+
+The underlying architecture powering cryptocurrencies.
+
+### Decentralized Ledgers
+At its core, a blockchain is a distributed database that is shared among the nodes of a computer network. 
+
+### Cryptographic Hashing
+Blocks are securely linked using cryptographic hashes. Once data has been recorded in a given block, it cannot be altered retroactively without the alteration of all subsequent blocks.
+
+### Consensus Mechanisms
+- **Proof of Work (PoW):** Requires computational energy (mining). E.g., Bitcoin.
+- **Proof of Stake (PoS):** Validators lock capital to secure the network. E.g., Ethereum.`,
+        'Market Analysis': `## Deep Dive: Market Analysis
+
+To anticipate market movements, you need to combine different analysis methods.
+
+### Fundamental Analysis (FA)
+Evaluating the intrinsic value of an asset. Look at the tokenomics, team, use cases, regulatory environment, and on-chain metrics (active addresses, transaction volume).
+
+### Technical Analysis (TA)
+Statistical trends gathered from trading activity, such as price movement and volume.
+* **Moving Averages (MA):** Smooths out price data.
+* **RSI (Relative Strength Index):** Measures momentum (oversold vs overbought).
+
+### Sentiment Analysis
+Gauging the mood of the market. Often measured through social volume or the Fear & Greed Index.`
+      };
+
+      const defaultContent = `## ${selectedTopic}\n\nThis is an accelerated learning module for **${selectedTopic}**.\n\n### Core Concepts\n* Topic introduction and historical context.\n* Key mechanisms and structural overview.\n* Best practices and modern applications.\n\nKeep reviewing your curriculum to master these elements.`;
+
+      setContent(simulatedData[selectedTopic] || defaultContent);
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'An error occurred.');
+      setContent("Module generation failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -108,16 +121,7 @@ export function CryptoMasterclass() {
           {loading ? (
              <div className="flex-1 flex flex-col items-center justify-center gap-4 text-white/40">
                <Sparkles className="w-8 h-8 animate-pulse text-blue-400/50" />
-               <div className="text-sm font-mono animate-pulse text-center">Synthesizing {topic} Module...<br /><span className="text-[10px] opacity-50">Powered by OpenAI</span></div>
-             </div>
-          ) : error ? (
-             <div className="flex-1 flex flex-col items-center justify-center gap-2 text-red-400/80">
-               <div className="text-sm border border-red-500/20 bg-red-500/10 p-4 rounded-lg text-center max-w-sm">
-                 <span className="font-bold flex items-center justify-center gap-2 mb-2">
-                   Error
-                 </span>
-                 {error}
-               </div>
+               <div className="text-sm font-mono animate-pulse text-center">Synthesizing {topic} Module...</div>
              </div>
           ) : content ? (
              <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white/90 prose-p:text-white/70 prose-a:text-blue-400 overflow-y-auto max-h-[500px] custom-scrollbar pr-4">

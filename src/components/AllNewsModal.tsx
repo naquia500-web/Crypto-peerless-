@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Globe, Clock, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { GoogleGenAI, Type } from '@google/genai';
 
 interface AllNewsModalProps {
   isOpen: boolean;
@@ -57,71 +56,9 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
   const fetchExtendedNews = async () => {
     try {
       setLoading(true);
-      const finalApiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-      if (!finalApiKey) throw new Error('API Key missing');
-
-      const tickerRes = await fetch('https://api.binance.com/api/v3/ticker/24hr');
-      const tickerData = await tickerRes.json();
-      
-      const topGainers = tickerData
-        .filter((t: any) => t.symbol.endsWith('USDT') && parseFloat(t.quoteVolume) > 10000000)
-        .sort((a: any, b: any) => parseFloat(b.priceChangePercent) - parseFloat(a.priceChangePercent))
-        .slice(0, 10); 
-        
-      const gainersData = topGainers.map((t: any) => ({
-           symbol: t.symbol,
-           price: parseFloat(t.lastPrice).toFixed(4),
-           changePercent: parseFloat(t.priceChangePercent).toFixed(2) + '%',
-      }));
-
-      const ai = new GoogleGenAI(
-      process.env.GEMINI_BASE_URL ? { 
-        apiKey: finalApiKey,
-        httpOptions: { baseUrl: process.env.GEMINI_BASE_URL, apiVersion: 'v1alpha' }
-      } : { 
-        apiKey: finalApiKey,
-        httpOptions: { apiVersion: 'v1alpha' }
-      }
-    );
-      const textResponse = await ai.models.generateContent({
-        model: 'gemini-3.1-flash-lite-preview',
-        contents: `Create highly professional, institutional-grade English news updates for these 10 crypto assets: ${JSON.stringify(gainersData)}. Act as "Nexus AI", an elite autonomous market analyst. Highlight their powerful price changes and momentum. Do not use generic placeholders. Ensure analytical full textual updates.`,
-        config: {
-          temperature: 0.7,
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.ARRAY,
-            items: {
-              type: Type.OBJECT,
-              properties: {
-                title: { type: Type.STRING },
-                description: { type: Type.STRING },
-                symbol: { type: Type.STRING }
-              },
-              required: ["title", "description", "symbol"]
-            }
-          }
-        }
-      });
-
-      const generatedData = JSON.parse(textResponse.text || '[]');
-      
-      const mapped = generatedData.map((item: any, idx: number) => ({
-        id: `extended-${item.symbol}-${Date.now()}-${idx}`,
-        source: 'NEXUS AI GLOBAL',
-        title: item.title,
-        description: item.description,
-        symbol: item.symbol,
-        published_on: Math.floor(Date.now() / 1000) - (idx * 300)
-      }));
-
-      setExtendedNews(mapped.length > 0 ? mapped : FALLBACK_EXTENDED_NEWS);
+      await new Promise(r => setTimeout(r, 1000));
+      setExtendedNews(FALLBACK_EXTENDED_NEWS);
     } catch (error: any) {
-      const errString = typeof error === 'object' ? JSON.stringify(error) : String(error);
-      const isQuota = errString.includes('429') || errString.toLowerCase().includes('quota') || errString.includes('RESOURCE_EXHAUSTED');
-      if (!isQuota) {
-         console.warn("Failed to generate extended news.", error);
-      }
       setExtendedNews(FALLBACK_EXTENDED_NEWS);
     } finally {
       setLoading(false);

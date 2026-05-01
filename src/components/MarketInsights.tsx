@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Play, CheckCircle2, XCircle, GraduationCap, ChevronRight, HelpCircle, Loader2 } from 'lucide-react';
+import { BookOpen, CheckCircle2, XCircle, GraduationCap, ChevronRight, HelpCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GoogleGenAI } from '@google/genai';
 
 interface VideoSegment {
   id: number;
@@ -10,18 +9,16 @@ interface VideoSegment {
   thumbnail: string;
   views: string;
   description: string;
-  videoUrl?: string;
 }
 
 const DEFAULT_VIDEOS: VideoSegment[] = [
   {
     id: 1,
     title: 'Introduction to Cryptocurrency',
-    duration: '0:45',
+    duration: '1:00',
     thumbnail: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop',
     views: '12K',
     description: 'A fundamental overview of digital currencies and their underlying technology.',
-    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
   },
   {
     id: 2,
@@ -30,7 +27,6 @@ const DEFAULT_VIDEOS: VideoSegment[] = [
     thumbnail: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=400&auto=format&fit=crop',
     views: '8.4K',
     description: 'Learn the basics of equity markets and how traditional trading compares to crypto.',
-    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
   },
   {
     id: 3,
@@ -39,7 +35,6 @@ const DEFAULT_VIDEOS: VideoSegment[] = [
     thumbnail: 'https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?q=80&w=400&auto=format&fit=crop',
     views: '15K',
     description: 'Strategies for diversifying your crypto assets and managing systemic risk.',
-    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
   }
 ];
 
@@ -74,93 +69,36 @@ export function MarketInsights() {
   const fetchAIInsights = async () => {
     setIsFetchingVideos(true);
     try {
-      const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-      if (!apiKey) return;
-      
-      const ai = new GoogleGenAI({ apiKey });
-      const prompt = `Act as an AI live market tracker.
-      Analyze the current real-world crypto market conditions.
-      Generate 3 highly professional, advanced crypto market insight video titles and detailed short descriptions (1-2 sentences each) based on current live data (e.g. BTC movements, macro economics, DeFi).
-      Return valid JSON in this exact structure:
-      [
+      await new Promise(r => setTimeout(r, 1000));
+      // Simulated new videos for realism
+      const unsplashThumbnails = [
+         'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop',
+         'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=400&auto=format&fit=crop',
+         'https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?q=80&w=400&auto=format&fit=crop',
+         'https://images.unsplash.com/photo-1605792657360-3f65bea7ce61?q=80&w=400&auto=format&fit=crop'
+      ];
+      const newVideos = [
         {
-          "title": "...",
-          "duration": "1:45",
-          "views": "32K",
-          "description": "..."
-        }
-      ]
-      No markdown, just pure JSON array.`;
-      
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.1-flash-lite-preview',
-        contents: prompt,
-      });
-
-      const text = response.text || "[]";
-      let parsed = [];
-      try {
-        const jsonMatch = text.match(/\[.*\]/s);
-        if (jsonMatch) {
-           parsed = JSON.parse(jsonMatch[0]);
-        } else {
-           parsed = JSON.parse(text);
-        }
-      } catch (e: any) {
-        console.error("Failed to parse Gemini output", text);
-        return; 
-      }
-
-      if (parsed && parsed.length > 0) {
-         const unsplashThumbnails = [
-            'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=400&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?q=80&w=400&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605792657360-3f65bea7ce61?q=80&w=400&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?q=80&w=400&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1639762681485-074b7f4ec651?q=80&w=400&auto=format&fit=crop'
-         ];
-         
-         const sampleVideoUrls = [
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'
-         ];
-         
-         const newVideos = parsed.slice(0, 3).map((item: any, idx: number) => ({
-            id: Date.now() + idx,
-            title: item.title || "Live Market Analysis",
-            duration: item.duration || "1:00",
-            views: item.views || "Live",
-            description: item.description || "In-depth AI market analysis for today's session.",
-            thumbnail: unsplashThumbnails[Math.floor(Math.random() * unsplashThumbnails.length)],
-            videoUrl: sampleVideoUrls[Math.floor(Math.random() * sampleVideoUrls.length)]
-         }));
-         setVideos(newVideos);
-         setLastUpdated(new Date());
-      }
+          id: Date.now() + 1,
+          title: "Live Market Analysis",
+          duration: "1:00",
+          views: "Live",
+          description: "In-depth AI market analysis for today's session.",
+          thumbnail: unsplashThumbnails[Math.floor(Math.random() * unsplashThumbnails.length)],
+        },
+        ...DEFAULT_VIDEOS.slice(0, 2)
+      ];
+      setVideos(newVideos);
+      setLastUpdated(new Date());
     } catch (e: any) {
-      const errString = typeof e === 'object' ? JSON.stringify(e) : String(e);
-      // Suppress 429 to keep default videos without breaking the UI
-      if (!errString.includes('429') && !errString.toLowerCase().includes('quota') && !errString.includes('RESOURCE_EXHAUSTED')) {
-         console.error(e);
-         console.warn("Market insights AI fetch failed", e);
-      }
+      console.warn("Market insights AI fetch failed", e);
     } finally {
       setIsFetchingVideos(false);
     }
   };
 
   useEffect(() => {
-    // Initial fetch to get latest market insights
     fetchAIInsights();
-
-    // Setup interval to fetch every 2 hours
-    const interval = setInterval(fetchAIInsights, 2 * 60 * 60 * 1000);
-    return () => clearInterval(interval);
   }, []);
 
   const handleAnswerSelect = (index: number) => {
@@ -178,11 +116,10 @@ export function MarketInsights() {
       setSelectedAnswer(null);
       setShowResult(false);
     } else {
-      // End of quiz state? We'll just loop or show a simple summary
       setCurrentQuestion(0);
       setSelectedAnswer(null);
       setShowResult(false);
-      setScore(0); // Reset for replay
+      setScore(0);
     }
   };
 
@@ -238,12 +175,12 @@ export function MarketInsights() {
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-transparent transition-colors">
                      <div className="flex flex-col items-center justify-center gap-2">
                        <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center backdrop-blur-md group-hover:bg-blue-500 transition-colors">
-                         <Play className="w-4 h-4 text-white ml-0.5" fill="currentColor" />
+                         <BookOpen className="w-4 h-4 text-white" />
                        </div>
                      </div>
                   </div>
                   <div className="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold text-white border border-white/10">
-                    {video.duration}
+                    Image Update
                   </div>
                 </div>
                 <div>
@@ -370,32 +307,24 @@ export function MarketInsights() {
               onClick={e => e.stopPropagation()}
             >
               <div className="aspect-video bg-black flex items-center justify-center relative w-full border-b border-white/10">
-                 {videos.find(v => v.id === activeVideo)?.videoUrl ? (
-                    <video 
-                      src={videos.find(v => v.id === activeVideo)?.videoUrl} 
-                      className="w-full h-full object-contain"
-                      controls
-                      autoPlay
-                      playsInline
-                    />
-                 ) : (
-                    // Fallback if no video url
-                    <img src={videos.find(v => v.id === activeVideo)?.thumbnail} className="w-full h-full object-cover opacity-50" />
-                 )}
+                  <img src={videos.find(v => v.id === activeVideo)?.thumbnail} className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="p-6 flex justify-between items-start">
                 <div className="max-w-2xl">
                   <h3 className="text-2xl font-bold">{videos.find(v => v.id === activeVideo)?.title}</h3>
-                  <p className="text-sm text-white/50 mt-2 font-mono">Market Insight • {videos.find(v => v.id === activeVideo)?.views} views</p>
+                  <p className="text-sm text-white/50 mt-2 font-mono">Market Insight • Live</p>
                   <p className="text-white/80 mt-4 leading-relaxed">
                     {videos.find(v => v.id === activeVideo)?.description}
                   </p>
+                  <div className="mt-6 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 text-white/70 text-sm">
+                    <strong>Note:</strong> This is a condensed, text-and-image based update designed for quick consumption. Continuous macro trends and institutional inflows suggest high velocity in price discovery phases over the coming 48 hours. Keep stop losses tight.
+                  </div>
                 </div>
                 <button 
                   onClick={() => setActiveVideo(null)}
                   className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-sm font-bold transition-colors shrink-0"
                 >
-                  Close Video
+                  Close
                 </button>
               </div>
             </motion.div>

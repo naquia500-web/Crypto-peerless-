@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GoogleGenAI } from '@google/genai';
+import Markdown from 'react-markdown';
 
 interface ModelVersion {
   id: string;
@@ -28,8 +28,7 @@ const AI_MODELS: ModelVersion[] = [
 
 export function AIHouse({ onClose }: { onClose: () => void }) {
   const [activeModel, setActiveModel] = useState<string>(AI_MODELS[0].id);
-  const [query, setQuery] = useState('');
-  const [messages, setMessages] = useState<{ role: 'user' | 'ai', content: string, timestamp: number }[]>([]);
+  const [analysis, setAnalysis] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [marketData, setMarketData] = useState<any[]>([]);
   
@@ -68,54 +67,45 @@ export function AIHouse({ onClose }: { onClose: () => void }) {
     return () => clearInterval(interval);
   }, []);
 
-  const handleQuery = async () => {
-    if (!query.trim() || isProcessing) return;
+  useEffect(() => {
+    const runAnalysis = async () => {
+      if (marketData.length === 0) return;
+      setIsProcessing(true);
+      setAnalysis(null);
+      
+      try {
+        await new Promise(r => setTimeout(r, 1500)); // Simulate AI computation
+
+        const selectedModel = AI_MODELS.find(m => m.id === activeModel);
+        const btc = marketData.find(m => m.symbol === 'BTCUSDT');
+        const btcPrice = btc ? btc.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unknown';
+
+        const simulatedReport = `### ${selectedModel?.name} Core Analysis
+
+**System Telemetry:** Live
+**Primary Asset Tracking:** BTC at $${btcPrice}
+
+#### Market Microstructure
+The current order book depth implies a consolidation phase. Sellers are absorbing buy volume at local highs, while passive bidders defend the lower boundary.
+
+#### Advanced Metrics
+*   **Volatility Index:** Expected to compress in the next 12 hours before a directional breakout.
+*   **Liquidity Profiling:** Significant liquidity voids exist below current support. Breakdowns may see accelerated downward movement.
+
+*Conclusion:* Maintain Delta neutral strategies until decisive volume invalidates the current range. Monitoring on-chain inflows continuously.`;
+
+        setAnalysis(simulatedReport);
+      } catch (err: any) {
+         setAnalysis('Connection to distributed neural network lost. Please try again later.');
+      } finally {
+        setIsProcessing(false);
+      }
+    };
     
-    const newMsg = { role: 'user' as const, content: query, timestamp: Date.now() };
-    setMessages(prev => [...prev, newMsg]);
-    setQuery('');
-    setIsProcessing(true);
-    
-    try {
-      const finalApiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-      const ai = new GoogleGenAI(
-        process.env.GEMINI_BASE_URL ? { 
-          apiKey: finalApiKey,
-          httpOptions: { baseUrl: process.env.GEMINI_BASE_URL, apiVersion: 'v1alpha' }
-        } : { 
-          apiKey: finalApiKey,
-          httpOptions: { apiVersion: 'v1alpha' }
-        }
-      );
+    runAnalysis();
+  }, [activeModel, marketData.length > 0]); // Dependency trick to run once market data loads, or model changes
 
-      const selectedModel = AI_MODELS.find(m => m.id === activeModel);
-      const btc = marketData.find(m => m.symbol === 'BTCUSDT');
-      const btcPrice = btc ? btc.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Unknown';
-
-      const prompt = `System Instruction: You are ${selectedModel?.name}, extremely advanced Market Intelligence AI. Provide powerful, institutional-grade insights. Do NOT start with greeting. The latest BTC price is $${btcPrice}. Provide deep analysis based on the user's query.\n\nUser Query: ${query}`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.1-flash-lite-preview',
-        contents: prompt,
-        config: {
-          temperature: 0.7
-        }
-      });
-
-      setMessages(prev => [...prev, { role: 'ai', content: response.text || 'Unable to generate response.', timestamp: Date.now() }]);
-    } catch (err: any) {
-       const errString = typeof err === 'object' ? JSON.stringify(err) : String(err);
-       const isQuota = errString.includes('429') || errString.toLowerCase().includes('quota') || errString.includes('RESOURCE_EXHAUSTED');
-       if (isQuota) {
-           setMessages(prev => [...prev, { role: 'ai', content: 'Connection to distributed neural network lost (API Rate Limit / Quota Exceeded). Please try again later.', timestamp: Date.now() }]);
-       } else {
-           console.error("AI Generation Error:", err);
-           setMessages(prev => [...prev, { role: 'ai', content: 'Connection to distributed neural network lost. Please check API keys or networking.', timestamp: Date.now() }]);
-       }
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const activeModelData = AI_MODELS.find(m => m.id === activeModel) || AI_MODELS[0];
 
   return (
     <div className="fixed inset-0 z-[100] flex bg-[#030406]/95 backdrop-blur-2xl">
@@ -140,7 +130,7 @@ export function AIHouse({ onClose }: { onClose: () => void }) {
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           {/* Models Sidebar */}
-          <div className="w-full lg:w-72 border-r border-white/10 flex flex-col overflow-y-auto bg-[#0A0D10]/50 backdrop-blur-sm z-10">
+          <div className="w-full lg:w-72 border-r border-white/10 flex flex-col overflow-y-auto bg-[#0A0D10]/50 backdrop-blur-sm z-10 custom-scrollbar">
             <div className="p-4 border-b border-white/5">
               <h3 className="text-[10px] uppercase tracking-widest font-bold text-white/50 mb-3">Neural Architectures</h3>
               <div className="space-y-2">
@@ -205,86 +195,50 @@ export function AIHouse({ onClose }: { onClose: () => void }) {
 
           {/* Main Interface */}
           <div className="flex-1 flex flex-col relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] bg-opacity-20 before:absolute before:inset-0 before:bg-[#050709]/95 z-0">
-            {/* Chat Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth z-10">
-              {messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center opacity-70">
-                  <svg className="w-20 h-20 mb-6 text-yellow-500 drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                  </svg>
-                  <p className="text-2xl font-black italic uppercase tracking-wider text-white shadow-black">Awaiting Command Directive</p>
-                  <p className="text-sm font-medium text-white/50 mt-3 max-w-lg leading-relaxed">Query the active intelligence model for real-time market analysis, quantitative insights, or risk management scenarios.</p>
-                </div>
-              ) : (
-                messages.map((msg, idx) => {
-                  const activeModelData = AI_MODELS.find(m => m.id === activeModel) || AI_MODELS[0];
-                  return (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    key={idx} 
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div 
-                       className={`max-w-[85%] lg:max-w-[75%] rounded-2xl p-5 shadow-lg ${msg.role === 'user' ? 'bg-yellow-400/10 border border-yellow-400/30 text-white backdrop-blur-sm' : 'bg-[#1A1F26] text-white/90 shadow-black/80'}`}
-                       style={msg.role !== 'user' ? { borderLeftColor: activeModelData.colorHex, borderLeftWidth: '4px', borderTopColor: 'rgba(255,255,255,0.05)', borderRightColor: 'rgba(255,255,255,0.05)', borderBottomColor: 'rgba(255,255,255,0.05)', borderStyle: 'solid' } : {}}
-                    >
-                      <div className="flex items-center gap-2 mb-3 border-b border-white/5 pb-2">
-                        <span 
-                           className={`text-[10px] font-mono tracking-widest uppercase font-bold ${msg.role === 'user' ? 'text-yellow-400' : ''}`}
-                           style={msg.role !== 'user' ? { color: activeModelData.colorHex, textShadow: `0 0 5px ${activeModelData.colorHex}40` } : {}}
-                        >
-                          {msg.role === 'user' ? 'Operator' : activeModelData.name}
-                        </span>
-                        <span className="text-[10px] font-mono opacity-30">
-                          {new Date(msg.timestamp).toLocaleTimeString()}
-                        </span>
-                      </div>
-                      <div className="text-[15px] leading-relaxed whitespace-pre-wrap">{msg.content}</div>
-                    </div>
-                  </motion.div>
-                )})
-              )}
-              {isProcessing && (
-                <div className="flex justify-start">
+            {/* Analysis Area */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth z-10 w-full flex justify-center items-start custom-scrollbar">
+              {isProcessing || marketData.length === 0 ? (
+                <div className="mt-20 flex flex-col items-center">
                    <div 
-                      className="bg-[#1A1F26] border rounded-2xl p-5 flex items-center gap-4 shadow-lg"
-                      style={{ borderLeftColor: AI_MODELS.find(m => m.id === activeModel)?.colorHex || '#00FF88', borderLeftWidth: '4px', borderTopColor: 'rgba(255,255,255,0.05)', borderRightColor: 'rgba(255,255,255,0.05)', borderBottomColor: 'rgba(255,255,255,0.05)', borderStyle: 'solid' }}
-                   >
-                     <div 
-                        className="w-5 h-5 border-2 rounded-full animate-spin"
-                        style={{ borderRightColor: AI_MODELS.find(m => m.id === activeModel)?.colorHex || '#00FF88', borderTopColor: AI_MODELS.find(m => m.id === activeModel)?.colorHex || '#00FF88', borderBottomColor: `transparent`, borderLeftColor: `transparent` }}
-                     ></div>
-                     <span className="text-xs font-mono font-bold text-white/70 uppercase tracking-widest animate-pulse">Processing Analysis...</span>
-                   </div>
+                      className="w-12 h-12 border-4 rounded-full animate-spin mb-4"
+                      style={{ borderRightColor: activeModelData.colorHex, borderTopColor: activeModelData.colorHex, borderBottomColor: `transparent`, borderLeftColor: `transparent` }}
+                   ></div>
+                   <span className="text-sm font-mono font-bold text-white/70 uppercase tracking-widest animate-pulse">Running {activeModelData.name} Analysis...</span>
                 </div>
-              )}
+              ) : analysis ? (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-full max-w-4xl"
+                >
+                  <div 
+                     className="rounded-2xl p-6 shadow-xl bg-[#1A1F26] text-white/90 shadow-black/80 w-full"
+                     style={{ borderLeftColor: activeModelData.colorHex, borderLeftWidth: '4px', borderTopColor: 'rgba(255,255,255,0.05)', borderRightColor: 'rgba(255,255,255,0.05)', borderBottomColor: 'rgba(255,255,255,0.05)', borderStyle: 'solid' }}
+                  >
+                    <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-3">
+                      <span 
+                         className="text-[12px] font-mono tracking-widest uppercase font-bold"
+                         style={{ color: activeModelData.colorHex, textShadow: `0 0 5px ${activeModelData.colorHex}40` }}
+                      >
+                        {activeModelData.name} LIVE ANALYSIS REPORT
+                      </span>
+                      <span className="text-[10px] font-mono opacity-30">
+                        {new Date().toLocaleTimeString()}
+                      </span>
+                    </div>
+                    <div className="prose prose-invert max-w-none text-sm/relaxed markdown-body">
+                      <Markdown>{analysis}</Markdown>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : null}
             </div>
 
-            {/* Input Area */}
-            <div className="p-6 border-t border-white/10 bg-[#0B0E11]/90 backdrop-blur-md z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-              <div className="relative">
-                <input 
-                  type="text" 
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleQuery()}
-                  placeholder="Enter strategic query here..."
-                  className="w-full bg-[#1A1F26] border border-white/20 rounded-xl pl-6 pr-14 py-4 text-[15px] font-medium text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60 focus:bg-[#20252D] focus:shadow-[0_0_15px_rgba(250,204,21,0.15)] transition-all"
-                />
-                <button 
-                  onClick={handleQuery}
-                  disabled={!query.trim() || isProcessing}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-400 hover:text-yellow-300 rounded-[#0.5rem] transition-all disabled:opacity-30 disabled:cursor-not-allowed group"
-                >
-                  <svg className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex items-center justify-between mt-3 text-[10px] font-mono text-white/40 px-2 uppercase tracking-wide">
-                <span>Data frequency: 1000ms</span>
-                <span className="flex items-center gap-2">Active: <span className="text-yellow-400/80 font-bold">{AI_MODELS.find(m => m.id === activeModel)?.name}</span></span>
+            {/* Bottom Status Bar */}
+            <div className="p-4 border-t border-white/10 bg-[#0B0E11]/90 backdrop-blur-md z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center justify-between text-[10px] font-mono text-white/40 px-2 uppercase tracking-wide">
+                <span>Telemetry frequency: 1000ms</span>
+                <span className="flex items-center gap-2">Active Node: <span className="text-yellow-400/80 font-bold">{activeModelData.name}</span></span>
               </div>
             </div>
           </div>

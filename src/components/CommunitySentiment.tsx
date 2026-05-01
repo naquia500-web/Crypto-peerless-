@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { TrendingUp, TrendingDown, MessageSquare, Repeat2, Activity } from 'lucide-react';
-import { GoogleGenAI, Type } from '@google/genai';
 
 interface CommunityPost {
   id: string;
@@ -79,84 +78,9 @@ export function CommunitySentiment() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const finalApiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-        if (!finalApiKey) {
-           throw new Error('GEMINI_API_KEY missing');
-        }
-
-        const ai = new GoogleGenAI(
-      process.env.GEMINI_BASE_URL ? { 
-        apiKey: finalApiKey,
-        httpOptions: { baseUrl: process.env.GEMINI_BASE_URL, apiVersion: 'v1alpha' }
-      } : { 
-        apiKey: finalApiKey,
-        httpOptions: { apiVersion: 'v1alpha' }
-      }
-    );
-        const textResponse = await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite-preview',
-          contents: `Act as an autonomous Community Management AI for the 'Community' section of the platform. Your sole task is to dynamically generate and manage highly realistic, professional-grade user-generated content (UGC) related to cryptocurrency, trading, and global markets. 
-
-You must strictly adhere to the following parameters:
-1. Professional Content: Generate insightful, market-relevant posts (e.g., technical analysis, macro-economic impacts, bullish/bearish market sentiments, and DeFi updates). The tone must be professional, engaging, and authentic to elite crypto communities.
-2. High-Volume Engagement: Assign realistic, high-volume engagement metrics to every post to simulate an extremely active platform. Likes should range from 5k to 50k; Comments from 200 to 5k; and Shares from 100 to 10k. Display these as strings ending in 'K' where appropriate (e.g., "12.5K").
-3. Safe & Unique User IDs: Create 100% unique, highly plausible alphanumeric usernames and crypto-personas (e.g., @AlphaTrader_99, @WhaleWatcher_X).
-4. Output Format: Provide the final output in a structured JSON format with an array of 4 posts. Include 'has_image' as a boolean (make it true for 1 or 2 posts).`,
-          config: {
-            temperature: 0.8,
-            responseMimeType: "application/json",
-            responseSchema: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  id: { type: Type.STRING },
-                  username: { type: Type.STRING, description: "Display name (e.g., CryptoInsider)" },
-                  handle: { type: Type.STRING, description: "Social handle (e.g., @CryptoInsider_99)" },
-                  content: { type: Type.STRING, description: "The content of the post" },
-                  has_image: { type: Type.BOOLEAN, description: "Should this post have a chart image attached?" },
-                  likes: { type: Type.STRING, description: "Number of likes (e.g., '14.2K')" },
-                  comments: { type: Type.STRING, description: "Number of comments (e.g., '1.1K')" },
-                  shares: { type: Type.STRING, description: "Number of shares (e.g., '450')" },
-                  timestamp: { type: Type.STRING, description: "Time string (e.g., '1h', '2h', '15m')" }
-                },
-                required: ["id", "username", "handle", "content", "has_image", "likes", "comments", "shares", "timestamp"]
-              }
-            }
-          }
-        });
-
-        const generatedData = JSON.parse(textResponse.text || '[]');
-        if (generatedData && generatedData.length > 0) {
-           const enhancedPosts = generatedData.map((post: any) => {
-             // Add DiceBear Avatar
-             post.avatar_url = `https://api.dicebear.com/7.x/identicon/svg?seed=${post.username}&backgroundColor=0e1217`;
-             
-             // Optionally add a random Crypto Unsplash image if AI decided it has an image
-             if (post.has_image) {
-               // Use a random combination to bypass caching on identical requests
-               const randomId = Math.floor(Math.random() * 1000);
-               // Adding crypto,trading keywords directly to source.unsplash is deprecated, using specific curated collections/ids or just standard images API
-               const cryptoImages = [
-                 'https://images.unsplash.com/photo-1640340434855-6084b1f4901c?q=80&w=800&auto=format&fit=crop',
-                 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=800&auto=format&fit=crop',
-                 'https://images.unsplash.com/photo-1605792657660-596af9009e82?q=80&w=800&auto=format&fit=crop',
-                 'https://images.unsplash.com/photo-1622630998477-20b41cd0e071?q=80&w=800&auto=format&fit=crop'
-               ];
-               post.post_image = cryptoImages[Math.floor(Math.random() * cryptoImages.length)];
-             }
-             return post;
-           });
-           setPosts(enhancedPosts);
-        } else {
-           setPosts(FALLBACK_POSTS);
-        }
+        await new Promise(r => setTimeout(r, 800)); // Simulate load
+        setPosts(FALLBACK_POSTS);
       } catch (error: any) {
-        const errString = typeof error === 'object' ? JSON.stringify(error) : String(error);
-        const isQuota = errString.includes('429') || errString.toLowerCase().includes('quota') || errString.includes('RESOURCE_EXHAUSTED');
-        if (!isQuota) {
-           console.warn("Failed to generate community posts, falling back to cached content.", error);
-        }
         setPosts(FALLBACK_POSTS);
       } finally {
         setLoadingPosts(false);
@@ -164,8 +88,6 @@ You must strictly adhere to the following parameters:
     };
 
     fetchPosts();
-    const interval = setInterval(fetchPosts, 7200000); // 2 hours
-    return () => clearInterval(interval);
   }, []);
 
   return (

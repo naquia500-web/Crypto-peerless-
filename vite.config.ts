@@ -12,6 +12,8 @@ export default defineConfig(({mode}) => {
       'process.env.GEMINI_BASE_URL': JSON.stringify(env.GEMINI_BASE_URL),
       'process.env.OPENAI_API_KEY': JSON.stringify(env.OPENAI_API_KEY),
       'process.env.OPENROUTER_API_KEY': JSON.stringify(env.OPENROUTER_API_KEY),
+      'process.env.SUPABASE_URL': JSON.stringify(env.SUPABASE_URL),
+      'process.env.SUPABASE_ANON_KEY': JSON.stringify(env.SUPABASE_ANON_KEY),
     },
     resolve: {
       alias: {

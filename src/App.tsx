@@ -24,7 +24,7 @@ import { GlobalCryptoNews } from "./components/GlobalCryptoNews";
 import { MarketInsights } from "./components/MarketInsights";
 import { Watchlist } from "./components/Watchlist";
 import { PortfolioTracker } from "./components/PortfolioTracker";
-import { AiAnalystChat } from "./components/AiAnalystChat";
+import { AiAnalyst } from "./components/AiAnalystChat";
 import { UserReports } from "./components/UserReports";
 import { MarketTracker } from "./components/MarketTracker";
 import { FAQ } from "./components/FAQ";
@@ -128,7 +128,7 @@ export default function App() {
         <div className="lg:col-span-4 flex flex-col gap-6 lg:pl-8 lg:ticker-border">
           <PortfolioTracker />
           <Watchlist />
-          <AiAnalystChat currentBtcPrice={currentBtcPrice} />
+          <AiAnalyst currentBtcPrice={currentBtcPrice} />
           <div id="section-notifications" className="mt-auto">
             <UserReports />
           </div>

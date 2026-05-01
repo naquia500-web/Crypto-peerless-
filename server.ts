@@ -12,56 +12,22 @@ async function startServer() {
   // API Routes
   app.post("/api/masterclass", async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] as string || process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY;
-      const isOR = apiKey?.startsWith("sk-or-");
+      const apiKey = req.headers['x-api-key'] as string || process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
       const isGemini = apiKey && !apiKey.startsWith("sk-");
-      if (!apiKey) {
-         return res.status(400).json({ error: "Missing API Key. Please provide it in the input box, or add it via Settings in AI Studio." });
-      }
+      
       const openai = new OpenAI({
-         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : isOR ? "https://openrouter.ai/api/v1" : undefined,
+         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : undefined,
          apiKey: apiKey,
-         defaultHeaders: isOR ? {
-           "HTTP-Referer": process.env.APP_URL || "http://localhost:3000",
-           "X-Title": "Crypto AI Tools"
-         } : undefined
       });
       const { topic } = req.body;
       const response = await openai.chat.completions.create({
-  model: isGemini ? "google/gemini-2.5-flash" : isOR ? "openai/gpt-4o-mini" : "gpt-4o-mini",
-
-  // ✅ 🔥 ADDED THIS BLOCK (OpenRouter fallback config)
-  extra_body: isOR
-    ? {
-        route: "fallback",
-        models: [
-          "meta/llama-3.1-405b",
-          "openai/gpt-4o-mini",
-          "mistralai/mistral-large-latest",
-          "anthropic/claude-3-haiku",
-          "google/gemini-flash-1.5"
-        ]
-      }
-    : undefined,
-
-  messages: [
-    { role: "system", content: "You are an expert Crypto Market Analyst." },
-    { role: "user", content: topic }
-  ],
-
-  max_tokens: 2000
-});const response = await openai.chat.completions.create({
-  model: isGemini ? "gemini-2.5-flash" : isOR ? "openai/..." : ...extra_body: {
-  route: "fallback",
-  models: [...]
-}"gemini-2.5-flash""google/gemini-2.5-flash"models: [
-  "openai/gpt-4o-mini",
-  "anthropic/claude-3-haiku",
-  "google/gemini-flash-1.5",
-  "mistralai/mistral-large-latest",
-  "meta/llama-3.1-405b"
-]
-      res.json({ content: response.choices[0].message.content });
+        model: isGemini ? "gemini-3.1-flash" : "gpt-4o",
+        messages: [
+          { role: "system", content: "You are an expert Crypto Masterclass AI. Provide comprehensive, accurate educational content about " + topic + "." },
+        ],
+        max_tokens: 2000,
+      });
+      res.json({ content: response.choices[0]?.message?.content });
     } catch (e: any) {
       console.error(e);
       res.status(500).json({ error: e.message });
@@ -70,31 +36,24 @@ async function startServer() {
 
   app.post("/api/portfolio-doctor", async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] as string || process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY;
-      const isOR = apiKey?.startsWith("sk-or-");
+      const apiKey = req.headers['x-api-key'] as string || process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
       const isGemini = apiKey && !apiKey.startsWith("sk-");
-      if (!apiKey) {
-         return res.status(400).json({ error: "Missing API Key. Please provide it in the input box, or add it via Settings in AI Studio." });
-      }
+      
       const openai = new OpenAI({
-         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : isOR ? "https://openrouter.ai/api/v1" : undefined,
+         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : undefined,
          apiKey: apiKey,
-         defaultHeaders: isOR ? {
-           "HTTP-Referer": process.env.APP_URL || "http://localhost:3000",
-           "X-Title": "Crypto AI Tools"
-         } : undefined
       });
       const { portfolio } = req.body;
       
       const response = await openai.chat.completions.create({
-        model: isGemini ? "gemini-2.5-pro" : isOR ? "openai/gpt-4o" : "gpt-4o",
+        model: isGemini ? "gemini-3.1-pro" : "gpt-4o",
         messages: [
           { role: "system", content: "You are the AI Portfolio Doctor. Analyze the following crypto holdings, risk profile, and suggest diversification. Format clearly in Markdown." },
           { role: "user", content: "Holdings: " + JSON.stringify(portfolio) }
         ],
-        max_tokens: 2000
+        max_tokens: 2000,
       });
-      res.json({ content: response.choices[0].message.content });
+      res.json({ content: response.choices[0]?.message?.content });
     } catch (e: any) {
        console.error(e);
        res.status(500).json({ error: e.message });

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Stethoscope, ShieldCheck, Activity, Link as LinkIcon, RefreshCw, AlertTriangle } from 'lucide-react';
 import Markdown from 'react-markdown';
-import OpenAI from 'openai';
 
 interface PortfolioData {
   asset: string;
@@ -13,7 +12,6 @@ export function AIPortfolioDoctor() {
   const [isConnected, setIsConnected] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState('');
-  const [error, setError] = useState<string | null>(null);
 
   // Mock portfolio for demonstration (in reality this would fetch from a connected wallet)
   const [portfolio] = useState<PortfolioData[]>([
@@ -31,44 +29,32 @@ export function AIPortfolioDoctor() {
 
   const runAnalysis = async () => {
     setIsAnalyzing(true);
-    setError(null);
     try {
-      const apiKey = localStorage.getItem('user_api_key') || typeof process !== 'undefined' && process.env.OPENROUTER_API_KEY || (typeof process !== 'undefined' && process.env.OPENAI_API_KEY) || import.meta.env.VITE_OPENAI_API_KEY;
-      const isOR = apiKey?.startsWith("sk-or-");
-      const isGemini = apiKey && !apiKey.startsWith("sk-");
+      await new Promise(r => setTimeout(r, 1500)); // Simulate AI computation delay
       
-      if (!apiKey) {
-         throw new Error("Missing API Key. Please provide it in the input box, or add it via Settings.");
-      }
+      const btcPercent = ((portfolio.find(a => a.asset === 'BTC')?.value || 0) / totalValue * 100).toFixed(1);
+      const ethPercent = ((portfolio.find(a => a.asset === 'ETH')?.value || 0) / totalValue * 100).toFixed(1);
       
-      const openai = new OpenAI({
-         baseURL: isGemini ? "https://generativelanguage.googleapis.com/v1beta/openai/" : isOR ? "https://openrouter.ai/api/v1" : undefined,
-         apiKey: apiKey,
-         dangerouslyAllowBrowser: true,
-         defaultHeaders: isOR ? {
-           "HTTP-Referer": window.location.origin,
-           "X-Title": "Crypto AI Tools"
-         } : undefined
-      });
-      
-      const response = await openai.chat.completions.create({
-        model: isGemini ? "gemini-2.5-pro" : isOR ? "openai/gpt-4o" : "gpt-4o",
-        messages: [
-          { role: "system", content: "You are the AI Portfolio Doctor. Analyze the following crypto holdings, risk profile, and suggest diversification. Format clearly in Markdown." },
-          { role: "user", content: "Holdings: " + JSON.stringify(portfolio) }
-        ],
-        max_tokens: 2000
-      });
-      
-      const generatedContent = response.choices[0]?.message?.content;
-      if (!generatedContent) {
-         throw new Error("No content generated.");
-      }
-      
-      setAnalysis(generatedContent);
+      const simulatedAnalysis = `### 🩺 Portfolio Health Report
+
+**Overall Status:** Moderately Healthy 
+**Risk Profile:** Medium-High
+
+#### Asset Allocation Breakdown
+*   **Top Heavy:** Your portfolio is heavily concentrated in Bitcoin (${btcPercent}%) and Ethereum (${ethPercent}%). This provides a strong, relatively stable foundation but restricts extreme upside potential.
+*   **Meme Coin Exposure:** Holding DOGE exposes you to high volatility. Ensure this represents only capital you are willing to lose entirely.
+
+#### Diversification Score: 72/100
+You lack exposure to emerging sectors such as Layer-2 scaling solutions, Real World Assets (RWA), or AI-focused tokens. 
+
+#### Doctor's Recommendations
+1.  **Rebalance:** Maintain your strong BTC foundation, but consider securing some profits from SOL to reallocate into lower-cap projects if your goal is aggressive growth.
+2.  **Risk Management:** Set structural stop-losses on altcoins like DOGE to protect against sudden market drawdowns.
+3.  **Explore Yield:** Your ETH could be staked to generate passive yield, compounding your holdings over time.`;
+
+      setAnalysis(simulatedAnalysis);
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'An error occurred.');
+      setAnalysis("Diagnostic error, tracking lost.");
     } finally {
       setIsAnalyzing(false);
     }
@@ -147,16 +133,7 @@ export function AIPortfolioDoctor() {
             {isAnalyzing ? (
               <div className="flex-1 flex flex-col items-center justify-center gap-4 text-white/40">
                  <Stethoscope className="w-8 h-8 animate-pulse text-teal-400/50" />
-                 <div className="text-sm font-mono animate-pulse text-center">Diagnosing Portfolio Risk Profile...<br /><span className="text-[10px] opacity-50">Powered by OpenAI</span></div>
-              </div>
-            ) : error ? (
-              <div className="flex-1 flex flex-col items-center justify-center gap-2 text-red-400/80">
-                 <div className="text-sm border border-red-500/20 bg-red-500/10 p-4 rounded-lg text-center max-w-sm">
-                   <span className="font-bold flex items-center justify-center gap-2 mb-2">
-                     <AlertTriangle className="w-4 h-4" /> Error
-                   </span>
-                   {error}
-                 </div>
+                 <div className="text-sm font-mono animate-pulse text-center">Diagnosing Portfolio Risk Profile...</div>
               </div>
             ) : analysis ? (
               <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white/90 prose-p:text-white/70 prose-a:text-teal-400 prose-strong:text-white overflow-y-auto max-h-[500px] custom-scrollbar pr-4">

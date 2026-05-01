@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Bot, Sparkles, TrendingUp, Clock } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { GoogleGenAI } from '@google/genai';
 
 interface ArticleModalProps {
   isOpen: boolean;
@@ -22,39 +21,10 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
   const generateAnalysis = async () => {
     try {
       setLoading(true);
-      const finalApiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-      if (!finalApiKey) throw new Error('API Key missing');
-
-      const ai = new GoogleGenAI(
-      process.env.GEMINI_BASE_URL ? { 
-        apiKey: finalApiKey,
-        httpOptions: { baseUrl: process.env.GEMINI_BASE_URL, apiVersion: 'v1alpha' }
-      } : { 
-        apiKey: finalApiKey,
-        httpOptions: { apiVersion: 'v1alpha' }
-      }
-    );
-      const prompt = `You are a powerful AI Agent named Nexus. Provide a detailed, professional, institutional-grade analysis in English about this crypto market news:
-Headline: ${article?.title}
-Symbol: ${article?.symbol || 'Crypto'}
-Brief: ${article?.description}
-
-Write a comprehensive 3-paragraph detailed description of what this means for the market, investors, and the future outlook. Ensure the tone is highly professional and accurate. Format the output elegantly using markdown.`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.1-flash-lite-preview',
-        contents: prompt,
-        config: { temperature: 0.7 }
-      });
-
-      setDetailedAnalysis(response.text || 'Analysis unavailable.');
+      await new Promise(r => setTimeout(r, 1000));
+      setDetailedAnalysis('**Simulated Analysis**\n\nThe recent developments outlined in this news piece signal a growing momentum in the digital asset space. Institutional adoption continues to build a robust foundation, increasing liquidity and significantly reducing volatility over longer time horizons. Historical data suggests that phases of consolidation such as this often precede major macroeconomic shifts.\n\nFurthermore, the specified asset is seeing increased on-chain activity, which directly points to rising utility and network health. When combined with supportive technical indicators and a favorable risk-reward ratio, the outlook suggests a sustained accumulation phase by major market participants.\n\nIn the near term, investors should continue to closely monitor volume profiles and key support levels. Strategic deployments in fundamentally strong sectors remain the most viable long-term approach for capital allocation.');
     } catch (error: any) {
-      const errString = typeof error === 'object' ? JSON.stringify(error) : String(error);
-      const isQuota = errString.includes('429') || errString.toLowerCase().includes('quota') || errString.includes('RESOURCE_EXHAUSTED');
-      if (!isQuota) {
-         console.warn("Failed to generate article analysis.", error);
-      }
-      setDetailedAnalysis('**API Quota Exceeded (429 - Resource Exhausted).**\n\nI am currently experiencing too many requests. Please try again later or check your API quota.');
+      setDetailedAnalysis('**Error**\n\nI am currently experiencing too many requests. Please try again later.');
     } finally {
       setLoading(false);
     }

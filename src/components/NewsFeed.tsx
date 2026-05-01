@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Clock, Activity, Sparkles, TrendingUp, TrendingDown, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { GoogleGenAI, Type } from '@google/genai';
 import { ArticleModal } from './ArticleModal';
 import { AllNewsModal } from './AllNewsModal';
 import { getCryptoLogo } from '../lib/logos';
@@ -82,123 +81,9 @@ export function NewsFeed() {
   useEffect(() => {
     const fetchLiveNews = async () => {
       try {
-        const finalApiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-        if (!finalApiKey) {
-           throw new Error('GEMINI_API_KEY missing');
-        }
-
-        // 1. Fetch live market data to find top 5 gainers for a broader news perspective
-        const tickerRes = await fetch('https://api.binance.com/api/v3/ticker/24hr');
-        const tickerData = await tickerRes.json();
-        
-        const topGainers = tickerData
-          .filter((t: any) => t.symbol.endsWith('USDT') && parseFloat(t.quoteVolume) > 10000000)
-          .sort((a: any, b: any) => parseFloat(b.priceChangePercent) - parseFloat(a.priceChangePercent))
-          .slice(0, 5); // 1 Featured, 4 list items
-          
-        const gainersData = topGainers.map((t: any) => ({
-             symbol: t.symbol,
-             price: parseFloat(t.lastPrice).toFixed(4),
-             changePercent: parseFloat(t.priceChangePercent).toFixed(2) + '%',
-        }));
-
-        // 2. Generate professional news text via Nexus AI
-        const ai = new GoogleGenAI(
-      process.env.GEMINI_BASE_URL ? { 
-        apiKey: finalApiKey,
-        httpOptions: { baseUrl: process.env.GEMINI_BASE_URL, apiVersion: 'v1alpha' }
-      } : { 
-        apiKey: finalApiKey,
-        httpOptions: { apiVersion: 'v1alpha' }
-      }
-    );
-        const textResponse = await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite-preview',
-          contents: `Create highly professional, institutional-grade English news updates for the top 5 crypto gainers right now: ${JSON.stringify(gainersData)}. Act as "Nexus AI", an elite autonomous market analyst. Highlight their powerful price changes and momentum. Do not use generic placeholders. Ensure deep, analytical full textual updates.`,
-          config: {
-            temperature: 0.7,
-            responseMimeType: "application/json",
-            responseSchema: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  title: { type: Type.STRING, description: "Professional catchy news headline in English" },
-                  description: { type: Type.STRING, description: "Detailed 2-3 sentence professional market momentum summary in English" },
-                  symbol: { type: Type.STRING, description: "The coin symbol" }
-                },
-                required: ["title", "description", "symbol"]
-              }
-            }
-          }
-        });
-
-        const generatedData = JSON.parse(textResponse.text || '[]');
-        
-        if (generatedData && generatedData.length >= 1) {
-          // 3. Generate perfectly matched 16:9 image ONLY for the featured article (index 0) to save speed/tokens
-          const articles = await Promise.all(
-            generatedData.slice(0, 5).map(async (item: any, idx: number) => {
-              const safeImages = [
-                'https://images.unsplash.com/photo-1605792657660-596af9009e82?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1640340434855-6084b1f4901c?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1639762681485-074b7f4ec651?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1519162584292-56dfc9eb5db4?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1618172193622-ae2d025f4032?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1621932953986-15fcfdadb174?q=80&w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1629339942165-4424ee437b6c?q=80&w=400&auto=format&fit=crop'
-              ];
-              let imageUrl = safeImages[Math.floor(Math.random() * safeImages.length)];
-              
-              if (idx === 0) {
-                try {
-                  const imageRes = await ai.models.generateImages({
-                    model: 'imagen-3.0-generate-002',
-                    prompt: `A highly professional, futuristic, and cutting-edge 3D render representing the crypto token ${item.symbol}. Theme: Institutional finance, neon cyber aesthetic, dark background. No text.`,
-                    config: {
-                      numberOfImages: 1,
-                      aspectRatio: "16:9"
-                    }
-                  });
-                  
-                  const base64Image = imageRes.generatedImages?.[0]?.image?.imageBytes;
-                  if (base64Image) {
-                    imageUrl = `data:image/jpeg;base64,${base64Image}`;
-                  }
-                } catch (imgError) {
-                  // Fallback for featured image
-                  imageUrl = 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=1600&auto=format&fit=crop';
-                }
-              }
-              
-              const tokenData = gainersData.find((g: any) => g.symbol === item.symbol);
-              return {
-                id: `nexus-${item.symbol}-${Date.now()}-${idx}`,
-                source: 'NEXUS AI INTELLIGENCE',
-                title: item.title,
-                description: item.description,
-                symbol: item.symbol,
-                changePercent: tokenData ? parseFloat(tokenData.changePercent) : undefined,
-                imageUrl: imageUrl,
-                url: '#',
-                published_on: Math.floor(Date.now() / 1000) - (idx * 900)
-              };
-            })
-          );
-          
-          setNews(articles);
-        } else {
-          setNews(FALLBACK_NEWS);
-        }
-
+        await new Promise(r => setTimeout(r, 1000));
+        setNews(FALLBACK_NEWS);
       } catch (error: any) {
-        const errString = typeof error === 'object' ? JSON.stringify(error) : String(error);
-        const isQuota = errString.includes('429') || errString.toLowerCase().includes('quota') || errString.includes('RESOURCE_EXHAUSTED');
-        if (!isQuota) {
-          console.warn("Failed to fetch live news, falling back to cached content.");
-        }
         setNews(FALLBACK_NEWS);
       } finally {
         setLoading(false);
@@ -206,8 +91,6 @@ export function NewsFeed() {
     };
 
     fetchLiveNews();
-    const interval = setInterval(fetchLiveNews, 7200000); // 2 hours
-    return () => clearInterval(interval);
   }, []);
 
   const formatTimeAgo = (timestamp: number) => {

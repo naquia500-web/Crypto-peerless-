@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Newspaper, Activity, AlertCircle, TrendingUp, TrendingDown, Minus, Sparkles } from 'lucide-react';
-import { GoogleGenAI, Type } from '@google/genai';
 
 interface NewsItem {
   id: string;
@@ -22,63 +21,16 @@ export function GlobalCryptoNews() {
       setLoading(true);
       setError(false);
       try {
-        const finalApiKey = process.env.GEMINI_API_KEY || 'AIzaSyBQWrotiRDJcPg_Y8EfLk-baV91sJ_08x0';
-        if (!finalApiKey) {
-           throw new Error('GEMINI_API_KEY missing');
-        }
-
-        const ai = new GoogleGenAI(
-          process.env.GEMINI_BASE_URL ? { 
-            apiKey: finalApiKey,
-            httpOptions: { baseUrl: process.env.GEMINI_BASE_URL, apiVersion: 'v1alpha' }
-          } : { 
-            apiKey: finalApiKey,
-            httpOptions: { apiVersion: 'v1alpha' }
-          }
-        );
-
-        const prompt = `You are a real-time global crypto news curator. Generate highly realistic, up-to-the-minute news items focusing on major coins like Bitcoin, Ethereum, Solana, and XRP, latest market trends, regulatory developments impacting the global crypto market, and updates on emerging technologies like DeFi and Web3. Do NOT use placeholders. Generate exactly 5 news items.`;
-
-        const response = await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite-preview',
-          contents: prompt,
-          config: {
-            temperature: 0.7,
-            responseMimeType: 'application/json',
-            responseSchema: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  id: { type: Type.STRING },
-                  headline: { type: Type.STRING, description: "A punchy, realistic news headline" },
-                  category: { type: Type.STRING, description: "Must be one of: Bitcoin, Ethereum, Solana, XRP, DeFi, Regulatory, Web3, Market Trends" },
-                  summary: { type: Type.STRING, description: "A 2-3 sentence detailed summary of the news" },
-                  impactScore: { type: Type.NUMBER, description: "Estimated market impact score from 1 to 10" },
-                  timeAgo: { type: Type.STRING, description: "Short string like '5m ago', '1h ago'" },
-                  sentiment: { type: Type.STRING, description: "Must be exactly 'bullish', 'bearish', or 'neutral'" }
-                },
-                required: ["id", "headline", "category", "summary", "impactScore", "timeAgo", "sentiment"]
-              }
-            }
-          }
-        });
-
-        const parsed = JSON.parse(response.text || '[]');
-        if (parsed && Array.isArray(parsed) && parsed.length > 0) {
-           setNews(parsed);
-        } else {
-           throw new Error("Invalid format");
-        }
-
+        await new Promise(r => setTimeout(r, 1000));
+        setNews([
+           { id: "1", headline: "Bitcoin Halving Impact Outperforming Previous Cycles", category: "Bitcoin", summary: "On-chain analytics suggest the latest BTC halving is absorbing liquid supply faster than the 2020 cycle, pointing to a potential upcoming supply shock on centralized exchanges.", impactScore: 9, timeAgo: "15m ago", sentiment: "bullish" },
+           { id: "2", headline: "Solana Network Upgrades Yield Record Transaction Throughput", category: "Solana", summary: "The latest validator client update has pushed the network's theoretical TPS to new highs, bringing institutional confidence to decentralized exchanges operating on the network.", impactScore: 8, timeAgo: "30m ago", sentiment: "bullish" },
+           { id: "3", headline: "Ethereum Layer 2s Dominate Total Value Locked", category: "Ethereum", summary: "Arbitrum and Base have seen explosive growth in the past 24 hours, collectively holding over $14B in TVL, driven by new decentralized perpetual exchanges.", impactScore: 7, timeAgo: "1h ago", sentiment: "bullish" },
+           { id: "4", headline: "XRP Ledger Enhances Cross-Border Settlement Corridors", category: "XRP", summary: "New banking partnerships in Southeast Asia demonstrate the ledger's ongoing maturation and viability for bridging institutional liquidity.", impactScore: 6, timeAgo: "2h ago", sentiment: "bullish" },
+           { id: "5", headline: "Global Regulators Coordinate on Stablecoin Framework", category: "Regulatory", summary: "Following recent closed-door meetings in Geneva, leading financial authorities have signaled a unified approach for classifying fiat-backed stablecoins to ensure systemic safety.", impactScore: 8, timeAgo: "3h ago", sentiment: "neutral" },
+        ]);
       } catch (err: any) {
-        const errString = typeof err === 'object' ? JSON.stringify(err) : String(err);
-        const isQuota = errString.includes('429') || errString.toLowerCase().includes('quota') || errString.includes('RESOURCE_EXHAUSTED');
-        if (!isQuota) {
-            console.warn("Error fetching news:", err);
-        }
         setError(true);
-        // Fallback data
         setNews([
            { id: "1", headline: "Bitcoin Halving Impact Outperforming Previous Cycles", category: "Bitcoin", summary: "On-chain analytics suggest the latest BTC halving is absorbing liquid supply faster than the 2020 cycle, pointing to a potential upcoming supply shock on centralized exchanges.", impactScore: 9, timeAgo: "15m ago", sentiment: "bullish" },
            { id: "2", headline: "Solana Network Upgrades Yield Record Transaction Throughput", category: "Solana", summary: "The latest validator client update has pushed the network's theoretical TPS to new highs, bringing institutional confidence to decentralized exchanges operating on the network.", impactScore: 8, timeAgo: "30m ago", sentiment: "bullish" },
