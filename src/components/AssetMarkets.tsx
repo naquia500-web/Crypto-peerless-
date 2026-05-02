@@ -12,32 +12,48 @@ export function AssetMarkets() {
     'Gate.io': 'https://www.google.com/s2/favicons?domain=gate.io&sz=128',
   };
 
-  const INITIAL_MARKETS = [
-    { rank: 1, exchange: 'Binance', pair: 'BTC/USDT', defaultPrice: 76593.69, depth: '$26.7M / $21.4M', volume: '$1.27B', volPct: '3.31%', liquidity: 1191, liqPct: 95, url: 'https://www.binance.com/en/trade/BTC_USDT', offset: 0 },
-    { rank: 2, exchange: 'Binance', pair: 'BTC/USDC', defaultPrice: 76592.86, depth: '$8.1M / $4.2M', volume: '$618.7M', volPct: '1.61%', liquidity: 945, liqPct: 80, url: 'https://www.binance.com/en/trade/BTC_USDC', offset: -1.5 },
-    { rank: 3, exchange: 'Coinbase', pair: 'BTC/USD', defaultPrice: 76612.93, depth: '$17.8M / $12.7M', volume: '$652.5M', volPct: '1.70%', liquidity: 904, liqPct: 75, url: 'https://exchange.coinbase.com/trade/BTC-USD', offset: 8.2 },
-    { rank: 4, exchange: 'Upbit', pair: 'BTC/KRW', defaultPrice: 77080.93, depth: '$238K / $207K', volume: '$100.3M', volPct: '0.26%', liquidity: 605, liqPct: 40, url: 'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-BTC', offset: 250.5 },
-    { rank: 5, exchange: 'OKX', pair: 'BTC/USDT', defaultPrice: 76598.70, depth: '$2.7M / $4.1M', volume: '$337.2M', volPct: '0.88%', liquidity: 849, liqPct: 65, url: 'https://www.okx.com/trade-spot/btc-usdt', offset: 4.1 },
-    { rank: 6, exchange: 'Bybit', pair: 'BTC/USDT', defaultPrice: 76580.00, depth: '$14.6M / $16.7M', volume: '$1.00B', volPct: '2.61%', liquidity: 853, liqPct: 67, url: 'https://www.bybit.com/en-US/trade/spot/BTC/USDT', offset: -10.2 },
-  ];
+  const MARKETS_DATA: Record<string, any[]> = {
+    'Spot': [
+      { rank: 1, exchange: 'Binance', pair: 'BTC/USDT', defaultPrice: 76593.69, depth: '$26.7M / $21.4M', volume: '$1.27B', volPct: '3.31%', liquidity: 1191, liqPct: 95, url: 'https://www.binance.com/en/trade/BTC_USDT', offset: 0 },
+      { rank: 2, exchange: 'Binance', pair: 'BTC/USDC', defaultPrice: 76592.86, depth: '$8.1M / $4.2M', volume: '$618.7M', volPct: '1.61%', liquidity: 945, liqPct: 80, url: 'https://www.binance.com/en/trade/BTC_USDC', offset: -1.5 },
+      { rank: 3, exchange: 'Coinbase', pair: 'BTC/USD', defaultPrice: 76612.93, depth: '$17.8M / $12.7M', volume: '$652.5M', volPct: '1.70%', liquidity: 904, liqPct: 75, url: 'https://exchange.coinbase.com/trade/BTC-USD', offset: 8.2 },
+      { rank: 4, exchange: 'Upbit', pair: 'BTC/KRW', defaultPrice: 77080.93, depth: '$238K / $207K', volume: '$100.3M', volPct: '0.26%', liquidity: 605, liqPct: 40, url: 'https://upbit.com/exchange?code=CRIX.UPBIT.KRW-BTC', offset: 250.5 },
+      { rank: 5, exchange: 'OKX', pair: 'BTC/USDT', defaultPrice: 76598.70, depth: '$2.7M / $4.1M', volume: '$337.2M', volPct: '0.88%', liquidity: 849, liqPct: 65, url: 'https://www.okx.com/trade-spot/btc-usdt', offset: 4.1 },
+      { rank: 6, exchange: 'Bybit', pair: 'BTC/USDT', defaultPrice: 76580.00, depth: '$14.6M / $16.7M', volume: '$1.00B', volPct: '2.61%', liquidity: 853, liqPct: 67, url: 'https://www.bybit.com/en-US/trade/spot/BTC/USDT', offset: -10.2 },
+    ],
+    'Perpetual': [
+      { rank: 1, exchange: 'Binance', pair: 'BTC/USDT', defaultPrice: 76595.12, depth: '$89.2M / $92.4M', volume: '$12.4B', volPct: '32.1%', liquidity: 1450, liqPct: 98, url: 'https://www.binance.com/en/futures/BTC_USDT', offset: 1.5 },
+      { rank: 2, exchange: 'Bybit', pair: 'BTC/USDT', defaultPrice: 76593.80, depth: '$45.1M / $42.2M', volume: '$8.2B', volPct: '21.3%', liquidity: 1200, liqPct: 88, url: 'https://www.bybit.com/en-US/trade/linear/BTCUSDT', offset: 0.1 },
+      { rank: 3, exchange: 'OKX', pair: 'BTC/USDT', defaultPrice: 76594.20, depth: '$38.7M / $36.5M', volume: '$6.5B', volPct: '16.8%', liquidity: 1100, liqPct: 84, url: 'https://www.okx.com/trade-swap/btc-usdt-swap', offset: 0.5 },
+      { rank: 4, exchange: 'Bitget', pair: 'BTC/USDT', defaultPrice: 76591.90, depth: '$22.4M / $25.1M', volume: '$4.1B', volPct: '10.6%', liquidity: 980, liqPct: 76, url: 'https://www.bitget.com/mix/usdt/BTCUSDT', offset: -1.8 },
+      { rank: 5, exchange: 'Gate.io', pair: 'BTC/USDT', defaultPrice: 76596.10, depth: '$12.1M / $15.4M', volume: '$2.8B', volPct: '7.2%', liquidity: 850, liqPct: 65, url: 'https://www.gate.io/futures/USDT/BTC_USDT', offset: 2.3 },
+    ],
+    'Futures': [
+      { rank: 1, exchange: 'Binance', pair: 'BTC/USD COIN-M', defaultPrice: 76650.00, depth: '$18.4M / $15.2M', volume: '$1.8B', volPct: '4.7%', liquidity: 950, liqPct: 80, url: 'https://www.binance.com/en/delivery/btc_usd', offset: 56.3 },
+      { rank: 2, exchange: 'OKX', pair: 'BTC/USD', defaultPrice: 76645.50, depth: '$12.2M / $10.1M', volume: '$1.2B', volPct: '3.1%', liquidity: 820, liqPct: 70, url: 'https://www.okx.com/trade-futures/btc-usd', offset: 51.8 },
+      { rank: 3, exchange: 'Bybit', pair: 'BTC/USD Inverse', defaultPrice: 76648.20, depth: '$9.5M / $11.2M', volume: '$800.5M', volPct: '2.1%', liquidity: 780, liqPct: 65, url: 'https://www.bybit.com/en-US/trade/inverse/BTCUSD', offset: 54.5 },
+    ]
+  };
 
+  const [activeTab, setActiveTab] = useState('Spot');
   const [liveData, setLiveData] = useState<Record<number, { price: number, status: 'up' | 'down' | 'neutral' }>>({});
-  const [activeTab, setActiveTab] = useState('Futures');
 
   useEffect(() => {
-    // Populate initial data
+    // Populate initial data based on active tab
     const initial: Record<number, { price: number, status: 'up' | 'down' | 'neutral' }> = {};
-    INITIAL_MARKETS.forEach(m => {
+    MARKETS_DATA[activeTab].forEach(m => {
       initial[m.rank] = { price: m.defaultPrice, status: 'neutral' };
     });
     setLiveData(initial);
 
     const wsUrl = `wss://stream.binance.com:9443/ws/!miniTicker@arr`;
     let ws: WebSocket | null = null;
+    let isSubscribed = true;
     
     const connectWs = () => {
       ws = new WebSocket(wsUrl);
       ws.onmessage = (event) => {
+        if (!isSubscribed) return;
         const data = JSON.parse(event.data);
         if (Array.isArray(data)) {
           const btcData = data.find((item: any) => item.s === 'BTCUSDT');
@@ -47,8 +63,8 @@ export function AssetMarkets() {
               const updated = { ...prev };
               let hasChanges = false;
               
-              INITIAL_MARKETS.forEach(m => {
-                const newPrice = basePrice + m.offset + (Math.random() * 2 - 1); // add slight jitter for realism across exchanges
+              MARKETS_DATA[activeTab].forEach(m => {
+                const newPrice = basePrice + m.offset + (Math.random() * 2 - 1); 
                 const oldPrice = updated[m.rank]?.price || m.defaultPrice;
                 
                 if (Math.abs(newPrice - oldPrice) > 0.01) {
@@ -66,12 +82,15 @@ export function AssetMarkets() {
         }
       };
       
-      ws.onclose = () => setTimeout(connectWs, 5000);
+      ws.onclose = () => { if (isSubscribed) setTimeout(connectWs, 5000); };
     };
     
     connectWs();
-    return () => { if (ws) { ws.onclose = null; ws.close(); } };
-  }, []);
+    return () => { 
+      isSubscribed = false;
+      if (ws) { ws.onclose = null; ws.close(); } 
+    };
+  }, [activeTab]);
 
   return (
     <section className="flex flex-col gap-4 mt-8">
@@ -104,7 +123,7 @@ export function AssetMarkets() {
             </tr>
           </thead>
           <tbody>
-            {INITIAL_MARKETS.map((row) => {
+            {MARKETS_DATA[activeTab].map((row) => {
               const current = liveData[row.rank] || { price: row.defaultPrice, status: 'neutral' };
               const colorClass = current.status === 'up' ? 'text-green-600 bg-green-50' : current.status === 'down' ? 'text-red-600 bg-red-50' : 'text-slate-800 bg-slate-50';
               

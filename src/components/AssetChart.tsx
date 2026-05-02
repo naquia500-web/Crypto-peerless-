@@ -9,13 +9,10 @@ interface ChartData {
   volume: number;
 }
 
-const SUB_NAV = ['Overview', 'Markets', 'News', 'Community', 'Yield', 'Market Cycles', 'Treasuries', 'About'];
-
 export function AssetChart() {
   const [data, setData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(true);
   const [timeframe, setTimeframe] = useState<'24h' | '1W' | '1M' | '1Y' | 'All'>('24h');
-  const [activeTab, setActiveTab] = useState('Overview');
   const [chartMode, setChartMode] = useState<'Price' | 'MarketCap' | 'TradingView'>('Price');
   const [btcAmount, setBtcAmount] = useState('1');
 
@@ -73,28 +70,6 @@ export function AssetChart() {
 
   return (
     <div className="bg-white text-slate-900 rounded-xl overflow-hidden font-sans shadow-sm w-full">
-      {/* Sub Navigation */}
-      <div className="flex items-center justify-between border-b border-slate-200 px-6 py-1 overflow-x-auto hide-scrollbar">
-        <div className="flex gap-6">
-          {SUB_NAV.map((nav) => (
-            <button 
-              key={nav} 
-              onClick={() => setActiveTab(nav)}
-              className={`text-[13px] font-semibold whitespace-nowrap py-3 transition-colors ${
-                activeTab === nav 
-                  ? 'text-blue-600 border-b-[3px] border-blue-600' 
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              {nav}
-            </button>
-          ))}
-        </div>
-        <button className="hidden sm:block ml-4 bg-blue-600 hover:bg-blue-700 text-slate-900 px-4 py-1.5 rounded-lg text-[13px] font-bold transition-colors">
-          Buy BTC
-        </button>
-      </div>
-
       <div className="p-6 md:p-8">
         {/* Header Title Section */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
@@ -186,6 +161,7 @@ export function AssetChart() {
         <div className="h-[400px] w-full relative pt-2">
           {chartMode === 'TradingView' ? (
              <iframe 
+               key={`tv-${timeframe}`}
                src={`https://s.tradingview.com/widgetembed/?frameElementId=tradingview_widget&symbol=BINANCE%3ABTCUSDT&interval=${timeframe === '24h' ? '15' : timeframe === '1W' ? '60' : timeframe === '1M' ? 'D' : 'W'}&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=%5B%5D&theme=light&style=1&timezone=Etc%2FUTC&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en`}
                className="w-full h-full border-0"
                title="TradingView Chart"
