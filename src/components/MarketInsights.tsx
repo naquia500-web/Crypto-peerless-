@@ -99,6 +99,10 @@ export function MarketInsights() {
 
   useEffect(() => {
     fetchAIInsights();
+    const interval = setInterval(() => {
+      fetchAIInsights();
+    }, 60 * 60 * 1000); // Live updates every 1 hour
+    return () => clearInterval(interval);
   }, []);
 
   const handleAnswerSelect = (index: number) => {
@@ -131,10 +135,10 @@ export function MarketInsights() {
             <GraduationCap className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
               Market Insights
             </h2>
-            <p className="text-[11px] text-slate-500 uppercase tracking-widest font-mono">
+            <p className="text-[11px] text-[#787B86] uppercase tracking-widest font-mono">
               Learn & Earn Knowledge
             </p>
           </div>
@@ -145,7 +149,7 @@ export function MarketInsights() {
               {isFetchingVideos ? 'AI Analyzing...' : 'AI Live Tracker'}
             </span>
             {!isFetchingVideos && (
-              <span className="text-[10px] text-slate-900/40 font-mono ml-2">
+              <span className="text-[10px] text-white/40 font-mono ml-2">
                 Last updated {lastUpdated.toLocaleTimeString()}
               </span>
             )}
@@ -159,39 +163,27 @@ export function MarketInsights() {
             <h3 className="text-sm font-bold uppercase tracking-widest opacity-70">Short Lessons (&lt; 1 min)</h3>
             {isFetchingVideos && <Loader2 className="w-3 h-3 text-blue-500 animate-spin" />}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {videos.map((video) => (
+          <div className="grid grid-cols-1 gap-4">
+            {videos.slice(0, 1).map((video) => (
               <div 
                 key={video.id}
-                className="group relative flex flex-col gap-3 cursor-pointer"
+                className="group relative flex flex-col gap-3 cursor-pointer bg-[#1E222D] p-4 rounded-xl border border-[#2A2E39] hover:border-blue-500/30 transition-colors"
                 onClick={() => setActiveVideo(video.id)}
               >
-                <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-50 border border-slate-200 group-hover:border-blue-500/30 transition-colors">
-                  <img 
-                    src={video.thumbnail} 
-                    alt={video.title} 
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity transform group-hover:scale-105 duration-500 mix-blend-lighten"
-                  />
-                  <div className="absolute inset-0 bg-slate-50 flex items-center justify-center group-hover:bg-transparent transition-colors">
-                     <div className="flex flex-col items-center justify-center gap-2">
-                       <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center backdrop-blur-md group-hover:bg-blue-500 transition-colors">
-                         <BookOpen className="w-4 h-4 text-slate-900" />
-                       </div>
-                     </div>
-                  </div>
-                  <div className="absolute bottom-2 right-2 bg-black/80 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold text-slate-900 border border-slate-200">
-                    Image Update
-                  </div>
-                </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-700 group-hover:text-blue-400 transition-colors leading-tight line-clamp-2">
-                    {video.title}
-                  </h4>
-                  <p className="text-[10px] text-slate-500 mt-1 line-clamp-2 group-hover:text-slate-500 transition-colors">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center">
+                      <BookOpen className="w-4 h-4 text-blue-500" />
+                    </div>
+                    <h4 className="text-sm font-bold text-[#B2B5BE] group-hover:text-blue-400 transition-colors leading-tight">
+                      {video.title}
+                    </h4>
+                  </div>
+                  <p className="text-xs text-[#787B86] line-clamp-2 transition-colors">
                     {video.description}
                   </p>
-                  <div className="text-[11px] text-slate-900/40 mt-1 font-mono">
-                    {video.views} views
+                  <div className="text-[11px] text-white/40 mt-3 font-mono">
+                    {video.views} views • {video.duration} runtime
                   </div>
                 </div>
               </div>
@@ -207,13 +199,13 @@ export function MarketInsights() {
             <h3 className="text-sm font-bold uppercase tracking-widest text-blue-400 flex items-center gap-2">
               <HelpCircle className="w-4 h-4" /> Crypto Quiz
             </h3>
-            <span className="text-[10px] font-mono opacity-50 border border-slate-200 px-2 py-1 rounded-full">
+            <span className="text-[10px] font-mono opacity-50 border border-[#2A2E39] px-2 py-1 rounded-full">
               Q{currentQuestion + 1} / {QUIZ_QUESTIONS.length}
             </span>
           </div>
 
           <div className="flex-1 flex flex-col relative z-10">
-            <h4 className="text-lg font-bold text-slate-900 mb-6 leading-snug">
+            <h4 className="text-lg font-bold text-white mb-6 leading-snug">
               {QUIZ_QUESTIONS[currentQuestion].question}
             </h4>
 
@@ -231,7 +223,7 @@ export function MarketInsights() {
                     const isSelected = selectedAnswer === index;
                     const isCorrect = index === QUIZ_QUESTIONS[currentQuestion].correctAnswer;
                     
-                    let bgClass = "bg-white hover:bg-slate-50 border-slate-200";
+                    let bgClass = "bg-[#131722] hover:bg-[#1E222D] border-[#2A2E39]";
                     let icon = null;
 
                     if (showResult) {
@@ -242,7 +234,7 @@ export function MarketInsights() {
                         bgClass = "bg-red-500/10 border-red-500/50 text-red-400";
                         icon = <XCircle className="w-4 h-4 text-red-500" />;
                       } else {
-                        bgClass = "bg-white border-slate-100 opacity-50";
+                        bgClass = "bg-[#131722] border-[#2A2E39] opacity-50";
                       }
                     } else if (isSelected) {
                        bgClass = "bg-blue-500/20 border-blue-500/50 text-blue-400";
@@ -303,26 +295,26 @@ export function MarketInsights() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white border border-slate-200 rounded-2xl overflow-hidden w-full max-w-4xl shadow-2xl relative flex flex-col"
+              className="bg-[#131722] border border-[#2A2E39] rounded-2xl overflow-hidden w-full max-w-4xl shadow-2xl relative flex flex-col"
               onClick={e => e.stopPropagation()}
             >
-              <div className="aspect-video bg-black flex items-center justify-center relative w-full border-b border-slate-200">
+              <div className="aspect-video bg-black flex items-center justify-center relative w-full border-b border-[#2A2E39]">
                   <img src={videos.find(v => v.id === activeVideo)?.thumbnail} className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="p-6 flex justify-between items-start">
                 <div className="max-w-2xl">
                   <h3 className="text-2xl font-bold">{videos.find(v => v.id === activeVideo)?.title}</h3>
-                  <p className="text-sm text-slate-500 mt-2 font-mono">Market Insight • Live</p>
-                  <p className="text-slate-600 mt-4 leading-relaxed">
+                  <p className="text-sm text-[#787B86] mt-2 font-mono">Market Insight • Live</p>
+                  <p className="text-[#787B86] mt-4 leading-relaxed">
                     {videos.find(v => v.id === activeVideo)?.description}
                   </p>
-                  <div className="mt-6 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 text-slate-500 text-sm">
+                  <div className="mt-6 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 text-[#787B86] text-sm">
                     <strong>Note:</strong> This is a condensed, text-and-image based update designed for quick consumption. Continuous macro trends and institutional inflows suggest high velocity in price discovery phases over the coming 48 hours. Keep stop losses tight.
                   </div>
                 </div>
                 <button 
                   onClick={() => setActiveVideo(null)}
-                  className="px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 rounded-lg text-sm font-bold transition-colors shrink-0"
+                  className="px-4 py-2 bg-[#1E222D] border border-[#2A2E39] hover:bg-[#2A2E39] rounded-lg text-sm font-bold transition-colors shrink-0"
                 >
                   Close
                 </button>

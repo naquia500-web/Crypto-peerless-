@@ -24,23 +24,31 @@ import { GlobalCryptoNews } from "./components/GlobalCryptoNews";
 import { MarketInsights } from "./components/MarketInsights";
 import { Watchlist } from "./components/Watchlist";
 import { PortfolioTracker } from "./components/PortfolioTracker";
-import { AiAnalyst } from "./components/AiAnalystChat";
 import { UserReports } from "./components/UserReports";
 import { MarketTracker } from "./components/MarketTracker";
 import { FAQ } from "./components/FAQ";
-import { AIHouse } from "./components/AIHouse";
 import { MarketHubDraft } from "./components/MarketHubDraft";
 import { LiveCoinTracker } from "./components/LiveCoinTracker";
 
 import { PremiumFeatures } from "./components/PremiumFeatures";
-import { TradingCoachAI } from "./components/TradingCoachAI";
 import { CryptoMasterclass } from "./components/CryptoMasterclass";
 import { AIPortfolioDoctor } from "./components/AIPortfolioDoctor";
 
+// New specialized toolkit features
+import { WhaleTracker } from "./components/WhaleTracker";
+import { MarketEvents } from "./components/MarketEvents";
+import { CryptoBeginnerHub } from "./components/CryptoBeginnerHub";
+import { ProCryptoTools } from "./components/ProCryptoTools";
+
+// Newly requested advanced features
+import { FearAndGreedIndex } from "./components/FearAndGreedIndex";
+import { AIScamDetection } from "./components/AIScamDetection";
+import { AirdropCalendar } from "./components/AirdropCalendar";
+import { SecurityDashboard } from "./components/SecurityDashboard";
+import { AdBanner } from "./components/AdBanner";
+
 export default function App() {
   const [currentBtcPrice, setCurrentBtcPrice] = useState<number>(76683.50);
-  const [showAIHouse, setShowAIHouse] = useState(false);
-  const [showTradingCoach, setShowTradingCoach] = useState(false);
 
   useEffect(() => {
     // Shared live price fetch to populate multiple descendants
@@ -61,14 +69,18 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-blue-500/30 flex flex-col gap-6">
-      <Navigation 
-        onOpenAIHouse={() => setShowAIHouse(true)} 
-        onOpenTradingCoach={() => setShowTradingCoach(true)}
-      />
+    <div className="min-h-screen bg-[#1E222D] text-white selection:bg-blue-500/30 flex flex-col gap-8 font-sans">
+      <Navigation />
       <MarketMarquee />
       
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 pb-8 mt-4">
+      <div className="w-full max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 mt-4 hidden md:block">
+        <AdBanner 
+          text="Get $100 Sign-Up Bonus on the World's #1 Most Trusted Crypto Exchange" 
+          cta="Claim Bonus" 
+        />
+      </div>
+
+      <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 mt-2">
         
         {/* Main Left Column */}
         <div className="lg:col-span-8 flex flex-col gap-8">
@@ -83,6 +95,31 @@ export default function App() {
              <div className="mt-4"><LiveCoinTracker /></div>
           </div>
 
+          {/* New Advanced Trading Tools Row */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 pt-8 border-t border-[#2A2E39]">
+             <WhaleTracker />
+             <ProCryptoTools />
+          </div>
+
+          {/* Events calendar & beginners row */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8 pt-8 border-t border-[#2A2E39]">
+             <CryptoBeginnerHub />
+             <MarketEvents />
+          </div>
+
+          {/* Advanced Market Analytics & Trust Features */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8 pt-8 border-t border-[#2A2E39]">
+             <div className="xl:col-span-1">
+               <FearAndGreedIndex />
+             </div>
+             <div className="xl:col-span-1">
+               <AIScamDetection />
+             </div>
+             <div className="xl:col-span-1">
+               <AirdropCalendar />
+             </div>
+          </div>
+
           {/* New Sections based on user screenshots */}
           <div id="section-markets"><AssetMarkets /></div>
           <div id="section-yield"><AssetYield /></div>
@@ -95,39 +132,39 @@ export default function App() {
           <GlobalPrices currentBtcPrice={currentBtcPrice} />
           <div id="section-about"><AboutAsset /></div>
           
-          <div id="section-market-sentiment" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-market-sentiment" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <MarketSentimentAnalysis />
           </div>
           
           <div id="section-community"><CommunitySentiment /></div>
           
           {/* Pre-existing Sections */}
-          <div id="section-whale-tracker" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-whale-tracker" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <MarketTracker />
           </div>
-          <div id="section-insights" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-insights" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <MarketInsights />
           </div>
-          <div id="section-news" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-news" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <NewsFeed />
           </div>
-          <div className="mt-8 pt-8 border-t border-slate-200">
+          <div className="mt-8 pt-8 border-t border-[#2A2E39]">
             <GlobalCryptoNews />
           </div>
 
-          <div id="section-support" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-support" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <SupportAndCommunity />
           </div>
 
-          <div id="section-premium" className="mt-8 pt-8 border-t border-slate-200">
-            <PremiumFeatures onOpenLiveCoach={() => setShowTradingCoach(true)} />
+          <div id="section-premium" className="mt-8 pt-8 border-t border-[#2A2E39]">
+            <PremiumFeatures />
           </div>
 
-          <div id="section-masterclass" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-masterclass" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <CryptoMasterclass />
           </div>
 
-          <div id="section-portfolio-doctor" className="mt-8 pt-8 border-t border-slate-200">
+          <div id="section-portfolio-doctor" className="mt-8 pt-8 border-t border-[#2A2E39]">
             <AIPortfolioDoctor />
           </div>
         </div>
@@ -135,69 +172,69 @@ export default function App() {
         {/* Right Sidebar */}
         <div className="lg:col-span-4 flex flex-col gap-6 lg:pl-8 lg:ticker-border">
           <PortfolioTracker />
+          <SecurityDashboard />
           <div id="section-watchlist"><Watchlist /></div>
-          <AiAnalyst currentBtcPrice={currentBtcPrice} />
           <div id="section-notifications" className="mt-auto">
             <UserReports />
           </div>
         </div>
 
         {/* FAQ - Keep as is per user instructions */}
-        <div className="lg:col-span-12 mt-8 pt-8 border-t border-slate-200">
+        <div className="lg:col-span-12 mt-8 pt-8 border-t border-[#2A2E39]">
           <FAQ />
         </div>
 
       </main>
       
       {/* Enhanced Footer */}
-      <footer className="w-full bg-slate-50 border-t border-slate-200 pt-12 pb-6 mt-auto">
+      <footer className="w-full bg-[#1E222D] border-t border-[#2A2E39] pt-12 pb-6 mt-auto">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div className="flex flex-col gap-4">
-              <h4 className="text-slate-900 font-bold text-sm tracking-wider uppercase">Products</h4>
-              <ul className="flex flex-col gap-2 text-xs text-slate-500">
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Academy</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Advertise</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">CMC Labs</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Top Stories</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Crypto API</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Real-World Assets</a></li>
+              <h4 className="text-white font-bold text-sm tracking-wider uppercase">Products</h4>
+              <ul className="flex flex-col gap-2 text-xs text-[#787B86]">
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Academy</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Advertise</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">CMC Labs</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Top Stories</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Crypto API</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Real-World Assets</a></li>
               </ul>
             </div>
             <div className="flex flex-col gap-4">
-              <h4 className="text-slate-900 font-bold text-sm tracking-wider uppercase">Company</h4>
-              <ul className="flex flex-col gap-2 text-xs text-slate-500">
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">About us</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Terms of use</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Privacy Policy</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Community Rules</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Disclaimer</a></li>
+              <h4 className="text-white font-bold text-sm tracking-wider uppercase">Company</h4>
+              <ul className="flex flex-col gap-2 text-xs text-[#787B86]">
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">About us</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Terms of use</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Community Rules</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Disclaimer</a></li>
                 <li><a href="#" target="_blank" rel="noopener noreferrer" className="text-orange-500 font-bold">Careers — We're hiring!</a></li>
               </ul>
             </div>
             <div className="flex flex-col gap-4">
-              <h4 className="text-slate-900 font-bold text-sm tracking-wider uppercase">Support</h4>
-              <ul className="flex flex-col gap-2 text-xs text-slate-500">
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Get Listed</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Request Form</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Contact Support</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">FAQ</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Glossary</a></li>
+              <h4 className="text-white font-bold text-sm tracking-wider uppercase">Support</h4>
+              <ul className="flex flex-col gap-2 text-xs text-[#787B86]">
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Get Listed</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Request Form</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Contact Support</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">FAQ</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Glossary</a></li>
               </ul>
             </div>
             <div className="flex flex-col gap-4">
-              <h4 className="text-slate-900 font-bold text-sm tracking-wider uppercase">Socials</h4>
-              <ul className="flex flex-col gap-2 text-xs text-slate-500">
-                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">X (Twitter)</a></li>
-                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Community</a></li>
-                <li><a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Telegram</a></li>
-                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Instagram</a></li>
-                <li><a href="https://reddit.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 transition-colors">Reddit</a></li>
+              <h4 className="text-white font-bold text-sm tracking-wider uppercase">Socials</h4>
+              <ul className="flex flex-col gap-2 text-xs text-[#787B86]">
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">X (Twitter)</a></li>
+                <li><a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Community</a></li>
+                <li><a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Telegram</a></li>
+                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
+                <li><a href="https://reddit.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Reddit</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="flex flex-col md:flex-row justify-between items-center text-[10px] font-mono opacity-30 border-t border-slate-200 pt-6 gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center text-[10px] font-mono opacity-30 border-t border-[#2A2E39] pt-6 gap-4">
             <span>© 2026 Finova Financial Services Group. All rights reserved.</span>
             <div className="flex gap-6">
               <span>SYSTEM STATUS: OPTIMAL</span>
@@ -209,8 +246,6 @@ export default function App() {
       </footer>
 
       <AnimatePresence>
-        {showAIHouse && <AIHouse onClose={() => setShowAIHouse(false)} />}
-        {showTradingCoach && <TradingCoachAI onClose={() => setShowTradingCoach(false)} />}
       </AnimatePresence>
     </div>
   );

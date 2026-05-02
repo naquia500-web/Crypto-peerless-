@@ -38,8 +38,8 @@ export function FAQ() {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex justify-between items-end border-b border-slate-200 pb-2">
-        <h3 className="text-[11px] font-black uppercase tracking-widest text-slate-900">
+      <div className="flex justify-between items-end border-b border-[#2A2E39] pb-2">
+        <h3 className="text-[11px] font-black uppercase tracking-widest text-white">
           Frequently Asked Questions (FAQ)
         </h3>
       </div>
@@ -51,21 +51,21 @@ export function FAQ() {
           return (
             <div 
               key={faq.id} 
-              className="border-b border-slate-200 last:border-0"
+              className="border-b border-[#2A2E39] last:border-0"
             >
               <button
                 onClick={() => toggleOpen(index)}
-                className="w-full py-5 flex items-center justify-between text-left group hover:bg-slate-100 transition-colors px-4 -mx-4 rounded"
+                className="w-full py-5 flex items-center justify-between text-left group hover:bg-[#2A2E39] transition-colors px-4 -mx-4 rounded"
               >
                 <div className="flex flex-col gap-1 pr-8">
-                  <h4 className="font-bold text-sm md:text-base text-slate-900 group-hover:text-orange-400 transition-colors">
+                  <h4 className="font-bold text-sm md:text-base text-white group-hover:text-orange-400 transition-colors">
                     {faq.question}
                   </h4>
                   <span className="text-[10px] font-mono opacity-40 uppercase tracking-wide">
                     {faq.englishTitle}
                   </span>
                 </div>
-                <div className="shrink-0 w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center bg-slate-50 group-hover:border-orange-500/50 group-hover:bg-orange-500/10 transition-all text-slate-500 group-hover:text-orange-500">
+                <div className="shrink-0 w-8 h-8 rounded-full border border-[#2A2E39] flex items-center justify-center bg-[#1E222D] group-hover:border-orange-500/50 group-hover:bg-orange-500/10 transition-all text-[#787B86] group-hover:text-orange-500">
                   {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                 </div>
               </button>
@@ -79,7 +79,7 @@ export function FAQ() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="pb-6 pt-2 pl-4 pr-12 text-sm text-slate-500 leading-relaxed font-sans border-l-2 border-orange-500/50 ml-4 mb-4">
+                    <div className="pb-6 pt-2 pl-4 pr-12 text-sm text-[#787B86] leading-relaxed font-sans border-l-2 border-orange-500/50 ml-4 mb-4">
                       {faq.answer}
                     </div>
                   </motion.div>

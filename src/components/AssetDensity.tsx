@@ -71,13 +71,13 @@ function DensityBlock({ title, items, isCrypto }: { title: string, items: any[],
 
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 border-b border-slate-200 pb-2 flex items-center gap-2">
+      <h3 className="text-[14px] font-black uppercase tracking-widest text-white border-b border-[#2A2E39] pb-2 flex items-center gap-2">
          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
          {title} <span className="lowercase font-mono text-[8px] animate-pulse opacity-50">(live tracking)</span>
       </h3>
       <div className="flex flex-wrap gap-2">
         {liveItems.map((item, idx) => (
-          <div key={idx} className="flex items-center gap-2 px-3 py-1.5 bg-white shadow-lg border border-slate-200 rounded-full hover:bg-slate-100 transition-colors cursor-pointer group">
+          <div key={idx} className="flex items-center gap-2 px-3 py-1.5 bg-[#131722] shadow-lg border border-[#2A2E39] rounded-full hover:bg-[#2A2E39] transition-colors cursor-pointer group">
             <img 
               src={isCrypto ? `https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/${item.ticker.toLowerCase()}.svg` : item.logo} 
               alt={item.ticker}
@@ -86,7 +86,7 @@ function DensityBlock({ title, items, isCrypto }: { title: string, items: any[],
                 (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${item.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`;
               }}
             />
-            <span className="text-[10px] font-bold text-slate-500 group-hover:text-slate-900 transition-colors uppercase tracking-wide">{item.name}</span>
+            <span className="text-[10px] font-bold text-[#787B86] group-hover:text-white transition-colors uppercase tracking-wide">{item.name}</span>
             <span className="text-[9px] font-bold opacity-40 uppercase">{item.ticker}</span>
             <AnimatePresence mode="popLayout">
               <motion.span 

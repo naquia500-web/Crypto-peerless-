@@ -12,7 +12,7 @@ interface AlertData {
   price: string;
 }
 
-export function PremiumFeatures({ onOpenLiveCoach }: { onOpenLiveCoach: () => void }) {
+export function PremiumFeatures() {
   const [alertsEnabled, setAlertsEnabled] = useState(false);
   const [activeAlerts, setActiveAlerts] = useState<AlertData[]>([]);
 
@@ -80,26 +80,26 @@ export function PremiumFeatures({ onOpenLiveCoach }: { onOpenLiveCoach: () => vo
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-              className="bg-slate-50 border border-slate-200 shadow-2xl rounded-xl p-4 w-80 flex items-start gap-3 pointer-events-auto relative overflow-hidden"
+              className="bg-[#1E222D] border border-[#2A2E39] shadow-2xl rounded-xl p-4 w-80 flex items-start gap-3 pointer-events-auto relative overflow-hidden"
             >
               <div className={`absolute top-0 left-0 w-1 h-full ${alert.type === 'pump' ? 'bg-green-500' : 'bg-red-500'}`}></div>
               
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0 p-1">
+              <div className="w-10 h-10 rounded-full bg-[#1E222D] flex items-center justify-center shrink-0 p-1">
                 <img src={getCryptoLogo(alert.symbol) || `https://ui-avatars.com/api/?name=${alert.symbol}&background=random`} alt={alert.symbol} className="w-full h-full object-contain" />
               </div>
               
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-bold text-slate-900 text-sm">{alert.coin} Alert</h4>
+                  <h4 className="font-bold text-white text-sm">{alert.coin} Alert</h4>
                   <span className={`text-[10px] font-bold ${alert.type === 'pump' ? 'text-green-400' : 'text-red-400'} flex items-center gap-1`}>
                     {alert.type === 'pump' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed mb-2">{alert.message}</p>
-                <div className="text-[10px] font-mono text-slate-900/40">Current Price: <span className="text-slate-600">{alert.price}</span></div>
+                <p className="text-xs text-[#787B86] leading-relaxed mb-2">{alert.message}</p>
+                <div className="text-[10px] font-mono text-white/40">Current Price: <span className="text-[#787B86]">{alert.price}</span></div>
               </div>
 
-              <button onClick={() => dismissAlert(alert.id)} className="absolute top-2 right-2 text-slate-900/40 hover:text-slate-900 transition-colors">
+              <button onClick={() => dismissAlert(alert.id)} className="absolute top-2 right-2 text-white/40 hover:text-white transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </motion.div>
@@ -112,48 +112,16 @@ export function PremiumFeatures({ onOpenLiveCoach }: { onOpenLiveCoach: () => vo
           <Zap className="w-4 h-4" />
         </div>
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
             Premium Features
           </h2>
-          <p className="text-[11px] text-slate-500 uppercase tracking-widest font-mono">
+          <p className="text-[11px] text-[#787B86] uppercase tracking-widest font-mono">
             Exclusive Tools for Advanced Traders
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Live Trading Coach */}
-        <div id="section-live-trading" className="p-6 bg-gradient-to-br from-[#0B0E11] to-blue-900/10 border border-blue-500/20 rounded-2xl relative overflow-hidden group hover:border-blue-500/50 transition-all duration-500 flex flex-col">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full pointer-events-none group-hover:bg-blue-500/20 transition-all"></div>
-          
-          <div className="flex justify-between items-start mb-6 align-top">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/50 flex items-center justify-center relative">
-              <Bot className="w-6 h-6 text-blue-400" />
-              <span className="absolute -bottom-1 -right-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 justify-center"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border-2 border-[#0B0E11]"></span>
-              </span>
-            </div>
-            <div className="px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-[10px] uppercase font-bold text-blue-400 tracking-wider">
-              Trading Coach AI
-            </div>
-          </div>
-          
-          <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-400 transition-colors">Live Trading Coach</h3>
-          <p className="text-sm text-slate-500 mb-6 min-h-[60px] leading-relaxed">
-            Real-time guidance during live market sessions. Make informed decisions on long/short entries, manage stop-losses, and track high-conviction trades with AI.
-          </p>
-          
-          <div className="mt-auto pt-4">
-            <button 
-              onClick={onOpenLiveCoach}
-              className="w-full py-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:border-blue-500/60 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 group/btn"
-            >
-              Start Live Session <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        </div>
-
         {/* Global Market Alert System */}
         <div id="section-global-alerts" className="p-6 bg-gradient-to-br from-[#0B0E11] to-purple-900/10 border border-purple-500/20 rounded-2xl relative overflow-hidden group hover:border-purple-500/50 transition-all duration-500 flex flex-col">
           <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-3xl rounded-full pointer-events-none group-hover:bg-purple-500/20 transition-all"></div>
@@ -175,8 +143,8 @@ export function PremiumFeatures({ onOpenLiveCoach }: { onOpenLiveCoach: () => vo
             </div>
           </div>
           
-          <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-purple-400 transition-colors">Global Market Alert System</h3>
-          <p className="text-sm text-slate-500 mb-6 min-h-[60px] leading-relaxed">
+          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Global Market Alert System</h3>
+          <p className="text-sm text-[#787B86] mb-6 min-h-[60px] leading-relaxed">
             Analyzes real-time data and news from all major crypto exchanges globally to send instant notifications on significant market movements or anomalies.
           </p>
           
@@ -191,7 +159,7 @@ export function PremiumFeatures({ onOpenLiveCoach }: { onOpenLiveCoach: () => vo
               className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 group/btn ${
                 alertsEnabled 
                   ? 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 hover:border-red-500/60' 
-                  : 'bg-purple-500 text-slate-900 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                  : 'bg-purple-500 text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]'
               }`}
             >
               {alertsEnabled ? 'Stop Alerts Tracker' : 'Activate Live Tracker'} 

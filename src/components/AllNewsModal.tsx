@@ -108,24 +108,24 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-5xl h-[90vh] bg-white rounded-2xl border border-slate-200 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden"
+          className="relative w-full max-w-5xl h-[90vh] bg-[#131722] rounded-2xl border border-[#2A2E39] shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden"
         >
           {/* Header */}
-          <div className="flex justify-between items-center p-6 border-b border-slate-200 bg-black/20 shrink-0">
+          <div className="flex justify-between items-center p-6 border-b border-[#2A2E39] bg-black/20 shrink-0">
             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200">
+               <div className="w-10 h-10 rounded-full bg-[#1E222D] flex items-center justify-center border border-[#2A2E39]">
                   <Globe className="w-5 h-5 text-teal-400" />
                </div>
                <div>
-                 <h2 className="text-xl font-black uppercase tracking-widest text-slate-900">ALL LIVE UPDATES</h2>
-                 <p className="text-xs text-slate-500 uppercase tracking-wider font-mono">Global Market Intel</p>
+                 <h2 className="text-xl font-black uppercase tracking-widest text-white">ALL LIVE UPDATES</h2>
+                 <p className="text-xs text-[#787B86] uppercase tracking-wider font-mono">Global Market Intel</p>
                </div>
             </div>
             <button 
               onClick={onClose}
-              className="w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-colors border border-slate-200"
+              className="w-10 h-10 rounded-full bg-[#1E222D] hover:bg-[#2A2E39] flex items-center justify-center transition-colors border border-[#2A2E39]"
             >
-              <X className="w-5 h-5 text-slate-500" />
+              <X className="w-5 h-5 text-[#787B86]" />
             </button>
           </div>
 
@@ -148,9 +148,9 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
                         onClose();
                         onSelectArticle(article);
                     }}
-                    className="group bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-teal-500/40 hover:bg-teal-500/5 transition-all cursor-pointer flex gap-4 items-center"
+                    className="group bg-[#1E222D] border border-[#2A2E39] rounded-xl p-5 hover:border-teal-500/40 hover:bg-teal-500/5 transition-all cursor-pointer flex gap-4 items-center"
                   >
-                    <div className="w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-slate-200 relative bg-black flex items-center justify-center p-2">
+                    <div className="w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-[#2A2E39] relative bg-black flex items-center justify-center p-2">
                       <img 
                         src={getThumbnailImage(i) || 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop'} 
                         alt=""
@@ -165,7 +165,7 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h5 className="text-[14px] font-bold leading-snug mb-2 text-slate-900 group-hover:text-teal-300 transition-colors line-clamp-2">
+                      <h5 className="text-[14px] font-bold leading-snug mb-2 text-white group-hover:text-teal-300 transition-colors line-clamp-2">
                         {article.title}
                       </h5>
                       <div className="flex items-center justify-between opacity-70">
@@ -174,7 +174,7 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
                             {article.source}
                           </span>
                           <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                          <div className="flex items-center gap-1 text-[9px] font-mono text-slate-500">
+                          <div className="flex items-center gap-1 text-[9px] font-mono text-[#787B86]">
                             <Clock className="w-3 h-3" />
                             {formatTimeAgo(article.published_on)}
                           </div>

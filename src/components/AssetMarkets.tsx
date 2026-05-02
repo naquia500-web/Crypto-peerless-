@@ -94,24 +94,24 @@ export function AssetMarkets() {
 
   return (
     <section className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-800 flex items-center gap-2">
+      <div className="flex items-center justify-between pb-2 border-b border-[#2A2E39]">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-[#D1D4DC] flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-          Bitcoin Markets <span className="text-[10px] text-slate-500 lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
+          Bitcoin Markets <span className="text-[10px] text-[#787B86] lowercase tracking-normal font-mono animate-pulse">(Live tracking)</span>
         </h3>
         <div className="flex gap-2">
           {['Spot', 'Perpetual', 'Futures'].map((tab) => (
-            <button key={tab} onClick={() => setActiveTab(tab)} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${activeTab === tab ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'}`}>
+            <button key={tab} onClick={() => setActiveTab(tab)} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${activeTab === tab ? 'bg-blue-100 text-blue-700' : 'bg-[#2A2E39] text-[#787B86] hover:bg-slate-200 hover:text-[#B2B5BE]'}`}>
               {tab}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-white shadow-sm border border-slate-200 rounded-xl overflow-x-auto">
+      <div className="bg-[#131722] shadow-sm border border-[#2A2E39] rounded-xl overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-[800px]">
           <thead>
-            <tr className="border-b border-slate-200 text-[9px] uppercase tracking-widest text-slate-500 bg-slate-50">
+            <tr className="border-b border-[#2A2E39] text-[9px] uppercase tracking-widest text-[#787B86] bg-[#1E222D]">
               <th className="px-4 py-3 font-bold w-12 text-center">#</th>
               <th className="px-4 py-3 font-bold">Exchange</th>
               <th className="px-4 py-3 font-bold">Pairs</th>
@@ -125,19 +125,19 @@ export function AssetMarkets() {
           <tbody>
             {MARKETS_DATA[activeTab].map((row) => {
               const current = liveData[row.rank] || { price: row.defaultPrice, status: 'neutral' };
-              const colorClass = current.status === 'up' ? 'text-green-600 bg-green-50' : current.status === 'down' ? 'text-red-600 bg-red-50' : 'text-slate-800 bg-slate-50';
+              const colorClass = current.status === 'up' ? 'text-green-600 bg-green-50' : current.status === 'down' ? 'text-red-600 bg-red-50' : 'text-[#D1D4DC] bg-[#1E222D]';
               
               return (
                 <tr 
                   key={row.rank} 
                   onClick={() => window.open(row.url, '_blank')}
-                  className="border-b border-slate-100 hover:bg-slate-50 transition-colors group cursor-pointer"
+                  className="border-b border-[#2A2E39] hover:bg-[#1E222D] transition-colors group cursor-pointer"
                 >
                   <td className="px-4 py-4 text-center">
                     <span className="text-[10px] font-mono text-slate-400">{row.rank}</span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-xs font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors text-slate-700">
+                    <span className="text-xs font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors text-[#B2B5BE]">
                       <img 
                         src={LOGOS[row.exchange] || `https://ui-avatars.com/api/?name=${row.exchange.replace(/ /g, '+')}&background=f8fafc&color=333&rounded=true&font-size=0.4`} 
                         alt={row.exchange}
@@ -147,7 +147,7 @@ export function AssetMarkets() {
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{row.pair}</span>
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#787B86]">{row.pair}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
                     <AnimatePresence mode="popLayout">
@@ -162,17 +162,17 @@ export function AssetMarkets() {
                     </AnimatePresence>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="font-mono text-xs text-slate-500">{row.depth}</span>
+                    <span className="font-mono text-xs text-[#787B86]">{row.depth}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="font-mono text-xs text-slate-700">{row.volume}</span>
+                    <span className="font-mono text-xs text-[#B2B5BE]">{row.volume}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <span className="font-mono text-xs text-slate-500">{row.volPct}</span>
+                    <span className="font-mono text-xs text-[#787B86]">{row.volPct}</span>
                   </td>
                   <td className="px-4 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <span className="font-mono text-xs text-slate-700">{row.liquidity}</span>
+                      <span className="font-mono text-xs text-[#B2B5BE]">{row.liquidity}</span>
                       <div className="w-12 h-1.5 bg-slate-200 rounded-full overflow-hidden flex">
                         <div className="h-full bg-blue-500" style={{ width: `${row.liqPct}%` }}></div>
                       </div>

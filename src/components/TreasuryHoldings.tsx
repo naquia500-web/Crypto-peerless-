@@ -10,20 +10,20 @@ export function TreasuryHoldings() {
 
   return (
     <section className="flex flex-col gap-4 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-800">Bitcoin Treasury Holdings</h3>
+      <div className="flex items-center justify-between pb-2 border-b border-[#2A2E39]">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-[#D1D4DC]">Bitcoin Treasury Holdings</h3>
         <button 
           onClick={() => window.open('https://bitcointreasuries.net', '_blank')}
-          className="text-[9px] font-bold uppercase tracking-widest bg-slate-100 text-slate-500 hover:text-slate-700 hover:bg-slate-200 px-3 py-1 rounded transition-colors"
+          className="text-[9px] font-bold uppercase tracking-widest bg-[#2A2E39] text-[#787B86] hover:text-[#B2B5BE] hover:bg-slate-200 px-3 py-1 rounded transition-colors"
         >
           View Complete List
         </button>
       </div>
 
-      <div className="bg-white shadow-sm border border-slate-200 rounded-xl overflow-x-auto">
+      <div className="bg-[#131722] shadow-sm border border-[#2A2E39] rounded-xl overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-[700px]">
           <thead>
-            <tr className="border-b border-slate-200 text-[9px] uppercase tracking-widest text-slate-500 bg-slate-50">
+            <tr className="border-b border-[#2A2E39] text-[9px] uppercase tracking-widest text-[#787B86] bg-[#1E222D]">
               <th className="px-4 py-3 font-bold w-12 text-center">#</th>
               <th className="px-4 py-3 font-bold">Company Name</th>
               <th className="px-4 py-3 font-bold">Ticker</th>
@@ -38,17 +38,17 @@ export function TreasuryHoldings() {
               <tr 
                 key={idx} 
                 onClick={() => window.open(`https://finance.yahoo.com/quote/${row.ticker}`, '_blank')}
-                className="border-b border-slate-100 hover:bg-slate-50 transition-colors group cursor-pointer"
+                className="border-b border-[#2A2E39] hover:bg-[#1E222D] transition-colors group cursor-pointer"
               >
                 <td className="px-4 py-4 text-center">
                   <span className="text-[10px] font-mono text-slate-400">{row.rank}</span>
                 </td>
                 <td className="px-4 py-4">
-                  <div className="flex items-center gap-2 group-hover:text-blue-600 transition-colors text-slate-700">
+                  <div className="flex items-center gap-2 group-hover:text-blue-600 transition-colors text-[#B2B5BE]">
                     <img 
                       src={row.logo} 
                       alt={row.name} 
-                      className="w-5 h-5 rounded-full bg-slate-100"
+                      className="w-5 h-5 rounded-full bg-[#2A2E39]"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${row.name.replace(/ /g, '+')}&background=f8fafc&color=333&rounded=true&font-size=0.4`;
                       }}
@@ -57,16 +57,16 @@ export function TreasuryHoldings() {
                   </div>
                 </td>
                 <td className="px-4 py-4">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{row.ticker}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#787B86] bg-[#2A2E39] px-2 py-0.5 rounded">{row.ticker}</span>
                 </td>
                 <td className="px-4 py-4 text-center">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{row.country}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#787B86]">{row.country}</span>
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <span className="font-mono text-xs font-bold text-slate-800">{row.holdings}</span>
+                  <span className="font-mono text-xs font-bold text-[#D1D4DC]">{row.holdings}</span>
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <span className="font-mono text-xs text-slate-600">{row.value}</span>
+                  <span className="font-mono text-xs text-[#787B86]">{row.value}</span>
                 </td>
                 <td className="px-4 py-4 text-right">
                   <span className="font-mono text-xs text-slate-400">{row.cost}</span>

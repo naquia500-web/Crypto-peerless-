@@ -48,7 +48,7 @@ export function GlobalCryptoNews() {
 
   return (
     <section className="flex flex-col gap-6 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+      <div className="flex items-center justify-between pb-2 border-b border-[#2A2E39]">
         <div className="flex items-center gap-3">
           <div className="relative flex h-8 w-8 items-center justify-center bg-teal-500/20 rounded-lg border border-teal-500/30">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-lg bg-teal-400 opacity-20"></span>
@@ -58,7 +58,7 @@ export function GlobalCryptoNews() {
             <h3 className="text-[14px] font-black uppercase tracking-widest text-blue-600 text-shadow-glow">
               AI Market Intelligence
             </h3>
-            <span className="text-[10px] text-slate-500 font-mono tracking-widest uppercase flex items-center gap-1.5">
+            <span className="text-[10px] text-[#787B86] font-mono tracking-widest uppercase flex items-center gap-1.5">
                <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
                Live Global News Feed
             </span>
@@ -66,7 +66,7 @@ export function GlobalCryptoNews() {
         </div>
       </div>
 
-      <div className="bg-white shadow-lg border border-teal-500/20 p-6 rounded-xl flex flex-col gap-5 relative overflow-hidden">
+      <div className="bg-[#131722] shadow-lg border border-teal-500/20 p-6 rounded-xl flex flex-col gap-5 relative overflow-hidden">
          <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 blur-[100px] pointer-events-none rounded-full"></div>
          
          {loading ? (
@@ -77,7 +77,7 @@ export function GlobalCryptoNews() {
          ) : (
             <div className="flex flex-col gap-4 relative z-10">
                {news.map((item) => {
-                 let catColor = "bg-slate-100 text-slate-900 border-slate-200";
+                 let catColor = "bg-[#2A2E39] text-white border-[#2A2E39]";
                  let Logo = null;
                  let brandColor = "";
 
@@ -96,7 +96,7 @@ export function GlobalCryptoNews() {
                  else if (item.category === "XRP") {
                     brandColor = "#23292F";
                     // Need a visible text color since #23292F is very dark. We'll use white text with #23292F bg.
-                    catColor = "bg-[#23292F]/80 text-slate-900 border-slate-200";
+                    catColor = "bg-[#23292F]/80 text-white border-[#2A2E39]";
                     Logo = <img src="https://cryptologos.cc/logos/xrp-xrp-logo.svg?v=025" alt="XRP" className="w-3.5 h-3.5" />;
                  }
                  else if (item.category === "Regulatory") catColor = "bg-orange-500/10 text-orange-400 border-orange-500/30";
@@ -122,7 +122,7 @@ export function GlobalCryptoNews() {
                  } else {
                     boxClasses = isBullish ? 'bg-blue-500/[0.03] border-blue-500/20 hover:border-blue-500/50 shadow-[0_0_15px_rgba(0,255,136,0.05)]' :
                                        isBearish ? 'bg-red-500/[0.03] border-red-500/20 hover:border-red-500/50 shadow-[0_0_15px_rgba(255,77,77,0.05)]' :
-                                       'bg-slate-50 border-slate-200 hover:border-slate-300';
+                                       'bg-[#1E222D] border-[#2A2E39] hover:border-[#363A45]';
                  }
 
                  return (
@@ -136,14 +136,14 @@ export function GlobalCryptoNews() {
                              {isBullish ? <TrendingUp className="w-3.5 h-3.5" /> : isBearish ? <TrendingDown className="w-3.5 h-3.5" /> : <Minus className="w-3.5 h-3.5" />}
                              {item.sentiment}
                            </span>
-                           <span className="flex items-center gap-1 text-[10px] uppercase font-bold text-slate-500 bg-white px-2 py-0.5 rounded">
+                           <span className="flex items-center gap-1 text-[10px] uppercase font-bold text-[#787B86] bg-[#131722] px-2 py-0.5 rounded">
                              Impact <span className={`font-mono font-black ${item.impactScore >= 8 ? 'text-red-400' : 'text-teal-400'}`}>{item.impactScore}</span>
                            </span>
-                           <span className="text-[10px] text-slate-900/30 font-mono hidden sm:block">{item.timeAgo}</span>
+                           <span className="text-[10px] text-white/30 font-mono hidden sm:block">{item.timeAgo}</span>
                         </div>
                      </div>
-                     <h4 className="text-[15px] font-black text-slate-900 leading-tight mt-1 group-hover:text-teal-400 transition-colors">{item.headline}</h4>
-                     <p className="text-[13px] text-slate-500 leading-relaxed font-sans">{item.summary}</p>
+                     <h4 className="text-[15px] font-black text-white leading-tight mt-1 group-hover:text-teal-400 transition-colors">{item.headline}</h4>
+                     <p className="text-[13px] text-[#787B86] leading-relaxed font-sans">{item.summary}</p>
                    </div>
                  )
                })}

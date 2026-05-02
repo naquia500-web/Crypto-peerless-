@@ -61,7 +61,7 @@ You lack exposure to emerging sectors such as Layer-2 scaling solutions, Real Wo
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col h-full relative overflow-hidden">
+    <div className="bg-[#131722] border border-[#2A2E39] rounded-2xl p-6 flex flex-col h-full relative overflow-hidden">
       <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
         <Stethoscope className="w-64 h-64" />
       </div>
@@ -72,15 +72,15 @@ You lack exposure to emerging sectors such as Layer-2 scaling solutions, Real Wo
             <Stethoscope className="w-5 h-5 text-teal-400" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-slate-900 tracking-tight">AI Portfolio Doctor</h2>
-            <p className="text-xs text-slate-500 font-mono mt-0.5">Secure Analysis & Diversification</p>
+            <h2 className="text-lg font-bold text-white tracking-tight">AI Portfolio Doctor</h2>
+            <p className="text-xs text-[#787B86] font-mono mt-0.5">Secure Analysis & Diversification</p>
           </div>
         </div>
         
         {!isConnected ? (
           <button 
             onClick={connectWallet}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-bold uppercase tracking-widest text-slate-600 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[#1E222D] hover:bg-[#2A2E39] border border-[#2A2E39] rounded-lg text-xs font-bold uppercase tracking-widest text-[#787B86] transition-colors"
           >
             <LinkIcon className="w-3.5 h-3.5" />
             Connect Portfolio
@@ -94,23 +94,23 @@ You lack exposure to emerging sectors such as Layer-2 scaling solutions, Real Wo
       </div>
 
       {!isConnected ? (
-        <div className="flex-1 flex flex-col items-center justify-center p-8 border border-dashed border-slate-200 rounded-xl bg-slate-50">
-          <Activity className="w-12 h-12 text-slate-900/20 mb-4" />
-          <p className="text-sm text-slate-500 text-center max-w-sm">Connect your exchange or wallet to allow the AI Doctor to scan your holdings and provide personalized health checks.</p>
+        <div className="flex-1 flex flex-col items-center justify-center p-8 border border-dashed border-[#2A2E39] rounded-xl bg-[#1E222D]">
+          <Activity className="w-12 h-12 text-white/20 mb-4" />
+          <p className="text-sm text-[#787B86] text-center max-w-sm">Connect your exchange or wallet to allow the AI Doctor to scan your holdings and provide personalized health checks.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
           <div className="lg:col-span-1 flex flex-col gap-4">
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-4">
-              <h3 className="text-[10px] uppercase font-bold tracking-widest text-slate-900/40 mb-3">Current Holdings</h3>
-              <div className="text-2xl font-bold font-mono text-slate-900 mb-4">
+            <div className="bg-[#1E222D] border border-[#2A2E39] rounded-xl p-4">
+              <h3 className="text-[10px] uppercase font-bold tracking-widest text-white/40 mb-3">Current Holdings</h3>
+              <div className="text-2xl font-bold font-mono text-white mb-4">
                 ${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </div>
               <div className="flex flex-col gap-2">
                 {portfolio.map(asset => (
-                  <div key={asset.asset} className="flex justify-between items-center text-sm border-b border-slate-100 pb-2 last:border-0 last:pb-0">
-                    <span className="font-bold text-slate-600">{asset.asset}</span>
-                    <span className="font-mono text-slate-500">${asset.value.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                  <div key={asset.asset} className="flex justify-between items-center text-sm border-b border-[#2A2E39] pb-2 last:border-0 last:pb-0">
+                    <span className="font-bold text-[#787B86]">{asset.asset}</span>
+                    <span className="font-mono text-[#787B86]">${asset.value.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                   </div>
                 ))}
               </div>
@@ -129,14 +129,14 @@ You lack exposure to emerging sectors such as Layer-2 scaling solutions, Real Wo
             </button>
           </div>
 
-          <div className="lg:col-span-2 min-h-[300px] border border-slate-100 rounded-xl bg-slate-50 p-6 flex flex-col">
+          <div className="lg:col-span-2 min-h-[300px] border border-[#2A2E39] rounded-xl bg-[#1E222D] p-6 flex flex-col">
             {isAnalyzing ? (
-              <div className="flex-1 flex flex-col items-center justify-center gap-4 text-slate-900/40">
+              <div className="flex-1 flex flex-col items-center justify-center gap-4 text-white/40">
                  <Stethoscope className="w-8 h-8 animate-pulse text-teal-400/50" />
                  <div className="text-sm font-mono animate-pulse text-center">Diagnosing Portfolio Risk Profile...</div>
               </div>
             ) : analysis ? (
-              <div className="prose prose-invert prose-sm max-w-none prose-headings:text-slate-700 prose-p:text-slate-500 prose-a:text-teal-400 prose-strong:text-slate-900 overflow-y-auto max-h-[500px] custom-scrollbar pr-4">
+              <div className="prose prose-invert prose-sm max-w-none prose-headings:text-[#B2B5BE] prose-p:text-[#787B86] prose-a:text-teal-400 prose-strong:text-white overflow-y-auto max-h-[500px] custom-scrollbar pr-4">
                  <div className="markdown-body">
                    <Markdown>{analysis}</Markdown>
                  </div>

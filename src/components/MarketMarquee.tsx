@@ -40,7 +40,7 @@ export function MarketMarquee() {
   }, []);
 
   return (
-    <div className="border-b border-slate-200 bg-white overflow-hidden whitespace-nowrap h-12 flex items-center">
+    <div className="border-b border-[#2A2E39] bg-[#131722] overflow-hidden whitespace-nowrap h-12 flex items-center">
       <div className="animate-marquee inline-flex gap-8 px-4" style={{ animation: 'marquee 30s linear infinite' }}>
         {[...INITIAL_SYMBOLS, ...INITIAL_SYMBOLS].map((asset, i) => {
           const data = tickers[asset.symbol];
@@ -48,10 +48,10 @@ export function MarketMarquee() {
           
           return (
             <div key={`${asset.symbol}-${i}`} className="inline-flex items-center gap-3 text-sm">
-              <span className="text-xs font-bold uppercase tracking-widest text-slate-500">{asset.name}</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#787B86]">{asset.name}</span>
               {data ? (
                 <>
-                  <span className="data-value text-slate-900 font-mono font-bold">${data.price}</span>
+                  <span className="data-value text-white font-mono font-bold">${data.price}</span>
                   <span className={`inline-flex items-center text-[10px] font-mono font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
                     {isPositive ? '+' : ''}{parseFloat(data.changePercent).toFixed(2)}%
                   </span>

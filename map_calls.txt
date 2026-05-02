@@ -1,0 +1,68 @@
+src/components/TreasuryHoldings.tsx:            {holdings.map((row, idx) => (
+src/components/AIPortfolioDoctor.tsx:                {portfolio.map(asset => (
+src/components/CommunitySentiment.tsx:            posts.map((post) => (
+src/components/AssetChart.tsx:        const formattedData = json.map(candle => {
+src/components/AssetChart.tsx:  const minPrice = data.length > 0 ? Math.min(...data.map(d => d.price)) : 0;
+src/components/AssetChart.tsx:  const maxPrice = data.length > 0 ? Math.max(...data.map(d => d.price)) : 0;
+src/components/AssetChart.tsx:                       {filteredAssets.map(asset => (
+src/components/AssetChart.tsx:              {(['24h', '1W', '1M', '1Y', 'All'] as const).map(tf => (
+src/components/MarketMarquee.tsx:    const streams = INITIAL_SYMBOLS.map(s => `${s.symbol.toLowerCase()}@ticker`).join('/');
+src/components/MarketMarquee.tsx:        {[...INITIAL_SYMBOLS, ...INITIAL_SYMBOLS].map((asset, i) => {
+src/components/SupportAndCommunity.tsx:              {GUIDELINES.map((rule) => {
+src/components/SupportAndCommunity.tsx:                      {selectedImages.map((file, i) => (
+src/components/Watchlist.tsx:        {MOVERS.map((asset, i) => (
+src/components/LiveCoinTracker.tsx:        const symbolsStr = JSON.stringify(TRACKED_COINS.map(c => c.symbol));
+src/components/LiveCoinTracker.tsx:        {[...Array(8)].map((_, i) => (
+src/components/LiveCoinTracker.tsx:      {TRACKED_COINS.map(coin => {
+src/components/ProCryptoTools.tsx:          ].map(t => (
+src/components/ProCryptoTools.tsx:                ].map((row, i) => (
+src/components/Navigation.tsx:          ].map(link => (
+src/components/Navigation.tsx:          ].map(link => (
+src/components/CryptoMasterclass.tsx:          {topics.map(t => (
+src/components/MarketInsights.tsx:            {videos.map((video) => (
+src/components/MarketInsights.tsx:                  {QUIZ_QUESTIONS[currentQuestion].options.map((option, index) => {
+src/components/ArticleModal.tsx:                        {detailedAnalysis.split('\n\n').map((paragraph, i) => (
+src/components/GlobalCryptoNews.tsx:               {news.map((item) => {
+src/components/UserReports.tsx:            {uploads.map((item) => (
+src/components/NewsFeed.tsx:               {listArticles.map((article, index) => (
+src/components/SimilarCoins.tsx:  return Array.from({ length: points }).map((_, i) => {
+src/components/SimilarCoins.tsx:  const [coins, setCoins] = useState<Array<typeof INITIAL_COINS[0] & { price: number | string, change: string | number, isUp: boolean }>>(INITIAL_COINS.map(c => ({...c, price: '...', change: '...', isUp: true})));
+src/components/SimilarCoins.tsx:        const symbolsString = `[${INITIAL_COINS.map(c => `"${c.id}"`).join(',')}]`;
+src/components/SimilarCoins.tsx:        const updatedCoins = await Promise.all(INITIAL_COINS.map(async (coin) => {
+src/components/SimilarCoins.tsx:              sparklineData = klinesJson.map(candle => ({ val: parseFloat(candle[4]) }));
+src/components/SimilarCoins.tsx:                  const newCoins = prevCoins.map(c => {
+src/components/SimilarCoins.tsx:          {['24h', '7d', '30d'].map(tf => (
+src/components/SimilarCoins.tsx:        {coins.map((coin) => {
+src/components/PortfolioTracker.tsx:      const symbolsList = items.map(i => `${i.symbol}USDT`).join(',');
+src/components/PortfolioTracker.tsx:        coinsToFetch.map(s => fetch(`https://api.binance.com/api/v3/ticker/price?symbol=${s}`).catch(() => null))
+src/components/PortfolioTracker.tsx:           {items.map(item => {
+src/components/MarketEvents.tsx:        ].map(t => (
+src/components/MarketEvents.tsx:            ].map((item, i) => (
+src/components/MarketEvents.tsx:            ].map((item, i) => (
+src/components/MarketEvents.tsx:            ].map((item, i) => (
+src/components/MarketEvents.tsx:            ].map((item, i) => (
+src/components/CryptoBeginnerHub.tsx:            ].map((course, i) => (
+src/components/CryptoBeginnerHub.tsx:                  {quizQuestions[currentQ].options.map((opt, i) => (
+src/components/PremiumFeatures.tsx:          {activeAlerts.map(alert => (
+src/components/MarketSentimentAnalysis.tsx:          {mockSentimentData.map((coin, idx) => {
+src/components/MarketSentimentAnalysis.tsx:                    {coin.topKeywords.map(keyword => (
+src/components/GlobalPrices.tsx:      setPairs(prev => prev.map(p => {
+src/components/GlobalPrices.tsx:      setLiveTrending(prev => prev.map(item => {
+src/components/GlobalPrices.tsx:          {pairs.map((pair: any) => (
+src/components/GlobalPrices.tsx:          {liveTrending.map((coin: any) => (
+src/components/AssetMarkets.tsx:          {['Spot', 'Perpetual', 'Futures'].map((tab) => (
+src/components/AssetMarkets.tsx:            {MARKETS_DATA[activeTab].map((row) => {
+src/components/WhaleTracker.tsx:          {(['all', 'whale', 'retail'] as const).map(f => (
+src/components/WhaleTracker.tsx:              {filteredTrades.map(trade => (
+src/components/AssetYield.tsx:          {['CeFi', 'DeFi', 'All'].map((tab, idx) => (
+src/components/AssetYield.tsx:            {INITIAL_YIELD.map((row) => {
+src/components/AssetDensity.tsx:      setLiveItems(prev => prev.map(item => {
+src/components/AssetDensity.tsx:        {liveItems.map((item, idx) => (
+src/components/FAQ.tsx:        {FAQ_DATA.map((faq, index) => {
+src/components/AllNewsModal.tsx:                {extendedNews.map((article, i) => (
+src/components/MarketHubDraft.tsx:              {trending.map((coin, i) => (
+src/components/MarketHubDraft.tsx:              {gainers.map((coin, i) => (
+src/components/MarketHubDraft.tsx:              {losers.map((coin, i) => (
+src/components/MarketTracker.tsx:    const symbolsString = `[${COINS.map(c => `"${c.id}"`).join(',')}]`;
+src/components/MarketTracker.tsx:    const streams = COINS.map(c => `${c.id.toLowerCase()}@ticker`).join('/');
+src/components/MarketTracker.tsx:              {COINS.map((coin, idx) => {

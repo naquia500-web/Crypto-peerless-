@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getCryptoLogo } from '../lib/logos';
+import { BadgeCheck } from 'lucide-react';
 
 interface CoinConfig {
   symbol: string;
@@ -129,7 +130,7 @@ export function LiveCoinTracker() {
     return (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-pulse">
         {[...Array(8)].map((_, i) => (
-          <div key={i} className="h-24 bg-slate-50 rounded-lg border border-slate-100"></div>
+          <div key={i} className="h-24 bg-[#1E222D] rounded-lg border border-[#2A2E39]"></div>
         ))}
       </div>
     );
@@ -147,16 +148,19 @@ export function LiveCoinTracker() {
         const baseSymbol = coin.symbol.replace('USDT', '');
         
         return (
-          <div key={coin.symbol} className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-slate-50`}>
+          <div key={coin.symbol} className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-[#1E222D]`}>
             <div className="flex justify-between items-start mb-2 relative z-10">
               <div className="flex items-center gap-2">
                 <img src={getCryptoLogo(baseSymbol) || `https://ui-avatars.com/api/?name=${coin.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} alt={baseSymbol} className="w-5 h-5 object-contain" />
                 <div className="flex flex-col">
-                  <span className="text-slate-900 font-bold text-sm tracking-wide">{coin.name}</span>
-                  <span className="text-slate-900/40 text-[10px] font-mono tracking-widest">{baseSymbol}</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-white font-bold text-sm tracking-wide">{coin.name}</span>
+                    <BadgeCheck className="w-3 h-3 text-blue-500" />
+                  </div>
+                  <span className="text-white/40 text-[10px] font-mono tracking-widest">{baseSymbol}</span>
                 </div>
               </div>
-              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-50 ${colorClass}`}>
+              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#1E222D] ${colorClass}`}>
                 {isUp ? '+' : ''}{data.priceChangePercent.toFixed(2)}%
               </span>
             </div>
@@ -168,15 +172,15 @@ export function LiveCoinTracker() {
                     key={data.price}
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`font-mono text-lg font-black tracking-tight ${data.status === 'up' ? 'text-blue-600' : data.status === 'down' ? 'text-red-500' : 'text-slate-900'}`}
+                    className={`font-mono text-lg font-black tracking-tight ${data.status === 'up' ? 'text-blue-600' : data.status === 'down' ? 'text-red-500' : 'text-white'}`}
                   >
                     ${data.price.toLocaleString(undefined, { minimumFractionDigits: data.price < 2 ? 4 : 2, maximumFractionDigits: data.price < 2 ? 4 : 2 })}
                   </motion.span>
                 </AnimatePresence>
               </div>
               <div className="flex flex-col items-end">
-                 <span className="text-[9px] text-slate-900/30 uppercase tracking-widest font-mono">24h Vol</span>
-                 <span className="text-[10px] text-slate-500 font-mono">${(data.volume / 1000000).toFixed(1)}M</span>
+                 <span className="text-[10px] text-[#787B86] uppercase tracking-widest font-mono font-bold">24h Vol</span>
+                 <span className="text-[11px] text-[#D1D4DC] font-mono font-bold">${(data.volume / 1000000).toFixed(1)}M</span>
               </div>
             </div>
             

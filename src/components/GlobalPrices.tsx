@@ -84,13 +84,13 @@ export function GlobalPrices({ currentBtcPrice = 76683.50 }: GlobalPricesProps) 
       
       {/* Global Prices block */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 border-b border-slate-200 pb-2 flex items-center gap-2">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-white border-b border-[#2A2E39] pb-2 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
           Global Bitcoin Prices <span className="lowercase font-mono text-[8px] animate-pulse opacity-50">(live tracking)</span>
         </h3>
         <div className="flex flex-wrap gap-2">
           {pairs.map((pair: any) => (
-            <div key={pair.target} className="flex items-center gap-2 px-3 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded transition-colors group cursor-pointer">
+            <div key={pair.target} className="flex items-center gap-2 px-3 py-2 bg-[#1E222D] hover:bg-[#2A2E39] border border-[#2A2E39] rounded transition-colors group cursor-pointer">
               <img 
                 src={`https://flagcdn.com/w20/${pair.target === 'EUR' ? 'eu' : pair.target === 'GBP' ? 'gb' : pair.target === 'CNY' ? 'cn' : pair.target === 'CAD' ? 'ca' : pair.target === 'AUD' ? 'au' : pair.target === 'JPY' ? 'jp' : pair.target === 'KRW' ? 'kr' : pair.target === 'INR' ? 'in' : pair.target === 'BRL' ? 'br' : 'za'}.png`} 
                 alt={`${pair.target} flag`}
@@ -115,19 +115,19 @@ export function GlobalPrices({ currentBtcPrice = 76683.50 }: GlobalPricesProps) 
 
       {/* Trending Block */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 border-b border-slate-200 pb-2 flex items-center gap-2">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-white border-b border-[#2A2E39] pb-2 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
           Trending <span className="lowercase font-mono text-[8px] animate-pulse opacity-50">(live tracking)</span>
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {liveTrending.map((coin: any) => (
-            <div key={coin.name} className="flex flex-col gap-2 p-4 bg-white shadow-lg border border-slate-200 rounded-xl hover:-translate-y-1 transition-transform cursor-pointer">
+            <div key={coin.name} className="flex flex-col gap-2 p-4 bg-[#131722] shadow-lg border border-[#2A2E39] rounded-xl hover:-translate-y-1 transition-transform cursor-pointer">
               <img 
                 src={getCryptoLogo(coin.symbol) || `https://ui-avatars.com/api/?name=${coin.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} 
                 alt={coin.name}
-                className="w-6 h-6 rounded-full mb-2 bg-slate-100"
+                className="w-6 h-6 rounded-full mb-2 bg-[#2A2E39]"
               />
-              <span className="font-bold text-sm text-slate-900">{coin.name}</span>
+              <span className="font-bold text-sm text-white">{coin.name}</span>
               <AnimatePresence mode="popLayout">
                 <motion.span 
                   key={coin.flashId || coin.price}

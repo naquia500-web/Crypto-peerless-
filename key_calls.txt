@@ -1,0 +1,58 @@
+src/components/TreasuryHoldings.tsx:                key={idx} 
+src/components/AIPortfolioDoctor.tsx:                  <div key={asset.asset} className="flex justify-between items-center text-sm border-b border-[#2A2E39] pb-2 last:border-0 last:pb-0">
+src/components/CommunitySentiment.tsx:              <div key={post.id} className="flex gap-4 p-4 bg-[#1E222D] rounded-xl border border-[#2A2E39] hover:border-teal-500/30 transition-all cursor-pointer group">
+src/components/AssetChart.tsx:                           key={asset.id}
+src/components/AssetChart.tsx:                  key={tf}
+src/components/AssetChart.tsx:               key={`tv-${timeframe}`}
+src/components/MarketMarquee.tsx:            <div key={`${asset.symbol}-${i}`} className="inline-flex items-center gap-3 text-sm">
+src/components/SupportAndCommunity.tsx:                  <div key={rule.id} className="flex gap-4 p-4 rounded-xl bg-[#131722] border border-[#2A2E39] hover:border-[#2A2E39] transition-colors">
+src/components/SupportAndCommunity.tsx:                        <div key={i} className="flex items-center gap-2 bg-[#1E222D] border border-[#2A2E39] rounded-md py-1 px-2 pr-1">
+src/components/Watchlist.tsx:          <div key={asset.symbol} className="flex justify-between items-center border-b border-[#2A2E39] pb-3 cursor-pointer hover:bg-[#2A2E39] transition-colors px-2 -mx-2 rounded">
+src/components/LiveCoinTracker.tsx:          <div key={i} className="h-24 bg-[#1E222D] rounded-lg border border-[#2A2E39]"></div>
+src/components/LiveCoinTracker.tsx:          <div key={coin.symbol} className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-[#1E222D]`}>
+src/components/LiveCoinTracker.tsx:                    key={data.price}
+src/components/ProCryptoTools.tsx:              key={t.id}
+src/components/ProCryptoTools.tsx:                  <tr key={i} className="border-b border-[#2A2E39] last:border-0">
+src/components/Navigation.tsx:              key={link.id} 
+src/components/Navigation.tsx:              key={'mobile-'+link.id} 
+src/components/CryptoMasterclass.tsx:              key={t}
+src/components/MarketInsights.tsx:                key={video.id}
+src/components/MarketInsights.tsx:                  key={currentQuestion}
+src/components/MarketInsights.tsx:                        key={index}
+src/components/ArticleModal.tsx:                           <p key={i}>{paragraph}</p>
+src/components/GlobalCryptoNews.tsx:                   <div key={item.id} className={`flex flex-col gap-3 p-5 rounded-xl transition-all duration-300 border ${boxClasses}`} style={inlineStyles}>
+src/components/UserReports.tsx:                key={item.id}
+src/components/NewsFeed.tsx:                    key={article.id}
+src/components/SimilarCoins.tsx:            <button key={tf} className="text-[9px] font-bold uppercase tracking-widest bg-[#1E222D] hover:bg-[#2A2E39] px-2 py-1 flex items-center justify-center rounded transition-colors text-[#787B86] hover:text-white">
+src/components/SimilarCoins.tsx:            <div key={coin.id} className="bg-[#131722] shadow-lg border border-[#2A2E39] p-4 rounded-xl flex flex-col relative group hover:bg-[#2A2E39] transition-colors cursor-pointer">
+src/components/PortfolioTracker.tsx:               <div key={item.id} className="grid grid-cols-4 px-4 py-3 bg-[#1E222D] hover:bg-[#1E222D] border border-[#2A2E39] rounded-lg items-center transition-colors">
+src/components/MarketEvents.tsx:            key={t.id}
+src/components/MarketEvents.tsx:              <div key={i} className="bg-[#131722] p-4 rounded-xl border border-[#2A2E39] shadow-sm flex justify-between items-center group hover:border-blue-300 transition-colors cursor-pointer">
+src/components/MarketEvents.tsx:              <div key={i} className="bg-[#131722] p-4 rounded-xl border border-[#2A2E39] shadow-sm flex flex-col gap-3 group hover:border-purple-300 transition-colors cursor-pointer">
+src/components/MarketEvents.tsx:              <div key={i} className="bg-[#131722] p-4 rounded-xl border border-[#2A2E39] shadow-sm flex justify-between items-center group hover:border-red-300 transition-colors cursor-pointer">
+src/components/MarketEvents.tsx:              <div key={i} className="bg-[#131722] p-4 rounded-xl border border-[#2A2E39] shadow-sm flex items-start justify-between group hover:border-blue-300 transition-colors cursor-pointer">
+src/components/CryptoBeginnerHub.tsx:              <div key={i} className="bg-[#131722] rounded-xl p-4 border border-[#2A2E39] shadow-sm hover:border-emerald-300 hover:shadow-md transition-all cursor-pointer group flex items-start gap-4">
+src/components/CryptoBeginnerHub.tsx:                      key={i}
+src/components/PremiumFeatures.tsx:              key={alert.id}
+src/components/MarketSentimentAnalysis.tsx:                key={coin.id}
+src/components/MarketSentimentAnalysis.tsx:                      <span key={keyword} className="text-[9px] uppercase tracking-widest bg-[#1E222D] border border-[#2A2E39] px-1.5 py-0.5 rounded text-[#787B86]">
+src/components/GlobalPrices.tsx:            <div key={pair.target} className="flex items-center gap-2 px-3 py-2 bg-[#1E222D] hover:bg-[#2A2E39] border border-[#2A2E39] rounded transition-colors group cursor-pointer">
+src/components/GlobalPrices.tsx:                  key={pair.flashId || pair.target}
+src/components/GlobalPrices.tsx:            <div key={coin.name} className="flex flex-col gap-2 p-4 bg-[#131722] shadow-lg border border-[#2A2E39] rounded-xl hover:-translate-y-1 transition-transform cursor-pointer">
+src/components/GlobalPrices.tsx:                  key={coin.flashId || coin.price}
+src/components/AssetMarkets.tsx:            <button key={tab} onClick={() => setActiveTab(tab)} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${activeTab === tab ? 'bg-blue-100 text-blue-700' : 'bg-[#2A2E39] text-[#787B86] hover:bg-slate-200 hover:text-[#B2B5BE]'}`}>
+src/components/AssetMarkets.tsx:                  key={row.rank} 
+src/components/AssetMarkets.tsx:                        key={current.price}
+src/components/WhaleTracker.tsx:              key={f}
+src/components/WhaleTracker.tsx:                  key={trade.id}
+src/components/AssetYield.tsx:            <button key={tab} className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded transition-colors ${idx === 2 ? 'bg-blue-100 text-blue-700' : 'bg-[#2A2E39] text-[#787B86] hover:bg-slate-200 hover:text-[#B2B5BE]'}`}>
+src/components/AssetYield.tsx:                <tr key={row.rank} className="border-b border-[#2A2E39] hover:bg-[#1E222D] transition-colors group">
+src/components/AssetYield.tsx:                        key={current.apy.toFixed(2)}
+src/components/AssetDensity.tsx:          <div key={idx} className="flex items-center gap-2 px-3 py-1.5 bg-[#131722] shadow-lg border border-[#2A2E39] rounded-full hover:bg-[#2A2E39] transition-colors cursor-pointer group">
+src/components/AssetDensity.tsx:                key={item.flashId || item.price}
+src/components/FAQ.tsx:              key={faq.id} 
+src/components/AllNewsModal.tsx:                    key={article.id}
+src/components/MarketHubDraft.tsx:                <div key={coin.symbol} className="flex justify-between items-center p-3 border-b border-[#2A2E39] last:border-0 hover:bg-[#1E222D] transition-colors">
+src/components/MarketHubDraft.tsx:                <div key={coin.symbol} className="flex justify-between items-center p-3 border-b border-[#2A2E39] last:border-0 hover:bg-[#1E222D] transition-colors">
+src/components/MarketHubDraft.tsx:                <div key={coin.symbol} className="flex justify-between items-center p-3 border-b border-[#2A2E39] last:border-0 hover:bg-[#1E222D] transition-colors">
+src/components/MarketTracker.tsx:                    key={coin.id} 

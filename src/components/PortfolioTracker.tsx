@@ -97,34 +97,34 @@ export function PortfolioTracker() {
 
   return (
     <section className="flex flex-col gap-6 mt-8">
-      <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-slate-900 flex items-center gap-2">
+      <div className="flex items-center justify-between pb-2 border-b border-[#2A2E39]">
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-white flex items-center gap-2">
           <Wallet className="w-5 h-5 text-teal-400" />
           Hardware Portfolio
         </h3>
         <button 
           onClick={fetchPrices}
-          className={`px-3 py-1.5 rounded bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest ${isRefreshing ? 'opacity-50' : ''}`}
+          className={`px-3 py-1.5 rounded bg-[#1E222D] hover:bg-[#2A2E39] text-[#787B86] hover:text-white transition-colors flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest ${isRefreshing ? 'opacity-50' : ''}`}
         >
           <RefreshCw className={`w-3 h-3 ${isRefreshing ? 'animate-spin text-teal-400' : ''}`} /> Sync
         </button>
       </div>
 
-      <div className="bg-white shadow-lg border border-slate-200 p-6 rounded-xl flex flex-col gap-6">
+      <div className="bg-[#131722] shadow-lg border border-[#2A2E39] p-6 rounded-xl flex flex-col gap-6">
         
         {/* Top Summary */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 p-5 rounded-xl border border-slate-100 bg-slate-50">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 p-5 rounded-xl border border-[#2A2E39] bg-[#1E222D]">
           <div className="flex flex-col gap-1">
-             <span className="text-[10px] uppercase tracking-widest font-bold opacity-50 text-slate-900 flex items-center gap-2">
+             <span className="text-[10px] uppercase tracking-widest font-bold opacity-50 text-white flex items-center gap-2">
                <Layers className="w-3 h-3" /> Total Balance
              </span>
-             <h2 className="text-3xl font-black text-slate-900 truncate max-w-[200px] md:max-w-md">
+             <h2 className="text-3xl font-black text-white truncate max-w-[200px] md:max-w-md">
                ${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
              </h2>
           </div>
           
           <div className="flex flex-col items-end gap-1">
-             <span className="text-[10px] uppercase tracking-widest font-bold opacity-50 text-slate-900">All-Time Pnl</span>
+             <span className="text-[10px] uppercase tracking-widest font-bold opacity-50 text-white">All-Time Pnl</span>
              <div className={`flex items-center gap-1.5 text-lg font-black ${totalProfit >= 0 ? 'text-blue-600' : 'text-red-500'}`}>
                {totalProfit >= 0 ? <ArrowUpRight className="w-5 h-5" /> : <ArrowDownRight className="w-5 h-5" />}
                ${Math.abs(totalProfit).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -135,7 +135,7 @@ export function PortfolioTracker() {
 
         {/* Holdings List */}
         <div className="flex flex-col gap-3">
-           <div className="grid grid-cols-4 px-4 py-2 text-[10px] uppercase tracking-widest font-bold text-slate-500 border-b border-slate-100">
+           <div className="grid grid-cols-4 px-4 py-2 text-[10px] uppercase tracking-widest font-bold text-[#787B86] border-b border-[#2A2E39]">
              <div className="col-span-1">Asset</div>
              <div className="col-span-1 text-right">Holdings</div>
              <div className="col-span-1 text-right">Price</div>
@@ -151,9 +151,9 @@ export function PortfolioTracker() {
              const isProfitable = pnl >= 0;
 
              return (
-               <div key={item.id} className="grid grid-cols-4 px-4 py-3 bg-slate-50 hover:bg-slate-50 border border-slate-100 rounded-lg items-center transition-colors">
+               <div key={item.id} className="grid grid-cols-4 px-4 py-3 bg-[#1E222D] hover:bg-[#1E222D] border border-[#2A2E39] rounded-lg items-center transition-colors">
                  <div className="col-span-1 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-black/50 border border-slate-200 flex items-center justify-center font-bold text-xs overflow-hidden">
+                    <div className="w-8 h-8 rounded-full bg-black/50 border border-[#2A2E39] flex items-center justify-center font-bold text-xs overflow-hidden">
                       {getCryptoLogo(item.symbol) ? (
                         <img src={getCryptoLogo(item.symbol)!} alt={item.symbol} className="w-5 h-5" />
                       ) : (
@@ -161,16 +161,16 @@ export function PortfolioTracker() {
                       )}
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold text-slate-900 leading-none">{item.symbol}</span>
-                      <span className="text-[10px] text-slate-900/40">{item.name}</span>
+                      <span className="text-sm font-bold text-white leading-none">{item.symbol}</span>
+                      <span className="text-[10px] text-white/40">{item.name}</span>
                     </div>
                  </div>
                  <div className="col-span-1 flex flex-col items-end">
-                    <span className="text-sm font-mono text-slate-700 leading-none">{item.amount.toLocaleString()}</span>
-                    <span className="text-[10px] font-mono text-slate-900/40">${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
+                    <span className="text-sm font-mono text-[#B2B5BE] leading-none">{item.amount.toLocaleString()}</span>
+                    <span className="text-[10px] font-mono text-white/40">${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
                  </div>
                  <div className="col-span-1 flex flex-col items-end">
-                    <span className="text-sm font-mono text-slate-700 leading-none">${currentPrice.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
+                    <span className="text-sm font-mono text-[#B2B5BE] leading-none">${currentPrice.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
                  </div>
                  <div className="col-span-1 flex flex-col items-end">
                     <span className={`text-sm font-mono font-bold leading-none ${isProfitable ? 'text-blue-600' : 'text-red-500'}`}>
