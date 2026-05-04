@@ -85,7 +85,7 @@ export function PortfolioTracker() {
     if (items.length > 0) {
       fetchPrices();
     }
-    const int = setInterval(fetchPrices, 30000);
+    const int = setInterval(fetchPrices, 10000);
     return () => clearInterval(int);
   }, [items]);
 

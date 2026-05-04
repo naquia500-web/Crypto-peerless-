@@ -101,7 +101,7 @@ export function MarketInsights() {
     fetchAIInsights();
     const interval = setInterval(() => {
       fetchAIInsights();
-    }, 60 * 60 * 1000); // Live updates every 1 hour
+    }, 2 * 60 * 60 * 1000); 
     return () => clearInterval(interval);
   }, []);
 

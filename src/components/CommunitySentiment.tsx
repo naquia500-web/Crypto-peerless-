@@ -76,10 +76,21 @@ export function CommunitySentiment() {
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const updatePosts = async () => {
       try {
         await new Promise(r => setTimeout(r, 800)); // Simulate load
-        setPosts(FALLBACK_POSTS);
+        const now = new Date();
+        const windowMs = 2 * 60 * 60 * 1000;
+        const currentEpochPeriod = Math.floor(now.getTime() / windowMs);
+
+        const seed = currentEpochPeriod;
+        const shuffledPosts = [...FALLBACK_POSTS].sort((a, b) => {
+          const seedA = (a.content.length * seed) % 100;
+          const seedB = (b.content.length * seed) % 100;
+          return seedA - seedB;
+        });
+
+        setPosts(shuffledPosts);
       } catch (error: any) {
         setPosts(FALLBACK_POSTS);
       } finally {
@@ -87,13 +98,25 @@ export function CommunitySentiment() {
       }
     };
 
-    fetchPosts();
+    updatePosts();
+    
+    const interval = setInterval(() => {
+      updatePosts();
+    }, 60000); // Check every minute, data rotates every 2 hours
+    
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <section className="flex flex-col gap-6 mt-8">
       <div className="flex items-center justify-between pb-2 border-b border-[#2A2E39]">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white">Market Community Updates</h3>
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-white flex items-center gap-2">
+          Market Community Updates
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 ml-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+            <span className="text-[9px] font-bold text-blue-500 uppercase tracking-wider">Live Tracker Active</span>
+          </div>
+        </h3>
       </div>
 
       <div className="bg-[#131722] shadow-lg border border-[#2A2E39] p-6 rounded-xl flex flex-col gap-5">

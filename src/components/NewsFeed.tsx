@@ -78,20 +78,28 @@ export function NewsFeed() {
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [isAllNewsOpen, setIsAllNewsOpen] = useState(false);
 
+  const [nextUpdateStr, setNextUpdateStr] = useState('');
+
   useEffect(() => {
-    const fetchLiveNews = async () => {
-      try {
-        await new Promise(r => setTimeout(r, 1000));
-        setNews([...FALLBACK_NEWS].sort(() => 0.5 - Math.random())); // Shuffle to simulate updates
-      } catch (error: any) {
-        setNews(FALLBACK_NEWS);
-      } finally {
-        setLoading(false);
-      }
+    const updateNews = () => {
+      const now = new Date();
+      const windowMs = 2 * 60 * 60 * 1000;
+      const currentEpochPeriod = Math.floor(now.getTime() / windowMs);
+
+      // Seed the shuffle based on epoch period so it changes every 2 hours
+      const seed = currentEpochPeriod;
+      const shuffledNews = [...FALLBACK_NEWS].sort((a, b) => {
+        const seedA = (a.title.length * seed) % 100;
+        const seedB = (b.title.length * seed) % 100;
+        return seedA - seedB;
+      });
+      
+      setNews(shuffledNews);
+      setLoading(false);
     };
 
-    fetchLiveNews();
-    const interval = setInterval(fetchLiveNews, 5 * 60 * 1000); // 5 minutes
+    updateNews();
+    const interval = setInterval(updateNews, 60000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -121,8 +129,8 @@ export function NewsFeed() {
             "NEXUS AI" LIVE MARKET INTEL
           </h3>
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 shadow-[0_0_10px_rgba(45,212,191,0.2)] ml-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse shadow-[0_0_5px_rgba(45,212,191,0.8)]"></div>
-            <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest hidden sm:block">Auto-Updating (5mins)</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-teal-400 shadow-[0_0_5px_rgba(45,212,191,0.8)] animate-pulse"></div>
+            <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest hidden sm:block">Live AI Tracker</span>
           </div>
         </div>
       </div>

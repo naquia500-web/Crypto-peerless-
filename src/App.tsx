@@ -45,7 +45,6 @@ import { FearAndGreedIndex } from "./components/FearAndGreedIndex";
 import { AIScamDetection } from "./components/AIScamDetection";
 import { AirdropCalendar } from "./components/AirdropCalendar";
 import { SecurityDashboard } from "./components/SecurityDashboard";
-import { AdBanner } from "./components/AdBanner";
 
 export default function App() {
   const [currentBtcPrice, setCurrentBtcPrice] = useState<number>(76683.50);
@@ -73,13 +72,6 @@ export default function App() {
       <Navigation />
       <MarketMarquee />
       
-      <div className="w-full max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 mt-4 hidden md:block">
-        <AdBanner 
-          text="Get $100 Sign-Up Bonus on the World's #1 Most Trusted Crypto Exchange" 
-          cta="Claim Bonus" 
-        />
-      </div>
-
       <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 mt-2">
         
         {/* Main Left Column */}

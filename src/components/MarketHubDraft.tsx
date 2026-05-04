@@ -46,7 +46,7 @@ export function MarketHubDraft() {
 
     fetchMarketData();
     // Fast polling since it's a draft but safe on Binance
-    const interval = setInterval(fetchMarketData, 30000); 
+    const interval = setInterval(fetchMarketData, 10000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -57,7 +57,11 @@ export function MarketHubDraft() {
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <Globe className="w-6 h-6 text-blue-600" />
-            Global Markets Overview <span className="bg-blue-100 text-blue-700 text-[10px] uppercase px-2 py-1 rounded font-bold tracking-widest">Draft preview</span>
+            Global Markets Overview 
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 ml-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+              <span className="text-[9px] font-bold text-blue-500 uppercase tracking-wider">Live Tracker Active</span>
+            </div>
           </h2>
           <p className="text-[#787B86] mt-1">Real-time macro metrics spanning Cryptocurrency, Stock Markets, and Blockchain ecosystems.</p>
         </div>

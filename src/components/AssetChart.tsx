@@ -126,7 +126,7 @@ export function AssetChart() {
               <span className="bg-[#2A2E39] text-[#B2B5BE] text-xs font-bold px-2 py-0.5 rounded ml-1 border border-[#2A2E39]">#{activeAsset.rank}</span>
             </div>
             
-            <div className="flex items-center gap-3 mt-1">
+            <div className="flex items-center gap-3 mt-1 relative z-30">
               <span className="text-4xl font-bold tracking-tight text-white drop-shadow-sm">
                 ${currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 8 })}
               </span>
@@ -135,10 +135,10 @@ export function AssetChart() {
               </span>
             </div>
 
-            <div className="mt-2 text-sm">
-               <span className="bg-blue-100 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full font-bold flex items-center w-max gap-1 cursor-pointer hover:bg-blue-200 transition-colors shadow-sm">
+            <div className="mt-2 text-sm relative z-30">
+               <button onClick={() => alert(`Analyzing ${activeAsset.symbol}'s market drivers...`)} className="bg-blue-100 text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full font-bold flex items-center w-max gap-1 hover:bg-blue-200 transition-colors shadow-sm outline-none">
                  <Activity className="w-3.5 h-3.5" /> Why is {activeAsset.symbol}'s price {isPositive ? 'up' : 'down'} today? <ChevronRight className="w-3.5 h-3.5" />
-               </span>
+               </button>
             </div>
           </div>
           
@@ -234,7 +234,7 @@ export function AssetChart() {
             </div>
             
             <div className="flex items-center gap-2 flex-wrap">
-              <button className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-bold text-[#787B86] hover:bg-[#2A2E39] rounded-lg">
+              <button onClick={() => alert('Compare feature coming soon!')} className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-bold text-[#787B86] hover:bg-[#2A2E39] hover:text-white transition-colors rounded-lg">
                 Compare <ChevronDown className="w-3.5 h-3.5" />
               </button>
               <div className="w-px h-4 bg-slate-200 mx-1"></div>
@@ -251,9 +251,9 @@ export function AssetChart() {
                 </button>
               ))}
               <div className="w-px h-4 bg-slate-200 mx-1"></div>
-              <button className="px-2 py-1 text-[13px] font-bold text-[#787B86] hover:text-white rounded-md flex items-center gap-1">Log</button>
-              <button className="p-1.5 text-[#787B86] hover:text-white rounded-md"><Settings className="w-4 h-4" /></button>
-              <button className="p-1.5 text-[#787B86] hover:text-white rounded-md"><Maximize2 className="w-4 h-4" /></button>
+              <button onClick={() => alert('Logarithmic scale toggled')} className="px-2 py-1 text-[13px] font-bold text-[#787B86] hover:text-white rounded-md flex items-center gap-1 transition-colors">Log</button>
+              <button onClick={() => alert('Chart settings opened')} className="p-1.5 text-[#787B86] hover:text-white rounded-md transition-colors"><Settings className="w-4 h-4" /></button>
+              <button onClick={() => alert('Fullscreen mode')} className="p-1.5 text-[#787B86] hover:text-white rounded-md transition-colors"><Maximize2 className="w-4 h-4" /></button>
             </div>
           </div>
         </div>
@@ -368,54 +368,54 @@ export function AssetChart() {
            <h3 className="text-sm font-bold text-[#D1D4DC] mb-4">Bitcoin statistics</h3>
            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
               
-              <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4">
+              <button onClick={() => alert('Loading Market Cap details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 hover:bg-[#1E222D] transition-colors text-left relative z-30">
                  <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Market cap <Info className="w-3.5 h-3.5" /></div>
                  <div className="flex items-center gap-2 mt-1">
                    <span className="text-sm font-bold text-white">$1.51T</span>
                    <span className="flex items-center text-xs font-bold text-red-500">▼ 0.1%</span>
                  </div>
-              </div>
+              </button>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4">
+                <button onClick={() => alert('Loading Volume details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 hover:bg-[#1E222D] transition-colors text-left relative z-30">
                    <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Volume (24h) <Info className="w-3.5 h-3.5" /></div>
                    <div className="flex items-center gap-2 mt-1">
                      <span className="text-sm font-bold text-white">$38.69B</span>
                      <span className="flex items-center text-xs font-bold text-green-500">▲ 2.18%</span>
                    </div>
-                </div>
-                <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4">
+                </button>
+                <button onClick={() => alert('Loading Vol/Mkt Cap ratio details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 hover:bg-[#1E222D] transition-colors text-left relative z-30">
                    <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Vol/Mkt Cap (24h) <Info className="w-3.5 h-3.5" /></div>
                    <div className="flex items-center gap-2 mt-1">
                      <span className="text-sm font-bold text-white">2.54%</span>
                    </div>
-                </div>
+                </button>
               </div>
 
-              <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4">
+              <button onClick={() => alert('Loading FDV details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 hover:bg-[#1E222D] transition-colors text-left relative z-30">
                  <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">FDV <Info className="w-3.5 h-3.5" /></div>
                  <div className="flex items-center gap-2 mt-1">
                    <span className="text-sm font-bold text-white">$1.58T</span>
                  </div>
-              </div>
+              </button>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center">
+                <button onClick={() => alert('Loading Total Supply details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center hover:bg-[#1E222D] transition-colors text-left relative z-30 w-full outline-none">
                    <div className="flex justify-between items-center w-full">
                      <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Total supply <Info className="w-3.5 h-3.5" /></div>
                      <span className="text-sm font-bold text-white">20.01M BTC</span>
                    </div>
-                </div>
-                <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center">
+                </button>
+                <button onClick={() => alert('Loading Max Supply details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center hover:bg-[#1E222D] transition-colors text-left relative z-30 w-full outline-none">
                    <div className="flex justify-between items-center w-full">
                      <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Max. supply <Info className="w-3.5 h-3.5" /></div>
                      <span className="text-sm font-bold text-white">21M BTC</span>
                    </div>
-                </div>
+                </button>
               </div>
 
               <div className="grid grid-cols-2 gap-4 md:col-span-2">
-                <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center">
+                <button onClick={() => alert('Loading Circulating Supply details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center hover:bg-[#1E222D] transition-colors text-left relative z-30 w-full outline-none">
                    <div className="flex justify-between items-center w-full">
                      <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Circulating supply <Info className="w-3.5 h-3.5" /></div>
                      <span className="text-sm font-bold text-white">20.01M BTC</span>
@@ -423,56 +423,56 @@ export function AssetChart() {
                    <div className="w-full bg-[#2A2E39] h-1.5 rounded-full mt-2">
                      <div className="bg-slate-900 h-1.5 rounded-full" style={{width: '95%'}}></div>
                    </div>
-                </div>
-                <div className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center">
+                </button>
+                <button onClick={() => alert('Loading Treasury Holdings details...')} className="flex flex-col border border-[#2A2E39] rounded-lg p-4 justify-center hover:bg-[#1E222D] transition-colors text-left relative z-30 w-full outline-none">
                    <div className="flex justify-between items-center w-full">
                      <div className="flex items-center gap-1 text-[#787B86] text-[11px] font-bold uppercase">Treasury Holdings <Info className="w-3.5 h-3.5" /></div>
                      <span className="text-sm font-bold text-white">1.17M BTC</span>
                    </div>
-                </div>
+                </button>
               </div>
 
            </div>
         </div>
 
         {/* Extra Lists - Profile Score, Links, etc */}
-        <div className="mt-8 pt-4 border-t border-[#2A2E39] flex flex-col gap-4 max-w-2xl text-[13px]">
-           <div className="flex justify-between items-center py-2 border-b border-[#2A2E39]">
+        <div className="mt-8 pt-4 border-t border-[#2A2E39] flex flex-col gap-4 max-w-2xl text-[13px] relative z-30">
+           <button onClick={() => alert('Viewing Profile Score Breakdown...')} className="flex w-full justify-between items-center py-2 border-b border-[#2A2E39] hover:bg-[#1E222D] transition-colors rounded px-2 -mx-2 outline-none">
              <span className="text-[#787B86] font-bold flex items-center gap-1">Profile score <Info className="w-3.5 h-3.5" /></span>
              <span className="text-green-500 font-bold">100%</span>
-           </div>
+           </button>
            
-           <div className="flex justify-between items-center py-2 border-b border-[#2A2E39]">
+           <div className="flex w-full justify-between items-center py-2 border-b border-[#2A2E39] px-2 -mx-2">
              <span className="text-[#787B86] font-bold">Website</span>
              <div className="flex gap-2">
-               <span className="bg-[#2A2E39] hover:bg-slate-200 text-[#B2B5BE] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer font-semibold transition-colors">
+               <button onClick={() => alert(`Opening ${activeAsset.name} website`)} className="bg-[#2A2E39] hover:bg-slate-200 text-[#B2B5BE] hover:text-[#131722] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer font-semibold transition-colors outline-none">
                  <Globe className="w-3.5 h-3.5" /> Website
-               </span>
-               <span className="bg-[#2A2E39] hover:bg-slate-200 text-[#B2B5BE] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer font-semibold transition-colors">
+               </button>
+               <button onClick={() => alert(`Opening ${activeAsset.name} whitepaper`)} className="bg-[#2A2E39] hover:bg-slate-200 text-[#B2B5BE] hover:text-[#131722] px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer font-semibold transition-colors outline-none">
                  <FileText className="w-3.5 h-3.5" /> Whitepaper
-               </span>
+               </button>
              </div>
            </div>
 
-           <div className="flex justify-between items-center py-2 border-b border-[#2A2E39]">
+           <button onClick={() => alert('Viewing CertiK Audit Rating...')} className="flex w-full justify-between items-center py-2 border-b border-[#2A2E39] hover:bg-[#1E222D] transition-colors rounded px-2 -mx-2 outline-none">
              <span className="text-[#787B86] font-bold">Rating (CertiK)</span>
-             <span className="font-bold flex items-center gap-2">
+             <span className="font-bold flex items-center gap-2 text-white">
                4.9 <span className="text-yellow-400">★★★★★</span>
              </span>
-           </div>
+           </button>
 
            <div className="flex flex-col gap-2 py-2">
              <span className="text-[#787B86] font-bold">Tags</span>
              <div className="flex gap-2 flex-wrap">
-               <span className="bg-[#2A2E39] text-[#787B86] px-3 py-1 rounded-md text-xs font-bold">Mineable</span>
-               <span className="bg-[#2A2E39] text-[#787B86] px-3 py-1 rounded-md text-xs font-bold">PoW</span>
-               <span className="bg-[#2A2E39] text-[#787B86] px-3 py-1 rounded-md text-xs font-bold">SHA-256</span>
-               <span className="bg-[#2A2E39] text-[#787B86] px-3 py-1 rounded-md text-xs font-bold">Store Of Value</span>
-               <span className="text-slate-400 font-bold px-1 py-1 text-xs cursor-pointer hover:text-[#787B86]">Show all</span>
+               <button className="bg-[#2A2E39] hover:bg-[#363A45] text-[#787B86] hover:text-[#B2B5BE] px-3 py-1 rounded-md text-xs font-bold transition-colors">Mineable</button>
+               <button className="bg-[#2A2E39] hover:bg-[#363A45] text-[#787B86] hover:text-[#B2B5BE] px-3 py-1 rounded-md text-xs font-bold transition-colors">PoW</button>
+               <button className="bg-[#2A2E39] hover:bg-[#363A45] text-[#787B86] hover:text-[#B2B5BE] px-3 py-1 rounded-md text-xs font-bold transition-colors">SHA-256</button>
+               <button className="bg-[#2A2E39] hover:bg-[#363A45] text-[#787B86] hover:text-[#B2B5BE] px-3 py-1 rounded-md text-xs font-bold transition-colors">Store Of Value</button>
+               <button onClick={() => alert('Showing all tags')} className="text-slate-400 font-bold px-1 py-1 text-xs cursor-pointer hover:text-white transition-colors">Show all</button>
              </div>
            </div>
 
-           <button className="w-full mt-2 bg-[#1E222D] text-[#B2B5BE] font-bold py-2 rounded-lg hover:bg-[#2A2E39] transition-colors border border-[#2A2E39]">
+           <button onClick={() => alert(`Loading more information about ${activeAsset.name}`)} className="w-full mt-2 bg-[#1E222D] text-[#B2B5BE] font-bold py-2 rounded-lg hover:bg-[#2A2E39] hover:text-white transition-colors border border-[#2A2E39]">
                More information
            </button>
         </div>
