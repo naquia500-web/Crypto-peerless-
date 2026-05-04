@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from 'motion/react';
-import { X, Bot, Sparkles, TrendingUp, Clock } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from "motion/react";
+import { X, Bot, Sparkles, TrendingUp, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface ArticleModalProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface ArticleModalProps {
 }
 
 export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
-  const [detailedAnalysis, setDetailedAnalysis] = useState<string>('');
+  const [detailedAnalysis, setDetailedAnalysis] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,10 +21,14 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
   const generateAnalysis = async () => {
     try {
       setLoading(true);
-      await new Promise(r => setTimeout(r, 1000));
-      setDetailedAnalysis('**Simulated Analysis**\n\nThe recent developments outlined in this news piece signal a growing momentum in the digital asset space. Institutional adoption continues to build a robust foundation, increasing liquidity and significantly reducing volatility over longer time horizons. Historical data suggests that phases of consolidation such as this often precede major macroeconomic shifts.\n\nFurthermore, the specified asset is seeing increased on-chain activity, which directly points to rising utility and network health. When combined with supportive technical indicators and a favorable risk-reward ratio, the outlook suggests a sustained accumulation phase by major market participants.\n\nIn the near term, investors should continue to closely monitor volume profiles and key support levels. Strategic deployments in fundamentally strong sectors remain the most viable long-term approach for capital allocation.');
+      await new Promise((r) => setTimeout(r, 1000));
+      setDetailedAnalysis(
+        "**Simulated Analysis**\n\nThe recent developments outlined in this news piece signal a growing momentum in the digital asset space. Institutional adoption continues to build a robust foundation, increasing liquidity and significantly reducing volatility over longer time horizons. Historical data suggests that phases of consolidation such as this often precede major macroeconomic shifts.\n\nFurthermore, the specified asset is seeing increased on-chain activity, which directly points to rising utility and network health. When combined with supportive technical indicators and a favorable risk-reward ratio, the outlook suggests a sustained accumulation phase by major market participants.\n\nIn the near term, investors should continue to closely monitor volume profiles and key support levels. Strategic deployments in fundamentally strong sectors remain the most viable long-term approach for capital allocation.",
+      );
     } catch (error: any) {
-      setDetailedAnalysis('**Error**\n\nI am currently experiencing too many requests. Please try again later.');
+      setDetailedAnalysis(
+        "**Error**\n\nI am currently experiencing too many requests. Please try again later.",
+      );
     } finally {
       setLoading(false);
     }
@@ -35,15 +39,15 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
           className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         />
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -52,15 +56,19 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
           {/* Header */}
           <div className="flex justify-between items-center p-6 border-b border-[#2A2E39] shrink-0">
             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center border border-teal-500/40">
-                  <Bot className="w-5 h-5 text-teal-400" />
-               </div>
-               <div>
-                 <h2 className="text-lg font-black uppercase tracking-widest text-white shadow-teal-500/50">NEXUS AI <span className="text-teal-400">DEEP ANALYSIS</span></h2>
-                 <p className="text-xs text-[#787B86] uppercase tracking-wider font-mono">Autonomous Contextual Intel</p>
-               </div>
+              <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center border border-teal-500/40">
+                <Bot className="w-5 h-5 text-teal-400" />
+              </div>
+              <div>
+                <h2 className="text-lg font-black uppercase tracking-widest text-white shadow-teal-500/50">
+                  NEXUS AI <span className="text-teal-400">DEEP ANALYSIS</span>
+                </h2>
+                <p className="text-xs text-[#787B86] uppercase tracking-wider font-mono">
+                  Autonomous Contextual Intel
+                </p>
+              </div>
             </div>
-            <button 
+            <button
               onClick={onClose}
               className="w-10 h-10 rounded-full bg-[#1E222D] hover:bg-[#2A2E39] flex items-center justify-center transition-colors border border-[#2A2E39]"
             >
@@ -76,7 +84,11 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                 <div className="w-full lg:w-1/3 flex flex-col gap-4 shrink-0">
                   {article.imageUrl && (
                     <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#2A2E39] relative">
-                      <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover" />
+                      <img
+                        src={article.imageUrl}
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                      />
                       {article.symbol && (
                         <div className="absolute top-2 right-2 bg-black/60 px-2 py-1 rounded backdrop-blur-md text-[10px] font-bold text-teal-400 border border-teal-500/30">
                           {article.symbol}
@@ -84,7 +96,9 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                       )}
                     </div>
                   )}
-                  <h3 className="text-xl font-bold leading-tight text-white">{article.title}</h3>
+                  <h3 className="text-xl font-bold leading-tight text-white">
+                    {article.title}
+                  </h3>
                   <div className="flex items-center gap-2 text-xs text-[#787B86] font-mono">
                     <Clock className="w-3 h-3" />
                     <span>Live Market Snapshot</span>
@@ -98,22 +112,26 @@ export function ArticleModal({ isOpen, onClose, article }: ArticleModalProps) {
                 <div className="w-full lg:w-2/3">
                   <div className="bg-teal-500/5 border border-teal-500/20 rounded-xl p-6 relative h-full">
                     <div className="absolute -top-3 left-6 bg-[#131722] px-3 flex items-center gap-2">
-                       <Sparkles className="w-4 h-4 text-teal-400" />
-                       <span className="text-xs font-bold uppercase tracking-widest text-teal-400">Detailed AI Context</span>
+                      <Sparkles className="w-4 h-4 text-teal-400" />
+                      <span className="text-xs font-bold uppercase tracking-widest text-teal-400">
+                        Detailed AI Context
+                      </span>
                     </div>
-                    
+
                     {loading ? (
                       <div className="flex flex-col items-center justify-center h-full py-12 opacity-70">
                         <TrendingUp className="w-8 h-8 text-teal-400 animate-bounce mb-4" />
-                        <span className="text-sm font-mono tracking-widest text-teal-400 uppercase">Synthesizing deep analysis...</span>
+                        <span className="text-sm font-mono tracking-widest text-teal-400 uppercase">
+                          Synthesizing deep analysis...
+                        </span>
                         <div className="w-32 h-1 bg-[#2A2E39] mt-4 rounded-full overflow-hidden">
                           <div className="h-full bg-teal-400 animate-pulse w-full"></div>
                         </div>
                       </div>
                     ) : (
                       <div className="text-sm md:text-base text-[#787B86] leading-loose prose prose-invert prose-p:mb-4 prose-teal max-w-none">
-                        {detailedAnalysis.split('\n\n').map((paragraph, i) => (
-                           <p key={i}>{paragraph}</p>
+                        {detailedAnalysis.split("\n\n").map((paragraph, i) => (
+                          <p key={i}>{paragraph}</p>
                         ))}
                       </div>
                     )}

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { getCryptoLogo } from '../lib/logos';
-import { BadgeCheck } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { getCryptoLogo } from "../lib/logos";
+import { BadgeCheck } from "lucide-react";
 
 interface CoinConfig {
   symbol: string;
@@ -9,14 +9,14 @@ interface CoinConfig {
 }
 
 const TRACKED_COINS: CoinConfig[] = [
-  { symbol: 'BTCUSDT', name: 'Bitcoin' },
-  { symbol: 'ETHUSDT', name: 'Ethereum' },
-  { symbol: 'SOLUSDT', name: 'Solana' },
-  { symbol: 'BNBUSDT', name: 'BNB' },
-  { symbol: 'XRPUSDT', name: 'XRP' },
-  { symbol: 'ADAUSDT', name: 'Cardano' },
-  { symbol: 'DOGEUSDT', name: 'Dogecoin' },
-  { symbol: 'AVAXUSDT', name: 'Avalanche' },
+  { symbol: "BTCUSDT", name: "Bitcoin" },
+  { symbol: "ETHUSDT", name: "Ethereum" },
+  { symbol: "SOLUSDT", name: "Solana" },
+  { symbol: "BNBUSDT", name: "BNB" },
+  { symbol: "XRPUSDT", name: "XRP" },
+  { symbol: "ADAUSDT", name: "Cardano" },
+  { symbol: "DOGEUSDT", name: "Dogecoin" },
+  { symbol: "AVAXUSDT", name: "Avalanche" },
 ];
 
 interface CoinData {
@@ -27,7 +27,7 @@ interface CoinData {
   lowPrice: number;
   priceChangePercent: number;
   volume: number;
-  status: 'up' | 'down' | 'neutral';
+  status: "up" | "down" | "neutral";
 }
 
 export function LiveCoinTracker() {
@@ -38,10 +38,12 @@ export function LiveCoinTracker() {
   useEffect(() => {
     const fetchInitial = async () => {
       try {
-        const symbolsStr = JSON.stringify(TRACKED_COINS.map(c => c.symbol));
-        const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(symbolsStr)}`);
+        const symbolsStr = JSON.stringify(TRACKED_COINS.map((c) => c.symbol));
+        const res = await fetch(
+          `https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(symbolsStr)}`,
+        );
         const data = await res.json();
-        
+
         const initialData: Record<string, CoinData> = {};
         if (Array.isArray(data)) {
           data.forEach((item: any) => {
@@ -53,7 +55,7 @@ export function LiveCoinTracker() {
               lowPrice: parseFloat(item.lowPrice),
               priceChangePercent: parseFloat(item.priceChangePercent),
               volume: parseFloat(item.quoteVolume),
-              status: parseFloat(item.priceChangePercent) >= 0 ? 'up' : 'down'
+              status: parseFloat(item.priceChangePercent) >= 0 ? "up" : "down",
             };
           });
         }
@@ -63,61 +65,66 @@ export function LiveCoinTracker() {
         console.warn("Failed to fetch initial coin data");
       }
     };
-    
+
     fetchInitial();
   }, []);
 
   // Set up WebSocket for light-weight real-time price updates (1s frequency)
   useEffect(() => {
     if (loading) return; // Wait until initial data is loaded
-    
+
     const wsUrl = `wss://stream.binance.com:9443/ws/!miniTicker@arr`;
     let ws: WebSocket | null = null;
-    
+
     const connectWs = () => {
       ws = new WebSocket(wsUrl);
-      
+
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (Array.isArray(data)) {
-          setCoinData(prev => {
+          setCoinData((prev) => {
             const updated = { ...prev };
             let hasChanges = false;
-            
+
             data.forEach((item: any) => {
               const symbol = item.s;
               if (updated[symbol]) {
                 const newPrice = parseFloat(item.c);
                 const oldPrice = updated[symbol].price;
-                
+
                 if (newPrice !== oldPrice) {
                   hasChanges = true;
                   updated[symbol] = {
                     ...updated[symbol],
                     price: newPrice,
-                    status: newPrice > oldPrice ? 'up' : (newPrice < oldPrice ? 'down' : updated[symbol].status)
+                    status:
+                      newPrice > oldPrice
+                        ? "up"
+                        : newPrice < oldPrice
+                          ? "down"
+                          : updated[symbol].status,
                   };
                 }
               }
             });
-            
+
             return hasChanges ? updated : prev;
           });
         }
       };
-      
+
       ws.onerror = () => {
         console.warn("Live ticker websocket error");
       };
-      
+
       ws.onclose = () => {
         // Attempt reconnect after 5s
         setTimeout(connectWs, 5000);
       };
     };
-    
+
     connectWs();
-    
+
     return () => {
       if (ws) {
         ws.onclose = null;
@@ -130,7 +137,10 @@ export function LiveCoinTracker() {
     return (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-pulse">
         {[...Array(8)].map((_, i) => (
-          <div key={i} className="h-24 bg-[#1E222D] rounded-lg border border-[#2A2E39]"></div>
+          <div
+            key={i}
+            className="h-24 bg-[#1E222D] rounded-lg border border-[#2A2E39]"
+          ></div>
         ))}
       </div>
     );
@@ -138,33 +148,52 @@ export function LiveCoinTracker() {
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-      {TRACKED_COINS.map(coin => {
+      {TRACKED_COINS.map((coin) => {
         const data = coinData[coin.symbol];
         if (!data) return null;
-        
+
         const isUp = data.priceChangePercent >= 0;
-        const colorClass = isUp ? 'text-blue-600' : 'text-red-500';
-        const bgClass = isUp ? 'bg-blue-500/5 border-blue-500/20' : 'bg-red-500/5 border-red-500/20';
-        const baseSymbol = coin.symbol.replace('USDT', '');
-        
+        const colorClass = isUp ? "text-blue-400" : "text-red-400";
+        const bgClass = isUp
+          ? "bg-blue-500/5 border-blue-500/20"
+          : "bg-red-500/5 border-red-500/20";
+        const baseSymbol = coin.symbol.replace("USDT", "");
+
         return (
-          <div key={coin.symbol} className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-[#1E222D]`}>
+          <div
+            key={coin.symbol}
+            className={`p-4 rounded-xl border ${bgClass} flex flex-col justify-between transition-colors relative overflow-hidden group hover:bg-[#1E222D]`}
+          >
             <div className="flex justify-between items-start mb-2 relative z-10">
               <div className="flex items-center gap-2">
-                <img src={getCryptoLogo(baseSymbol) || `https://ui-avatars.com/api/?name=${coin.name.replace(/ /g, '+')}&background=0B0E11&color=fff&rounded=true&font-size=0.4`} alt={baseSymbol} className="w-5 h-5 object-contain" />
+                <img
+                  src={
+                    getCryptoLogo(baseSymbol) ||
+                    `https://ui-avatars.com/api/?name=${coin.name.replace(/ /g, "+")}&background=0B0E11&color=fff&rounded=true&font-size=0.4`
+                  }
+                  alt={baseSymbol}
+                  className="w-5 h-5 object-contain"
+                />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1">
-                    <span className="text-white font-bold text-sm tracking-wide">{coin.name}</span>
+                    <span className="text-white font-bold text-sm tracking-wide">
+                      {coin.name}
+                    </span>
                     <BadgeCheck className="w-3 h-3 text-blue-500" />
                   </div>
-                  <span className="text-white/40 text-[10px] font-mono tracking-widest">{baseSymbol}</span>
+                  <span className="text-white/40 text-[10px] font-mono tracking-widest">
+                    {baseSymbol}
+                  </span>
                 </div>
               </div>
-              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#1E222D] ${colorClass}`}>
-                {isUp ? '+' : ''}{data.priceChangePercent.toFixed(2)}%
+              <span
+                className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#1E222D] ${colorClass}`}
+              >
+                {isUp ? "+" : ""}
+                {data.priceChangePercent.toFixed(2)}%
               </span>
             </div>
-            
+
             <div className="flex justify-between items-end relative z-10">
               <div className="flex flex-col">
                 <AnimatePresence mode="popLayout">
@@ -172,20 +201,30 @@ export function LiveCoinTracker() {
                     key={data.price}
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`font-mono text-lg font-black tracking-tight ${data.status === 'up' ? 'text-blue-600' : data.status === 'down' ? 'text-red-500' : 'text-white'}`}
+                    className={`font-mono text-lg font-black tracking-tight ${data.status === "up" ? "text-blue-400" : data.status === "down" ? "text-red-400" : "text-white"}`}
                   >
-                    ${data.price.toLocaleString(undefined, { minimumFractionDigits: data.price < 2 ? 4 : 2, maximumFractionDigits: data.price < 2 ? 4 : 2 })}
+                    $
+                    {data.price.toLocaleString(undefined, {
+                      minimumFractionDigits: data.price < 2 ? 4 : 2,
+                      maximumFractionDigits: data.price < 2 ? 4 : 2,
+                    })}
                   </motion.span>
                 </AnimatePresence>
               </div>
               <div className="flex flex-col items-end">
-                 <span className="text-[10px] text-[#787B86] uppercase tracking-widest font-mono font-bold">24h Vol</span>
-                 <span className="text-[11px] text-[#D1D4DC] font-mono font-bold">${(data.volume / 1000000).toFixed(1)}M</span>
+                <span className="text-[10px] text-[#787B86] uppercase tracking-widest font-mono font-bold">
+                  24h Vol
+                </span>
+                <span className="text-[11px] text-[#D1D4DC] font-mono font-bold">
+                  ${(data.volume / 1000000).toFixed(1)}M
+                </span>
               </div>
             </div>
-            
+
             {/* Background decorative elements */}
-            <div className={`absolute -right-4 -bottom-4 w-16 h-16 rounded-full blur-xl opacity-20 ${isUp ? 'bg-blue-500' : 'bg-red-500'} group-hover:opacity-40 transition-opacity`}></div>
+            <div
+              className={`absolute -right-4 -bottom-4 w-16 h-16 rounded-full blur-xl opacity-20 ${isUp ? "bg-blue-500" : "bg-red-500"} group-hover:opacity-40 transition-opacity`}
+            ></div>
           </div>
         );
       })}

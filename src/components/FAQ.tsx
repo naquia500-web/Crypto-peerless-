@@ -1,32 +1,36 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Minus } from 'lucide-react';
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Plus, Minus } from "lucide-react";
 
 const FAQ_DATA = [
   {
     id: 1,
-    question: 'How live is the data on Finova?',
-    englishTitle: 'How live is the data on Finova?',
-    answer: 'Our platform connects directly through Binance API and major global WebSockets. This means you get real-time price updates and fresh news feeds in milliseconds without needing a page refresh.'
+    question: "How live is the data on Finova?",
+    englishTitle: "How live is the data on Finova?",
+    answer:
+      "Our platform connects directly through Binance API and major global WebSockets. This means you get real-time price updates and fresh news feeds in milliseconds without needing a page refresh.",
   },
   {
     id: 2,
-    question: 'Can I securely upload my private trading notes?',
-    englishTitle: 'Can I securely upload my private trading notes?',
-    answer: 'Yes, the data in your "Private Reports" section remains completely restricted to your device (local browser). We do not store any of your documents, images, or private data on our servers.'
+    question: "Can I securely upload my private trading notes?",
+    englishTitle: "Can I securely upload my private trading notes?",
+    answer:
+      'Yes, the data in your "Private Reports" section remains completely restricted to your device (local browser). We do not store any of your documents, images, or private data on our servers.',
   },
   {
     id: 3,
-    question: 'Is this platform completely free to use?',
-    englishTitle: 'Is this platform completely free to use?',
-    answer: 'Absolutely! Finovas main goal is to provide traders with excellent analytics and fast market tracking tools with zero interruptions, ads, or hidden premium fees.'
+    question: "Is this platform completely free to use?",
+    englishTitle: "Is this platform completely free to use?",
+    answer:
+      "Absolutely! Finovas main goal is to provide traders with excellent analytics and fast market tracking tools with zero interruptions, ads, or hidden premium fees.",
   },
   {
     id: 4,
-    question: 'Does this platform work on mobile devices?',
-    englishTitle: 'Does this platform work on mobile devices?',
-    answer: 'Yes, Finovas "Artistic Flair" design is fully responsive. You can easily use it on your desktop, laptop, tablet, or smartphone. It automatically adjusts according to screen size.'
-  }
+    question: "Does this platform work on mobile devices?",
+    englishTitle: "Does this platform work on mobile devices?",
+    answer:
+      'Yes, Finovas "Artistic Flair" design is fully responsive. You can easily use it on your desktop, laptop, tablet, or smartphone. It automatically adjusts according to screen size.',
+  },
 ];
 
 export function FAQ() {
@@ -43,14 +47,14 @@ export function FAQ() {
           Frequently Asked Questions (FAQ)
         </h3>
       </div>
-      
+
       <div className="flex flex-col">
         {FAQ_DATA.map((faq, index) => {
           const isOpen = openIndex === index;
-          
+
           return (
-            <div 
-              key={faq.id} 
+            <div
+              key={faq.id}
               className="border-b border-[#2A2E39] last:border-0"
             >
               <button
@@ -66,15 +70,19 @@ export function FAQ() {
                   </span>
                 </div>
                 <div className="shrink-0 w-8 h-8 rounded-full border border-[#2A2E39] flex items-center justify-center bg-[#1E222D] group-hover:border-orange-500/50 group-hover:bg-orange-500/10 transition-all text-[#787B86] group-hover:text-orange-500">
-                  {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  {isOpen ? (
+                    <Minus className="w-4 h-4" />
+                  ) : (
+                    <Plus className="w-4 h-4" />
+                  )}
                 </div>
               </button>
-              
+
               <AnimatePresence>
                 {isOpen && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
+                    animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"

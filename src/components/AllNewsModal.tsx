@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from 'motion/react';
-import { X, Globe, Clock, ArrowRight } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from "motion/react";
+import { X, Globe, Clock, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface AllNewsModalProps {
   isOpen: boolean;
@@ -8,42 +8,11 @@ interface AllNewsModalProps {
   onSelectArticle: (article: any) => void;
 }
 
-const FALLBACK_EXTENDED_NEWS = [
-  {
-    id: "ext-fb-1",
-    source: "NEXUS AI GLOBAL",
-    title: "Massive Surge in Global Crypto Markets",
-    description: "Institutional investors have started pouring significant capital into Bitcoin and Ethereum, causing a massive surge and positive momentum in global crypto markets.",
-    symbol: "BTCUSDT",
-    published_on: Math.floor(Date.now() / 1000) - 300
-  },
-  {
-    id: "ext-fb-2",
-    source: "NEXUS AI GLOBAL",
-    title: "New Bull Run? Will Altcoins Also Gain Momentum?",
-    description: "With continuous gains in major currencies, smaller and emerging altcoins are now showing recovery and volume growth, bolstering investor confidence.",
-    symbol: "ETHUSDT",
-    published_on: Math.floor(Date.now() / 1000) - 600
-  },
-  {
-    id: "ext-fb-3",
-    source: "NEXUS AI GLOBAL",
-    title: "Heavy Buying in Web3 and Gaming Tokens",
-    description: "Technological upgrades and news of new project launches have brought the Web3 and gaming sectors back into the spotlight. Volume is steadily increasing.",
-    symbol: "SOLUSDT",
-    published_on: Math.floor(Date.now() / 1000) - 900
-  },
-  {
-    id: "ext-fb-4",
-    source: "NEXUS AI GLOBAL",
-    title: "DeFi Total Value Locked (TVL) Approaching New Record",
-    description: "Investors have locked massive amounts of capital in the decentralized finance sector. Heavy traffic is being observed on lending and borrowing platforms.",
-    symbol: "BNBUSDT",
-    published_on: Math.floor(Date.now() / 1000) - 1200
-  }
-];
-
-export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalProps) {
+export function AllNewsModal({
+  isOpen,
+  onClose,
+  onSelectArticle,
+}: AllNewsModalProps) {
   const [extendedNews, setExtendedNews] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -56,10 +25,27 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
   const fetchExtendedNews = async () => {
     try {
       setLoading(true);
-      await new Promise(r => setTimeout(r, 1000));
-      setExtendedNews(FALLBACK_EXTENDED_NEWS);
+      const res = await fetch(
+        "https://min-api.cryptocompare.com/data/v2/news/?lang=EN",
+      );
+      const json = await res.json();
+
+      if (json && Array.isArray(json.Data) && json.Data.length > 0) {
+        const formattedNews = json.Data.map((item: any) => ({
+          id: item.id,
+          source: item.source_info?.name || "NEXUS AI GLOBAL",
+          title: item.title,
+          description: item.body || "",
+          symbol: item.categories.split("|")[0] || "BTC",
+          imageUrl: item.imageurl,
+          url: item.url,
+          published_on: item.published_on,
+        }));
+
+        setExtendedNews(formattedNews);
+      }
     } catch (error: any) {
-      setExtendedNews(FALLBACK_EXTENDED_NEWS);
+      console.error("Failed to fetch full news", error);
     } finally {
       setLoading(false);
     }
@@ -67,15 +53,15 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
 
   const getThumbnailImage = (index: number) => {
     const images = [
-      'https://images.unsplash.com/photo-1605792657660-596af9009e82?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1640340434855-6084b1f4901c?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1639762681485-074b7f4ec651?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1519162584292-56dfc9eb5db4?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1618172193622-ae2d025f4032?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1621932953986-15fcfdadb174?q=80&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1629339942165-4424ee437b6c?q=80&w=400&auto=format&fit=crop'
+      "https://images.unsplash.com/photo-1605792657660-596af9009e82?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1640340434855-6084b1f4901c?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1639762681485-074b7f4ec651?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1519162584292-56dfc9eb5db4?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1618172193622-ae2d025f4032?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1621932953986-15fcfdadb174?q=80&w=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1629339942165-4424ee437b6c?q=80&w=400&auto=format&fit=crop",
     ];
     return images[index % images.length];
   };
@@ -96,15 +82,15 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
           className="absolute inset-0 bg-black/80 backdrop-blur-md"
         />
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -113,15 +99,19 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
           {/* Header */}
           <div className="flex justify-between items-center p-6 border-b border-[#2A2E39] bg-black/20 shrink-0">
             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-full bg-[#1E222D] flex items-center justify-center border border-[#2A2E39]">
-                  <Globe className="w-5 h-5 text-teal-400" />
-               </div>
-               <div>
-                 <h2 className="text-xl font-black uppercase tracking-widest text-white">ALL LIVE UPDATES</h2>
-                 <p className="text-xs text-[#787B86] uppercase tracking-wider font-mono">Global Market Intel</p>
-               </div>
+              <div className="w-10 h-10 rounded-full bg-[#1E222D] flex items-center justify-center border border-[#2A2E39]">
+                <Globe className="w-5 h-5 text-teal-400" />
+              </div>
+              <div>
+                <h2 className="text-xl font-black uppercase tracking-widest text-white">
+                  ALL LIVE UPDATES
+                </h2>
+                <p className="text-xs text-[#787B86] uppercase tracking-wider font-mono">
+                  Global Market Intel
+                </p>
+              </div>
             </div>
-            <button 
+            <button
               onClick={onClose}
               className="w-10 h-10 rounded-full bg-[#1E222D] hover:bg-[#2A2E39] flex items-center justify-center transition-colors border border-[#2A2E39]"
             >
@@ -134,7 +124,9 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
             {loading ? (
               <div className="h-full flex flex-col items-center justify-center opacity-50">
                 <div className="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <span className="text-sm font-mono tracking-widest uppercase">Fetching global feeds...</span>
+                <span className="text-sm font-mono tracking-widest uppercase">
+                  Fetching global feeds...
+                </span>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -145,14 +137,17 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
                     onClick={() => {
-                        onClose();
-                        onSelectArticle(article);
+                      onClose();
+                      onSelectArticle(article);
                     }}
                     className="group bg-[#1E222D] border border-[#2A2E39] rounded-xl p-5 hover:border-teal-500/40 hover:bg-teal-500/5 transition-all cursor-pointer flex gap-4 items-center"
                   >
                     <div className="w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-[#2A2E39] relative bg-black flex items-center justify-center p-2">
-                      <img 
-                        src={getThumbnailImage(i) || 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop'} 
+                      <img
+                        src={
+                          getThumbnailImage(i) ||
+                          "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop"
+                        }
                         alt=""
                         className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                         referrerPolicy="no-referrer"
@@ -160,7 +155,8 @@ export function AllNewsModal({ isOpen, onClose, onSelectArticle }: AllNewsModalP
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.onerror = null;
-                          target.src = 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop';
+                          target.src =
+                            "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=400&auto=format&fit=crop";
                         }}
                       />
                     </div>
