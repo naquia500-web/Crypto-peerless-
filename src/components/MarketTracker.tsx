@@ -119,20 +119,21 @@ export function MarketTracker() {
     <section className="flex flex-col gap-4">
       <div className="flex justify-between items-end border-b border-[#2A2E39] pb-2">
         <div className="flex items-center gap-3">
-          <h3 className="text-[11px] font-black uppercase tracking-widest text-white">
-            Bitcoin Whale Live Tracker
+          <Activity className="w-5 h-5 text-teal-400" />
+          <h3 className="text-[11px] font-black uppercase tracking-widest text-teal-400">
+            Nexus AI / Whale Live Tracker
           </h3>
           <button
             onClick={() => setIsTracking(!isTracking)}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-full border transition-all ${isTracking ? "bg-orange-500/10 border-orange-500/30 hover:bg-orange-500/20" : "bg-[#1E222D] border-[#2A2E39] hover:bg-[#2A2E39] opacity-70"}`}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-full border transition-all ${isTracking ? "bg-teal-500/10 border-teal-500/30 hover:bg-teal-500/20 shadow-[0_0_15px_rgba(45,212,191,0.1)]" : "bg-[#1E222D] border-[#2A2E39] hover:bg-[#2A2E39] opacity-70"}`}
           >
             <div
-              className={`w-2 h-2 rounded-full ${isTracking ? "bg-orange-500 animate-pulse shadow-[0_0_8px_rgba(249,115,22,0.8)]" : "bg-gray-500"}`}
+              className={`w-2 h-2 rounded-full ${isTracking ? "bg-teal-400 animate-pulse shadow-[0_0_8px_rgba(45,212,191,0.8)]" : "bg-gray-500"}`}
             ></div>
             <span
-              className={`text-[9px] font-bold uppercase tracking-wider ${isTracking ? "text-orange-500" : "text-gray-400"}`}
+              className={`text-[9px] font-bold uppercase tracking-wider ${isTracking ? "text-teal-400" : "text-gray-400"}`}
             >
-              {isTracking ? "Live Tracking" : "Paused"}
+              {isTracking ? "AI Agent Live" : "Paused"}
             </span>
           </button>
         </div>
@@ -140,10 +141,10 @@ export function MarketTracker() {
 
       <div className="bg-[#131722] shadow-lg border border-[#2A2E39] rounded-xl overflow-hidden relative min-h-[300px]">
         {loading ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center opacity-50 z-10">
-            <Activity className="w-8 h-8 animate-spin mb-4 text-orange-500" />
-            <span className="text-xs uppercase tracking-widest font-mono">
-              Loading Data...
+          <div className="absolute inset-0 flex flex-col items-center justify-center opacity-70 z-10">
+            <Activity className="w-8 h-8 animate-spin mb-4 text-teal-400" />
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-teal-400 text-shadow-glow">
+              NEXUS AI IS CONNECTING...
             </span>
           </div>
         ) : null}
@@ -209,7 +210,7 @@ export function MarketTracker() {
                     <td className="px-4 py-3 text-right">
                       {coinData ? (
                         <span
-                          className={`font-mono font-bold text-[12px] tracking-tight ${isPositive ? "text-blue-400" : "text-red-400"}`}
+                          className={`font-mono font-bold text-[12px] tracking-tight ${isPositive ? "text-teal-400" : "text-red-400"}`}
                         >
                           {isPositive ? "+" : ""}
                           {formatCurrency(coinData.p)}
@@ -223,7 +224,7 @@ export function MarketTracker() {
                     <td className="px-4 py-3 text-right">
                       {coinData ? (
                         <span
-                          className={`font-mono font-bold text-[12px] tracking-tight px-1.5 py-0.5 rounded bg-[#1E222D] ${isPositive ? "text-blue-400" : "text-red-400"}`}
+                          className={`font-mono font-bold text-[12px] tracking-tight px-1.5 py-0.5 rounded bg-[#1E222D] ${isPositive ? "text-teal-400" : "text-red-400"}`}
                         >
                           {isPositive ? "+" : ""}
                           {parseFloat(coinData.P).toFixed(2)}%

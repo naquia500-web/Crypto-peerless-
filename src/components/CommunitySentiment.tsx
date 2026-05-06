@@ -149,12 +149,12 @@ export function CommunitySentiment() {
   return (
     <section className="flex flex-col gap-6 mt-8">
       <div className="flex items-center justify-between pb-2 border-b border-[#2A2E39]">
-        <h3 className="text-[14px] font-black uppercase tracking-widest text-white flex items-center gap-2">
-          Market Community Updates
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 ml-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
-            <span className="text-[9px] font-bold text-blue-500 uppercase tracking-wider">
-              Live Tracker Active
+        <h3 className="text-[14px] font-black uppercase tracking-widest text-teal-400 flex items-center gap-2">
+          NEXUS AI AGENT / Community Sentiment
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-500/10 border border-teal-500/20 ml-2 shadow-[0_0_10px_rgba(45,212,191,0.2)]">
+            <div className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse shadow-[0_0_5px_rgba(45,212,191,0.8)]"></div>
+            <span className="text-[9px] font-bold text-teal-400 uppercase tracking-wider">
+              1-Hour Auto-Update Agent Active
             </span>
           </div>
         </h3>
@@ -172,7 +172,7 @@ export function CommunitySentiment() {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-2">
             <div className="flex justify-between font-mono font-bold text-sm mb-1">
-              <span className="text-blue-400 flex items-center gap-1">
+              <span className="text-teal-400 flex items-center gap-1">
                 <TrendingUp className="w-4 h-4" /> BTC Sentiment:{" "}
                 {bullPercentage}%
               </span>
@@ -194,7 +194,7 @@ export function CommunitySentiment() {
               <button
                 onClick={() => handleVote("bull")}
                 disabled={hasVoted}
-                className={`flex-1 py-2.5 rounded-lg border border-blue-500/30 text-blue-400 transition-all text-[11px] uppercase font-bold tracking-widest flex justify-center items-center gap-2 ${hasVoted ? "opacity-50 cursor-not-allowed bg-[#1E222D]" : "hover:bg-blue-500/10 hover:shadow-[0_0_15px_rgba(0,255,136,0.2)]"}`}
+                className={`flex-1 py-2.5 rounded-lg border border-teal-500/30 text-teal-400 transition-all text-[11px] uppercase font-bold tracking-widest flex justify-center items-center gap-2 ${hasVoted ? "opacity-50 cursor-not-allowed bg-[#1E222D]" : "hover:bg-teal-500/10 hover:shadow-[0_0_15px_rgba(45,212,191,0.2)]"}`}
               >
                 <TrendingUp className="w-4 h-4" /> Bullish
               </button>
@@ -207,7 +207,7 @@ export function CommunitySentiment() {
               </button>
             </div>
             {hasVoted && (
-              <div className="text-center mt-2 text-[10px] text-blue-400 font-mono tracking-widest uppercase">
+              <div className="text-center mt-2 text-[10px] text-teal-400 font-mono tracking-widest uppercase">
                 Vote Registered • 6,432,192 Total Votes
               </div>
             )}
@@ -224,7 +224,7 @@ export function CommunitySentiment() {
                   <span>68%</span>
                 </div>
                 <div className="w-full h-1.5 bg-[#2A2E39] rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 w-[68%]"></div>
+                  <div className="h-full bg-teal-500 w-[68%]"></div>
                 </div>
               </div>
               <div>
@@ -282,7 +282,7 @@ export function CommunitySentiment() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm font-bold text-white">
                       {post.username}{" "}
-                      <span className="text-blue-400 text-xs">✓</span>
+                      <span className="text-teal-400 text-xs">✓</span>
                       <span className="text-[10px] opacity-40 font-mono font-normal">
                         {post.handle} · {post.timestamp}
                       </span>
@@ -311,9 +311,9 @@ export function CommunitySentiment() {
                   )}
 
                   <div className="flex items-center gap-6 mt-3 text-[#787B86]">
-                    <button className="flex items-center gap-1.5 hover:text-blue-400 transition-colors group-hover:text-[#787B86]">
+                    <button className="flex items-center gap-1.5 hover:text-teal-400 transition-colors group-hover:text-[#787B86]">
                       <TrendingUp className="w-4 h-4" />{" "}
-                      <span className="text-xs font-mono font-bold text-blue-400">
+                      <span className="text-xs font-mono font-bold text-teal-400">
                         {post.likes}
                       </span>
                     </button>
